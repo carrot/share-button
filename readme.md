@@ -13,18 +13,15 @@ Simple, light, flexible, and good-looking share button. Ermahgerd.
 
 You can pass an options object when you call `share` on an element to make things a little more flexible.
 
-##### general purpose
 **url**: the url you want to share. default: `window.location.href`    
 **text**: text to be tweeted alongside your link, default: your page's meta description    
 **image**: image to be shared (facebook-specific)    
 **app_id**: facebook app id for tracking shares. if provided, will use the facebook API
-
-##### ui options
 **background**: background color of the button, default: `#e1e1e1`    
 **color**: text color of the button, default: '#333'    
 **icon**: change the icon to the left. choose from [this set](http://weloveiconfonts.com/#entypo), default: `export`    
 
-##### network-specific options
+#### network-specific options
 If you pass an object called `twitter`, `facebook`, and/or `gplus` into the main options, you can get more granular with the share info, specifying different information for different networks. Example objects shown below:
 
 ```
