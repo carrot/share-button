@@ -61,7 +61,7 @@ This will likely become more powerful down the line as this project continues to
 
 ### Example
 
-To see an example, clone this repo and open `test/public/index.html`
+To see an example, clone this repo and open `index.html`
 
 ### Contirbuting
 
