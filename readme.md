@@ -70,3 +70,7 @@ Pretty simple project, all you need to do to set up for build is the following:
 - `npm install grunt-cli -g`
 - inside this folder, `npm install`
 - edit the coffee file in `src` and run `grunt` to build it
+
+### Inspiration
+
+This project was inspired by [this dribbble shot](http://dribbble.com/shots/1072278) and [this cssdeck experiment](http://cssdeck.com/labs/css-social-share-button) - huge props to these two guys for some incredible ideas and work.
