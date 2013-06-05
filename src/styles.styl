@@ -1,0 +1,85 @@
+// dep: http://weloveiconfonts.com/api/?family=entypo
+// dep: http://fonts.googleapis.com/css?family=Lato:900
+
+.share-button
+  size: 90 20
+
+  [class*="entypo-"]:before
+    font-family: 'entypo', sans-serif;
+
+  label
+    font-size: 16px
+    cursor: pointer
+    margin: 0
+    padding: 5px 10px
+    round: 5px
+    background: #7B7484
+    color: #231733
+    transition()
+
+    &:hover
+      background: #928a9e
+
+    span
+      upcase()
+      font-size: .85em
+      font-family: Lato, sans-serif
+      font-weight: 900
+      -webkit-font-smoothing: antialiased
+      padding-left: 6px
+
+  .social
+    transform-origin: 50% 0%
+    transform: scale(0) translateY(-190px)
+    opacity: 0
+    transition: all .4s ease
+    display: none
+    margin-left: -15px
+
+    &.active
+      opacity: 1
+      transform: scale(1) translateY(-90px)
+      transition: all .4s ease
+      margin-left: -45px
+
+  ul
+    relative: left 0 right 0
+    size: 180px 46px
+    color: #fff
+    background: #3B5998
+    margin: auto
+    padding: 0
+    list-style: none
+
+    li
+      font-size: 20px
+      cursor: pointer
+      width: 60px
+      margin: 0
+      padding: 12px 0
+      text-align: center
+      float: left
+      display: block
+      height: 22px
+      transition()
+
+      &:hover
+        color: rgba(0,0,0,.5)
+
+    &:after
+      content: ''
+      display: block
+      size: 0
+      absolute: left 0 right 0
+      margin: 35px auto
+      border-left: 20px solid transparent
+      border-right: 20px solid transparent
+      border-top: 20px solid #3B5998
+
+  li[class*="twitter"]
+    background: #6CDFEA
+    padding: 12px 0
+
+  li[class*="gplus"]
+    background: #E34429
+    padding: 12px 0

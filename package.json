@@ -1,0 +1,9 @@
+{
+  "name": "share",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-coffee": "*"
+  }
+}
