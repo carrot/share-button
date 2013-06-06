@@ -62,7 +62,7 @@
       var link;
       link = paths[$(this).data('network')];
       if (($(this).data('network') === 'facebook') && config.app_id) {
-        FB.ui({
+        window.FB.ui({
           method: 'feed',
           link: config.fb_url,
           name: config.fb_title,
