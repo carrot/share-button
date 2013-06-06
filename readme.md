@@ -24,7 +24,7 @@ You can pass an options object when you call `share` on an element to make thing
 #### network-specific options
 If you pass an object called `twitter`, `facebook`, and/or `gplus` into the main options, you can get more granular with the share info, specifying different information for different networks. Example objects shown below:
 
-```
+```js
 facebook: {
   name: 'title'
   link: 'url'
