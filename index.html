@@ -6,7 +6,8 @@
     body { padding: 80px; -webkit-font-smoothing: antialiased; }
     .share-button { margin: 150px auto;}
   </style>
-  <meta name='description' content='A simple, light, flexible, and good-looking share button.'
+  <meta name='description' content='A simple, light, flexible, and good-looking share button'>
+  <meta name='og:image' content='http://carrot.is/img/fb-share.jpg'>
 </head>
 <body>
   <div class='share-button'></div>
@@ -16,7 +17,7 @@
     $(function(){
       $('.share-button').sharer({
         title: 'Share Button Test',
-        image: 'https://si0.twimg.com/profile_images/23999002/ackbar.gif',
+        image: 'http://carrot.is/img/fb-share.jpg',
         app_id: '602752456409826'
       })
     });
