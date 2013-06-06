@@ -1,6 +1,6 @@
 Share
 =====
-Simple, light, flexible, and good-looking share button. Ermahgerd.
+Simple, light, flexible, and good-looking share button. Ermahgerd. [See it here](http://carrot.github.io/share-button/).
 
 ### Setup
 
