@@ -63,7 +63,7 @@ This will likely become more powerful down the line as this project continues to
 
 To see an example, clone this repo and open `index.html`
 
-### Contirbuting
+### Contributing
 
 Pretty simple project, all you need to do to set up for build is the following:
 
