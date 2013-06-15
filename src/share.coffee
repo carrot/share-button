@@ -1,4 +1,4 @@
-$.fn.sharer = (opts) ->
+$.fn.share = (opts) ->
 
   $(@).hide()
 
@@ -71,7 +71,7 @@ $.fn.sharer = (opts) ->
     link = paths[$(@).data('network')]
     if ($(@).data('network') == 'facebook') && config.app_id
       window.FB.ui
-        method: 'feed', 
+        method: 'feed',
         link: config.fb_url
         name: config.fb_title
         caption: config.fb_text

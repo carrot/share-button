@@ -1,5 +1,5 @@
 (function() {
-  $.fn.sharer = function(opts) {
+  $.fn.share = function(opts) {
     var clean_text, click_link, close, config, open, paths, set_opt, styles, toggle,
       _this = this;
     $(this).hide();
