@@ -28,8 +28,9 @@ If you pass an object called `twitter`, `facebook`, and/or `gplus` into the main
 facebook: {
   name: 'title'
   link: 'url'
-  text: 'short description'
   image: 'share image'
+  caption: 'picture caption'
+  text: 'short description'
 }
 
 twitter: {
