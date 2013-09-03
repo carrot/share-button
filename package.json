@@ -4,6 +4,13 @@
   "devDependencies": {
     "grunt": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-coffee": "*"
+    "grunt-contrib-coffee": "*",
+    "mocha": "*",
+    "should": "*",
+    "zombie": "*",
+    "q": "*"
+  },
+  "scripts": {
+    "test": "mocha test"
   }
 }
