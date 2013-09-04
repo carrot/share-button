@@ -5,6 +5,7 @@
     "grunt": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-coffee": "*",
+    "grunt-contrib-watch": "*",
     "mocha": "*",
     "should": "*",
     "zombie": "*",

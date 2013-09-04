@@ -15,7 +15,13 @@ module.exports = (grunt) ->
         files:
           'build/<%= pkg.name %>.js': 'src/<%= pkg.name %>.coffee'
 
+    watch:
+      scripts:
+        files: ['src/*.coffee']
+        tasks: ['coffee', 'uglify']
+
   grunt.loadNpmTasks 'grunt-contrib-uglify'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
 
   grunt.registerTask 'default', ['coffee', 'uglify']

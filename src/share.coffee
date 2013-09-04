@@ -17,6 +17,7 @@ $.fn.share = (opts) ->
   config.button_color      = opts.color || '#333'
   config.button_background = opts.background || '#e1e1e1'
   config.button_icon       = opts.icon || 'export'
+  config.button_text       = opts.button_text || 'Share'
 
   # network-specific
   set_opt = (base,ext) -> if opts[base] then opts[base][ext] || config[ext] else config[ext]
@@ -42,7 +43,7 @@ $.fn.share = (opts) ->
   $('head').append(styles) unless $('meta[name=sharer]').length
 
   # inject the html
-  $(@).html("<label class='entypo-#{config.button_icon}'><span>Share</span></label><div class='social'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li></ul></div>")
+  $(@).html("<label class='entypo-#{config.button_icon}'><span>#{config.button_text}</span></label><div class='social'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li></ul></div>")
 
   # set up facebook api if necessary
   if !window.FB && config.app_id

@@ -15,6 +15,7 @@
     config.button_color = opts.color || '#333';
     config.button_background = opts.background || '#e1e1e1';
     config.button_icon = opts.icon || 'export';
+    config.button_text = opts.button_text || 'Share';
     set_opt = function(base, ext) {
       if (opts[base]) {
         return opts[base][ext] || config[ext];
@@ -39,7 +40,7 @@
     if (!$('meta[name=sharer]').length) {
       $('head').append(styles);
     }
-    $(this).html("<label class='entypo-" + config.button_icon + "'><span>Share</span></label><div class='social'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li></ul></div>");
+    $(this).html("<label class='entypo-" + config.button_icon + "'><span>" + config.button_text + "</span></label><div class='social'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li></ul></div>");
     if (!window.FB && config.app_id) {
       $('body').append("<div id='fb-root'></div><script>(function(a,b,c){var d,e=a.getElementsByTagName(b)[0];a.getElementById(c)||(d=a.createElement(b),d.id=c,d.src='//connect.facebook.net/en_US/all.js#xfbml=1&appId=" + config.app_id + "',e.parentNode.insertBefore(d,e))})(document,'script','facebook-jssdk');</script>");
     }
