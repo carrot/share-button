@@ -3,8 +3,9 @@
 <head>
   <title>Share Button Test</title>
   <style>
-    body { padding: 80px; -webkit-font-smoothing: antialiased; }
-    .share-button { margin: 150px auto; }
+    html { width: 100%; height: 100%; overflow: hidden; }
+    body { -webkit-font-smoothing: antialiased;width: 100%; height: 100%;overflow: hidden;margin: 0; padding: 0;background: #4f3b5b;background: -moz-radial-gradient(center, ellipse cover,  #4f3b5b 0%, #231733 100%);background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#4f3b5b), color-stop(100%,#231733));background: -webkit-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: -o-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: -ms-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: radial-gradient(ellipse at center,  #4f3b5b 0%,#231733 100%);}
+    .share-button { margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
   </style>
   <meta name='description' content='A simple, light, flexible, and good-looking share button'>
   <meta name='og:image' content='http://carrot.is/img/fb-share.jpg'>
@@ -18,7 +19,9 @@
       $('.share-button').share({
         title: 'Share Button Test',
         image: 'http://carrot.is/img/fb-share.jpg',
-        app_id: '602752456409826'
+        app_id: '602752456409826',
+        background: 'rgba(255,255,255,.5)',
+        color: '#3B2B45'
       })
     });
   </script>
