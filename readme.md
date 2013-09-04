@@ -40,7 +40,7 @@ You can pass an options object when you call `share` on an element to make thing
 
 **Example:**
 
-```
+```js
 $('.element').share({
   url: 'http://www.youtube.com/watch?v=oHg5SJYRHA0',
   text: 'check out this awesome video guys!'
@@ -71,7 +71,7 @@ gplus: {
 
 **Example:**
 
-```
+```js
 $('.element').share({
   url: 'http://www.youtube.com/watch?v=oHg5SJYRHA0',
   text: 'check out this awesome video guys!'
