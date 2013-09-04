@@ -36,6 +36,7 @@ You can pass an options object when you call `share` on an element to make thing
 **background**: background color of the button, _default: `#e1e1e1`_    
 **color**: text color of the button, _default: '#333'_    
 **icon**: change the icon to the left. choose from [this set](http://weloveiconfonts.com/#entypo), _default: `export`_    
+**button_text**: change the text of the button, _default: `Share`_    
 
 **Example:**
 
