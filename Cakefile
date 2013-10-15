@@ -6,8 +6,41 @@ transformers = require 'transformers'
 stylus = require 'stylus'
 axis = require 'axis-css'
 uuid = require 'node-uuid'
+monocle = require 'monocle'
 W = require 'when'
 fn = require 'when/function'
+async = require 'async'
+
+# tasks
+
+build = ->
+  async.parallel [build_normal, build_minified], -> console.log 'done!'.green
+
+build_normal = (cb) ->
+  (new Builder()).build { minify: false }, (res) ->
+    p = path.join(__dirname, 'build/share.js')
+    fs.writeFileSync(p, res)
+    cb()
+
+build_minified = (cb) ->
+  (new Builder()).build { minify: true }, (res) ->
+    p = path.join(__dirname, 'build/share.min.js')
+    fs.writeFileSync(p, res)
+    cb()
+
+task 'build', 'build the plugin', ->
+  process.stdout.write 'building... '.grey
+  build()
+
+task 'watch', 'rebuild on change in src folder', ->
+  monocle().watchDirectory
+    root: path.join(__dirname, 'src')
+    complete: -> console.log 'watching src directory'.grey
+    listener: ->
+      process.stdout.write 'rebuilding... '.grey
+      build()
+
+# logic
 
 class Builder
 
@@ -65,12 +98,3 @@ class Builder
 
   define_tokens = (tokens) ->
     return (style) -> style.define(k, v) for k, v of tokens
-
-# task
-
-task 'build', 'build the plugin', ->
-  main_path = path.join(__dirname, 'build/share.js')
-  min_path = path.join(__dirname, 'build/share.min.js')
-
-  (new Builder()).build { minify: false }, (res) -> fs.writeFileSync(main_path, res)
-  (new Builder()).build { minify: true }, (res) -> fs.writeFileSync(min_path, res)

@@ -14,7 +14,9 @@
     "node-uuid": "1.x.x",
     "colors": "0.6.x",
     "sugar": "1.x.x",
-    "when": "2.x.x"
+    "when": "2.x.x",
+    "monocle": "1.x.x",
+    "async": "0.2.x"
   },
   "scripts": {
     "test": "mocha test"
