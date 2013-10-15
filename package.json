@@ -1,15 +1,20 @@
 {
   "name": "share",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-uglify": "*",
-    "grunt-contrib-coffee": "*",
-    "grunt-contrib-watch": "*",
     "mocha": "*",
     "should": "*",
     "zombie": "*",
-    "q": "*"
+    "q": "*",
+    "stylus": "0.38.x",
+    "uglify-js": "2.x.x",
+    "transformers": "2.x.x",
+    "coffee-script": "1.x.x",
+    "axis-css": "0.1.x",
+    "node-uuid": "1.x.x",
+    "colors": "0.6.x",
+    "sugar": "1.x.x",
+    "when": "2.x.x"
   },
   "scripts": {
     "test": "mocha test"

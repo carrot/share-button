@@ -103,9 +103,9 @@ This will likely become more powerful down the line as this project continues to
 
 Pretty simple project, all you need to do to set up for build is the following:
 
-- `npm install grunt-cli -g`
+- `npm install coffee-script -g`
 - inside this folder, `npm install`
-- edit the coffee file in `src` and run `grunt` to build it
+- edit any of the files in `src` and run `cake build` to build them
 
 ### Testing
 

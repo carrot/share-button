@@ -1,10 +1,10 @@
 // dep: http://weloveiconfonts.com/api/?family=entypo
 // dep: http://fonts.googleapis.com/css?family=Lato:900
 
-.share-button
+{ selector }
   size: 90 20
 
-  [class*="entypo-"]:before
+  [class*='entypo-']:before
     font-family: 'entypo', sans-serif;
 
   label
@@ -13,8 +13,8 @@
     margin: 0
     padding: 5px 10px
     round: 5px
-    background: #7B7484
-    color: #231733
+    background: unquote(button_background)
+    color: unquote(button_color)
     transition()
 
     &:hover
@@ -33,7 +33,6 @@
     transform: scale(0) translateY(-190px)
     opacity: 0
     transition: all .4s ease
-    display: none
     margin-left: -15px
 
     &.active
@@ -61,6 +60,8 @@
       float: left
       display: block
       height: 22px
+      position: relative
+      z-index: 2
       transition()
 
       &:hover
@@ -76,10 +77,10 @@
       border-right: 20px solid transparent
       border-top: 20px solid #3B5998
 
-  li[class*="twitter"]
+  li[class*='twitter']
     background: #6CDFEA
     padding: 12px 0
 
-  li[class*="gplus"]
+  li[class*='gplus']
     background: #E34429
     padding: 12px 0
