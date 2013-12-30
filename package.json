@@ -10,7 +10,7 @@
     "uglify-js": "2.x.x",
     "transformers": "2.x.x",
     "coffee-script": "1.x.x",
-    "axis-css": "0.1.x",
+    "axis-css": "0.1.5",
     "node-uuid": "1.x.x",
     "colors": "0.6.x",
     "sugar": "1.x.x",
