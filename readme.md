@@ -99,25 +99,11 @@ share.self;     // returns an instance of the jquery object it was called on (fo
 
 This will likely become more powerful down the line as this project continues to be developed - open an issue if there's anything you wish the api would have.
 
-### Contributing
-
-Pretty simple project, all you need to do to set up for build is the following:
-
-- `npm install coffee-script -g`
-- inside this folder, `npm install`
-- edit any of the files in `src` and run `cake build` to build them
-
-### Testing
-
-We are in process of adding a small test suite that covers the basic functionality of this plugin to make sure nothing is broken. If you send a pull request, it would be awesome if you also wrote a test for your feature. The testing interface is very simple, it just uses [should.js](https://github.com/visionmedia/should.js/) and jquery. Here's how to get set up for testing:
-
-- `npm install mocha -g`
-- `npm install coffee-script -g`
-- inside this folder, `npm install`
-- `mocha` or `npm test` will run the tests
-
-The tests rely on the following libraries, for which documentation is linked: [mocha](http://visionmedia.github.io/mocha/), [should](https://github.com/visionmedia/should.js/), [zombie](http://zombie.labnotes.org/), [q](https://github.com/kriskowal/q)
-
 ### Inspiration
 
 This project was inspired by [this dribbble shot](http://dribbble.com/shots/1072278) and [this cssdeck experiment](http://cssdeck.com/labs/css-social-share-button) - huge props to these two guys for some incredible ideas and work.
+
+### Contributing and License
+
+- Contributing Guidelines can be found [here](contributing.md)
+- Licenced uncer MIT - [details here](license.md)
