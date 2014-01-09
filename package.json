@@ -5,7 +5,6 @@
     "mocha": "*",
     "should": "*",
     "zombie": "*",
-    "q": "*",
     "stylus": "0.38.x",
     "uglify-js": "2.x.x",
     "transformers": "2.x.x",
@@ -13,10 +12,8 @@
     "axis-css": "0.2.x",
     "node-uuid": "1.x.x",
     "colors": "0.6.x",
-    "sugar": "1.x.x",
     "when": "2.x.x",
-    "monocle": "1.x.x",
-    "async": "0.2.x"
+    "monocle": "1.x.x"
   },
   "scripts": {
     "test": "mocha test"

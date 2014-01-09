@@ -1,7 +1,6 @@
 should = require 'should'
 Zombie = require 'zombie'
 path   = require 'path'
-q      = require 'q'
 
 browser = new Zombie()
 test_page_path = "file://#{path.join(process.cwd(), 'index.html')}"

@@ -1,5 +1,4 @@
 require 'colors'
-require 'sugar'
 fs = require 'fs'
 path = require 'path'
 transformers = require 'transformers'
@@ -8,25 +7,21 @@ axis = require 'axis-css'
 uuid = require 'node-uuid'
 monocle = require 'monocle'
 W = require 'when'
-fn = require 'when/function'
-async = require 'async'
+nodefn = require 'when/node/function'
 
 # tasks
 
 build = ->
-  async.parallel [build_normal, build_minified], -> console.log 'done!'.green
+  W.all([build_normal(), build_minified()])
+    .done((-> console.log 'done!'.green), ((err) -> console.error(err.stack)))
 
-build_normal = (cb) ->
-  (new Builder()).build { minify: false }, (res) ->
-    p = path.join(__dirname, 'build/share.js')
-    fs.writeFileSync(p, res)
-    cb()
+build_normal = ->
+  (new Builder()).build(minify: false).then (res) ->
+    nodefn.call(fs.writeFile, path.join(__dirname, 'build/share.js'), res)
 
-build_minified = (cb) ->
-  (new Builder()).build { minify: true }, (res) ->
-    p = path.join(__dirname, 'build/share.min.js')
-    fs.writeFileSync(p, res)
-    cb()
+build_minified = ->
+  (new Builder()).build(minify: true).then (res) ->
+    nodefn.call(fs.writeFile, path.join(__dirname, 'build/share.min.js'), res)
 
 task 'build', 'build the plugin', ->
   process.stdout.write 'building... '.grey
@@ -48,12 +43,9 @@ class Builder
     @js_path = path.join(__dirname, 'src/share.coffee')
     @css_path = path.join(__dirname, 'src/styles.styl')
 
-  build: (opts, cb) ->
-    @opts = opts
-    @compile_css()
-      .then(@compile_js.bind(@))
-      .otherwise((err) -> console.error(err))
-      .then(cb)
+  build: (opts) ->
+    @opts = opts || {}
+    @compile_css().then(@compile_js.bind(@))
 
   compile_css: (opts) ->
     deferred = W.defer()
@@ -80,7 +72,7 @@ class Builder
   compile_js: (css) ->
     js = transformers['coffee-script'].renderFileSync(@js_path, { bare: true })
     if @opts.minify then js = transformers['uglify-js'].renderSync(js)
-    return fn.call(-> return "!function(){#{css}#{js}}.call(this)")
+    return "!function(){#{css}#{js}}.call(this)"
 
   # 
   # @api private
