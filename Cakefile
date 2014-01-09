@@ -72,6 +72,7 @@ class Builder
       .use(define_tokens(tokens))
       .use(axis())
       .render (err, css) =>
+        if err then return console.error(err)
         if css then deferred.resolve(fn_wrapper("#{meta_tag}#{icons}#{fonts}#{style_wrapper(css)}"))
 
     return deferred.promise

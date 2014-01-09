@@ -2,7 +2,7 @@
 // dep: http://fonts.googleapis.com/css?family=Lato:900
 
 { selector }
-  size: 90 20
+  size: 90px 20px
 
   [class*='entypo-']:before
     font-family: 'entypo', sans-serif;
@@ -12,13 +12,13 @@
     cursor: pointer
     margin: 0
     padding: 5px 10px
-    round: 5px
+    border-radius: 5px
     background: unquote(button_background)
     color: unquote(button_color)
     transition()
 
     &:hover
-      background: #928a9e
+      opacity: .8
 
     span
       upcase()
@@ -62,6 +62,7 @@
       height: 22px
       position: relative
       z-index: 2
+      box-sizing: content-box
       transition()
 
       &:hover
