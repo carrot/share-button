@@ -1,13 +1,14 @@
 require 'colors'
 fs = require 'fs'
 path = require 'path'
-transformers = require 'transformers'
-stylus = require 'stylus'
-axis = require 'axis-css'
-uuid = require 'node-uuid'
-monocle = require 'monocle'
 W = require 'when'
 nodefn = require 'when/node/function'
+accord = require 'accord'
+stylus = accord.load('stylus')
+axis = require 'axis-css'
+autoprefixer = require 'autoprefixer-stylus'
+uuid = require 'node-uuid'
+monocle = require 'monocle'
 
 # tasks
 
@@ -48,41 +49,35 @@ class Builder
     @compile_css().then(@compile_js.bind(@))
 
   compile_css: (opts) ->
-    deferred = W.defer()
-
     tokens = set_tokens(['selector', 'button_color', 'button_background'])
     meta_tag = "<meta name='sharer'>"
     icons = "<link rel='stylesheet' href='http://weloveiconfonts.com/api/?family=entypo'>"
     fonts = "<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:900'>"
 
     fn_wrapper = (c) -> "function getStyles(config){ return \"#{c}\"};"
-    style_wrapper = (c) =>
-      c = transformers['uglify-css'].renderSync(c)
-      "<style>#{replace_tokens(c, tokens)}</style>"
 
-    stylus(fs.readFileSync(@css_path, 'utf8'))
-      .use(define_tokens(tokens))
-      .use(axis())
-      .render (err, css) =>
-        if err then return console.error(err)
-        if css then deferred.resolve(fn_wrapper("#{meta_tag}#{icons}#{fonts}#{style_wrapper(css)}"))
-
-    return deferred.promise
+    stylus.renderFile(@css_path, { use: [define_tokens(tokens), axis(), autoprefixer()] })
+      .then((css) ->
+          accord.load('minify-css').render(css).then (css) ->
+            return "<style>#{replace_tokens(css, tokens)}</style>"
+      ).then (css) ->
+        "function getStyles(config){ return \"#{meta_tag}#{icons}#{fonts}#{css}\"};"
 
   compile_js: (css) ->
-    js = transformers['coffee-script'].renderFileSync(@js_path, { bare: true })
-    if @opts.minify then js = transformers['uglify-js'].renderSync(js)
-    return "!function(){#{css}#{js}}.call(this)"
+    accord.load('coffee-script').renderFile(@js_path, { bare: true })
+      .then (js) =>
+        if @opts.minify
+          accord.load('minify-js').render(js).then (js) ->
+            "!function(){#{css}#{js}}.call(this)"
+        else
+          return "!function(){#{css}#{js}}.call(this)"
 
   # 
   # @api private
   # 
   
   set_tokens = (arr) ->
-    arr.reduce (m,v) ->
-      m[v] = uuid.v1()
-      m
-    , {}
+    arr.reduce(((m,v) -> m[v] = uuid.v1(); m), {})
 
   replace_tokens = (res, tokens) ->
     for k, v of tokens

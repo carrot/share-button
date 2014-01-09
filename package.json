@@ -1,18 +1,27 @@
 {
-  "name": "share",
+  "name": "share-button",
   "version": "0.0.2",
+  "author": "Jeff Escalante <hello@jenius.me>",
+  "description": "fast, beautiful, and painless social shares",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carrot/share-button"
+  },
+  "license": "MIT",
   "devDependencies": {
     "mocha": "*",
     "should": "*",
     "zombie": "*",
+    "when": "2.x.x",
+    "accord": "0.0.4",
     "stylus": "0.38.x",
-    "uglify-js": "2.x.x",
-    "transformers": "2.x.x",
-    "coffee-script": "1.x.x",
     "axis-css": "0.2.x",
+    "autoprefixer-stylus": "0.0.2",
+    "clean-css": "2.x.x",
+    "coffee-script": "1.x.x",
+    "uglifyjs": "2.x.x",
     "node-uuid": "1.x.x",
     "colors": "0.6.x",
-    "when": "2.x.x",
     "monocle": "1.x.x"
   },
   "scripts": {
