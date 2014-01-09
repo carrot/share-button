@@ -121,5 +121,3 @@ The tests rely on the following libraries, for which documentation is linked: [m
 ### Inspiration
 
 This project was inspired by [this dribbble shot](http://dribbble.com/shots/1072278) and [this cssdeck experiment](http://cssdeck.com/labs/css-social-share-button) - huge props to these two guys for some incredible ideas and work.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/carrot/share-button/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
