@@ -20,7 +20,7 @@ Let's take a quick look at the alternative, using this little js plugin:
 
 ### Setup
 
-1. [Download the script](https://github.com/carrot/share-button/blob/master/build/share.min.js) and include it on your page.
+1. [Download the script](https://github.com/carrot/share-button/releases/download/v0.0.3/share.min.js) and include it on your page.
 2. Make an empty div on your page
 3. In your javascript, call `$('.element').share()`
 4. Pass options to the share call if you want (details below)
