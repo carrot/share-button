@@ -1,4 +1,8 @@
 $.fn.share = (opts) ->
+  if $(@).length is 0
+    console.log "Share Button: No elements found."
+    return
+
   $(@).hide()
 
   # set up options
