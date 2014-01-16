@@ -1,5 +1,4 @@
 $.fn.share = (opts) ->
-
   $(@).hide()
 
   # set up options
@@ -32,7 +31,7 @@ $.fn.share = (opts) ->
   config.gplus_url    = set_opt('gplus', 'url')
 
   # private
-  config.selector = ".#{$(@).attr('class')}"
+  config.selector = ".#{$(@).attr('class').split(" ").join(".")}"
 
   # correct common errors
   config.twitter_text = encodeURIComponent(config.twitter_text)

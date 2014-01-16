@@ -30,7 +30,7 @@
   config.fb_text = set_opt('facebook', 'text');
   config.fb_image = set_opt('facebook', 'image');
   config.gplus_url = set_opt('gplus', 'url');
-  config.selector = "." + ($(this).attr('class'));
+  config.selector = "." + ($(this).attr('class').split(" ").join("."));
   config.twitter_text = encodeURIComponent(config.twitter_text);
   if (typeof config.app_id === 'integer') {
     config.app_id = config.app_id.toString();
