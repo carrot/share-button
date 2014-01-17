@@ -50,18 +50,13 @@ class Builder
 
   compile_css: (opts) ->
     tokens = set_tokens(['selector', 'button_color', 'button_background'])
-    meta_tag = "<meta name='sharer'>"
-    icons = "<link rel='stylesheet' href='http://weloveiconfonts.com/api/?family=entypo'>"
-    fonts = "<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:900'>"
-
-    fn_wrapper = (c) -> "function getStyles(config){ return \"#{c}\"};"
 
     stylus.renderFile(@css_path, { use: [define_tokens(tokens), axis(), autoprefixer()] })
       .then((css) ->
           accord.load('minify-css').render(css).then (css) ->
             return "<style>#{replace_tokens(css, tokens)}</style>"
       ).then (css) ->
-        "function getStyles(config){ return \"#{meta_tag}#{icons}#{fonts}#{css}\"};"
+        "function getStyles(config){ return \"#{css}\"};"
 
   compile_js: (css) ->
     accord.load('coffee-script').renderFile(@js_path, { bare: true })
