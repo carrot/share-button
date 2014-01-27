@@ -38,6 +38,7 @@ You can pass an options object when you call `share` on an element to make thing
 **color**: text color of the button, _default: '#333'_    
 **icon**: change the icon to the left. choose from [this set](http://weloveiconfonts.com/#entypo), _default: `export`_    
 **button_text**: change the text of the button, _default: `Share`_    
+**flyout**: change the flyout direction of the shares. chose from left, center, or right. _default: `center`_
 
 **Example:**
 
@@ -75,7 +76,8 @@ gplus: {
 ```js
 $('.element').share({
   url: 'http://www.youtube.com/watch?v=oHg5SJYRHA0',
-  text: 'check out this awesome video guys!'
+  text: 'check out this awesome video guys!',
+  flyout: 'center', // left, center, right
   twitter: {
     text: 'peep this great video #great #video #hashtag'
   }
