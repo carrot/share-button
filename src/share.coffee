@@ -50,6 +50,7 @@ $.fn.share = (opts) ->
     config.app_id = opts.app_id
     config.title  = opts.title
     config.image  = opts.image
+    config.flyout = opts.flyout || 'center'
 
     ## UI Configurations
 
@@ -119,7 +120,7 @@ $.fn.share = (opts) ->
     # Inject HTML #
     ###############
 
-    $(@).html("<label class='entypo-#{config.button_icon}'><span>#{config.button_text}</span></label><div class='social'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li></ul></div>")
+    $(@).html("<label class='entypo-#{config.button_icon}'><span>#{config.button_text}</span></label><div class='social #{config.flyout}'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li></ul></div>")
 
 
     #######################

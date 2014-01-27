@@ -39,49 +39,73 @@
       opacity: 1
       transform: scale(1) translateY(-90px)
       transition: all .4s ease
-      margin-left: -45px
 
-  ul
-    relative: left 0 right 0
-    size: 180px 46px
-    color: #fff
-    background: #3B5998
-    margin: auto
-    padding: 0
-    list-style: none
+    &.center
+      ul
+        &:after
+          margin: 35px auto
+          border-top: 20px solid #3B5998
 
-    li
-      font-size: 20px
-      cursor: pointer
-      width: 60px
-      margin: 0
+      &.active
+        margin-left: -45px
+
+    &.left
+      ul
+        &:after
+          margin: 35px 0px 0px 129px
+          border-top: 20px solid #E34429
+
+      &.active
+        margin-left: -115px
+
+    &.right
+      ul
+        &:after
+          margin: 35px 0px 0px 10px
+          border-top: 20px solid #6CDFEA
+
+      &.active
+        margin-left: 10px
+
+    ul
+      relative: left 0 right 0
+      size: 180px 46px
+      color: #fff
+      background: #3B5998
+      margin: auto
+      padding: 0
+      list-style: none
+
+      li
+        font-size: 20px
+        cursor: pointer
+        width: 60px
+        margin: 0
+        padding: 12px 0
+        text-align: center
+        float: left
+        display: block
+        height: 22px
+        position: relative
+        z-index: 2
+        box-sizing: content-box
+        transition()
+
+        &:hover
+          color: rgba(0,0,0,.5)
+
+      &:after
+        content: ''
+        display: block
+        size: 0
+        absolute: left 0 right 0
+        border-left: 20px solid transparent
+        border-right: 20px solid transparent
+
+    li[class*='twitter']
+      background: #6CDFEA
       padding: 12px 0
-      text-align: center
-      float: left
-      display: block
-      height: 22px
-      position: relative
-      z-index: 2
-      box-sizing: content-box
-      transition()
 
-      &:hover
-        color: rgba(0,0,0,.5)
-
-    &:after
-      content: ''
-      display: block
-      size: 0
-      absolute: left 0 right 0
-      margin: 35px auto
-      border-left: 20px solid transparent
-      border-right: 20px solid transparent
-      border-top: 20px solid #3B5998
-
-  li[class*='twitter']
-    background: #6CDFEA
-    padding: 12px 0
-
-  li[class*='gplus']
-    background: #E34429
-    padding: 12px 0
+    li[class*='gplus']
+      background: #E34429
+      padding: 12px 0
