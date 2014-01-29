@@ -50,7 +50,7 @@ $.fn.share = (opts) ->
     config.app_id = opts.app_id
     config.title  = opts.title
     config.image  = opts.image
-    config.flyout = opts.flyout || 'center'
+    config.flyout = opts.flyout || 'top center'
 
     ## UI Configurations
 
