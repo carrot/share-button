@@ -37,35 +37,61 @@
 
     &.active
       opacity: 1
-      transform: scale(1) translateY(-90px)
       transition: all .4s ease
 
-    &.center
-      ul
-        &:after
-          margin: 35px auto
-          border-top: 20px solid #3B5998
-
-      &.active
+      // Arrow Offsets
+      &.center
         margin-left: -45px
 
-    &.left
-      ul
-        &:after
-          margin: 35px 0px 0px 129px
-          border-top: 20px solid #E34429
-
-      &.active
+      &.left
         margin-left: -115px
 
-    &.right
-      ul
-        &:after
-          margin: 35px 0px 0px 10px
-          border-top: 20px solid #6CDFEA
-
-      &.active
+      &.right
         margin-left: 10px
+
+      // Arrow x-positioning & colors
+      &.top
+        transform: scale(1) translateY(-90px)
+
+        &.center
+          ul
+            &:after
+              margin: 35px auto
+              border-top: 20px solid #3B5998
+
+        &.left
+          ul
+            &:after
+              margin: 35px 0px 0px 129px
+              border-top: 20px solid #E34429
+
+        &.right
+          ul
+            &:after
+              margin: 35px 0px 0px 10px
+              border-top: 20px solid #6CDFEA
+
+      &.bottom
+        transform: scale(1) translateY(45px)
+        margin-top: -14px
+
+        &.center
+          ul
+            &:after
+              margin: -10px auto
+              border-bottom: 20px solid #3B5998
+
+        &.left
+          ul
+            &:after
+              margin: -10px 0px 0px 129px
+              border-bottom: 20px solid #E34429
+
+        &.right
+          ul
+            &:after
+              margin: -10px 0px 0px 10px
+              border-bottom: 20px solid #6CDFEA
 
     ul
       relative: left 0 right 0
