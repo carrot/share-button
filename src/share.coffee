@@ -59,7 +59,10 @@ $.fn.share = (opts) ->
     config.button_color      = opts.color || '#333'
     config.button_background = opts.background || '#e1e1e1'
     config.button_icon       = opts.icon || 'export'
-    config.button_text       = opts.button_text || 'Share'
+    config.button_text       = if typeof(opts.button_text) is 'string'
+      opts.button_text
+    else
+      'Share'
 
     ## Network-Specific Configurations
 
