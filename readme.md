@@ -1,6 +1,8 @@
 Share
 =====
-Simple, light, flexible, and good-looking share button jquery plugin. Ermahgerd. [See it here](http://carrot.github.io/share-button/).
+Simple, light, flexible, and good-looking share button jquery plugin. Ermahgerd. [See it in action here](http://carrot.github.io/share-button/).
+
+<p align="center"><a><img src="http://cl.ly/Ti66/prev.jpg" /></a></p>
 
 ### Why Should You Use This?
 
