@@ -110,4 +110,4 @@ This project was inspired by [this dribbble shot](http://dribbble.com/shots/1072
 ### Contributing and License
 
 - Contributing Guidelines can be found [here](contributing.md)
-- Licenced uncer MIT - [details here](license.md)
+- Licenced under MIT - [details here](license.md)
