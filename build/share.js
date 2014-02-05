@@ -89,7 +89,7 @@ $.fn.share = function(opts) {
       return bubble.removeClass('active');
     };
     click_link = function() {
-      var link;
+      var link, popup;
       link = paths[$(this).data('network')];
       if (($(this).data('network') === 'facebook') && config.app_id) {
         if (!window.FB) {
@@ -105,7 +105,13 @@ $.fn.share = function(opts) {
           description: config.fb_text
         });
       } else {
-        window.open(link, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=350');
+        popup = {
+          width: 500,
+          height: 350
+        };
+        popup.top = (screen.height / 2) - (popup.height / 2);
+        popup.left = (screen.width / 2) - (popup.width / 2);
+        window.open(link, 'targetWindow', "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=" + popup.left + ",top=" + popup.top + ",width=" + popup.width + ",height=" + popup.height);
       }
       return false;
     };
