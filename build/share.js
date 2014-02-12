@@ -51,10 +51,10 @@ $.fn.share = function(opts) {
       config.app_id = config.app_id.toString();
     }
     config.protocol = opts.protocol || (['http', 'https'].indexOf(window.location.href.split(':')[0]) === -1 ? 'https://' : '//');
-    if (!$('link[href="https://www.sharebutton.co/fonts/entypo.css"]').length) {
+    if (!$('link[href="https://www.sharebutton.co/fonts/entypo.min.css"]').length) {
       $("<link />").attr({
         rel: "stylesheet",
-        href: "https://www.sharebutton.co/fonts/entypo.css"
+        href: "https://www.sharebutton.co/fonts/entypo.min.css"
       }).appendTo($("head"));
     }
     if (!$('link[href="' + config.protocol + 'fonts.googleapis.com/css?family=Lato:900"]').length) {

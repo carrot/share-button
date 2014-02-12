@@ -95,10 +95,13 @@ $.fn.share = (opts) ->
     # Inject Icons #
     ################
 
-    unless $('link[href="https://www.sharebutton.co/fonts/entypo.css"]').length
+    # Notes
+    # - Must be https:// due to CDN CORS caching issues
+    # - To include the full entypo set, change URL to: https://www.sharebutton.co/fonts/entypo.css
+    unless $('link[href="https://www.sharebutton.co/fonts/entypo.min.css"]').length
       $("<link />").attr(
         rel: "stylesheet"
-        href: "https://www.sharebutton.co/fonts/entypo.css" # Must be https:// due to CDN CORS caching issues
+        href: "https://www.sharebutton.co/fonts/entypo.min.css" # 
       ).appendTo $("head")
 
 
