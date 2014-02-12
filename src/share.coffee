@@ -88,16 +88,17 @@ $.fn.share = (opts) ->
     ## Correct Common Errors
     config.twitter_text = encodeURIComponent(config.twitter_text)
     config.app_id = config.app_id.toString() if typeof config.app_id == 'integer'
+    config.protocol = opts.protocol || if ['http', 'https'].indexOf(window.location.href.split(':')[0]) is -1 then 'https://' else '//'
 
 
     ################
     # Inject Icons #
     ################
 
-    unless $('link[href="http://weloveiconfonts.com/api/?family=entypo"]').length
+    unless $('link[href="https://www.sharebutton.co/fonts/entypo.css"]').length
       $("<link />").attr(
         rel: "stylesheet"
-        href: "http://weloveiconfonts.com/api/?family=entypo"
+        href: "https://www.sharebutton.co/fonts/entypo.css" # Must be https:// due to CDN CORS caching issues
       ).appendTo $("head")
 
 
@@ -105,10 +106,10 @@ $.fn.share = (opts) ->
     # Inject Fonts #
     ################
 
-    unless $('link[href="http://fonts.googleapis.com/css?family=Lato:900"]').length
+    unless $('link[href="'+config.protocol+'fonts.googleapis.com/css?family=Lato:900"]').length
       $("<link />").attr(
         rel: "stylesheet"
-        href: "http://fonts.googleapis.com/css?family=Lato:900"
+        href: "#{config.protocol}fonts.googleapis.com/css?family=Lato:900&text=#{config.button_text}"
       ).appendTo $("head")
 
 
@@ -133,8 +134,7 @@ $.fn.share = (opts) ->
     #######################
 
     if !window.FB && config.app_id && ($('#fb-root').length is 0)
-      protocol = if ['http', 'https'].indexOf(window.location.href.split(':')[0]) is -1 then 'https://' else '//'
-      $body.append("<div id='fb-root'></div><script>(function(a,b,c){var d,e=a.getElementsByTagName(b)[0];a.getElementById(c)||(d=a.createElement(b),d.id=c,d.src='#{protocol}connect.facebook.net/en_US/all.js#xfbml=1&appId=#{config.app_id}',e.parentNode.insertBefore(d,e))})(document,'script','facebook-jssdk');</script>")
+      $body.append("<div id='fb-root'></div><script>(function(a,b,c){var d,e=a.getElementsByTagName(b)[0];a.getElementById(c)||(d=a.createElement(b),d.id=c,d.src='#{config.protocol}connect.facebook.net/en_US/all.js#xfbml=1&appId=#{config.app_id}',e.parentNode.insertBefore(d,e))})(document,'script','facebook-jssdk');</script>")
 
     ###########################
     # Share URL Configuration #

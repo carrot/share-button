@@ -11,7 +11,7 @@ $.fn.share = function(opts) {
   $head = $('head');
   $body = $('body');
   return $(this).each(function(i, el) {
-    var $sharer, bubble, bubbles, click_link, close, config, open, parent, paths, protocol, set_opt, toggle,
+    var $sharer, bubble, bubbles, click_link, close, config, open, parent, paths, set_opt, toggle,
       _this = this;
     $sharer = $(this);
     $sharer.addClass("sharer-" + i);
@@ -50,16 +50,17 @@ $.fn.share = function(opts) {
     if (typeof config.app_id === 'integer') {
       config.app_id = config.app_id.toString();
     }
-    if (!$('link[href="http://weloveiconfonts.com/api/?family=entypo"]').length) {
+    config.protocol = opts.protocol || (['http', 'https'].indexOf(window.location.href.split(':')[0]) === -1 ? 'https://' : '//');
+    if (!$('link[href="https://www.sharebutton.co/fonts/entypo.css"]').length) {
       $("<link />").attr({
         rel: "stylesheet",
-        href: "http://weloveiconfonts.com/api/?family=entypo"
+        href: "https://www.sharebutton.co/fonts/entypo.css"
       }).appendTo($("head"));
     }
-    if (!$('link[href="http://fonts.googleapis.com/css?family=Lato:900"]').length) {
+    if (!$('link[href="' + config.protocol + 'fonts.googleapis.com/css?family=Lato:900"]').length) {
       $("<link />").attr({
         rel: "stylesheet",
-        href: "http://fonts.googleapis.com/css?family=Lato:900"
+        href: "" + config.protocol + "fonts.googleapis.com/css?family=Lato:900&text=" + config.button_text
       }).appendTo($("head"));
     }
     if (!$("meta[name='sharer" + config.selector + "']").length) {
@@ -67,8 +68,7 @@ $.fn.share = function(opts) {
     }
     $(this).html("<label class='entypo-" + config.button_icon + "'><span>" + config.button_text + "</span></label><div class='social " + config.flyout + "'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='gplus'></li></ul></div>");
     if (!window.FB && config.app_id && ($('#fb-root').length === 0)) {
-      protocol = ['http', 'https'].indexOf(window.location.href.split(':')[0]) === -1 ? 'https://' : '//';
-      $body.append("<div id='fb-root'></div><script>(function(a,b,c){var d,e=a.getElementsByTagName(b)[0];a.getElementById(c)||(d=a.createElement(b),d.id=c,d.src='" + protocol + "connect.facebook.net/en_US/all.js#xfbml=1&appId=" + config.app_id + "',e.parentNode.insertBefore(d,e))})(document,'script','facebook-jssdk');</script>");
+      $body.append("<div id='fb-root'></div><script>(function(a,b,c){var d,e=a.getElementsByTagName(b)[0];a.getElementById(c)||(d=a.createElement(b),d.id=c,d.src='" + config.protocol + "connect.facebook.net/en_US/all.js#xfbml=1&appId=" + config.app_id + "',e.parentNode.insertBefore(d,e))})(document,'script','facebook-jssdk');</script>");
     }
     paths = {
       twitter: "http://twitter.com/intent/tweet?text=" + config.twitter_text + "&url=" + config.twitter_url,
