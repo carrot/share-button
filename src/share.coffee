@@ -98,10 +98,10 @@ $.fn.share = (opts) ->
     # Notes
     # - Must be https:// due to CDN CORS caching issues
     # - To include the full entypo set, change URL to: https://www.sharebutton.co/fonts/entypo.css
-    unless $('link[href="https://www.sharebutton.co/fonts/entypo.min.css"]').length
+    unless $('link[href="https://www.sharebutton.co/fonts/v2/entypo.min.css"]').length
       $("<link />").attr(
         rel: "stylesheet"
-        href: "https://www.sharebutton.co/fonts/entypo.min.css" # 
+        href: "https://www.sharebutton.co/fonts/v2/entypo.min.css" # 
       ).appendTo $("head")
 
 
