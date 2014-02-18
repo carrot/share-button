@@ -101,7 +101,7 @@ $.fn.share = (opts) ->
     unless $('link[href="https://www.sharebutton.co/fonts/v2/entypo.min.css"]').length
       $("<link />").attr(
         rel: "stylesheet"
-        href: "https://www.sharebutton.co/fonts/v2/entypo.min.css" # 
+        href: "https://www.sharebutton.co/fonts/v2/entypo.min.css"
       ).appendTo $("head")
 
 
@@ -179,7 +179,7 @@ $.fn.share = (opts) ->
           caption: config.fb_caption
           description: config.fb_text
       else
-        popup = 
+        popup =
           width: 500
           height: 350
 
