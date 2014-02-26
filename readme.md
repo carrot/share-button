@@ -103,6 +103,23 @@ share.self;     // returns an instance of the jquery object it was called on (fo
 
 This will likely become more powerful down the line as this project continues to be developed - open an issue if there's anything you wish the api would have.
 
+### Fonts ###
+
+#### Entypo ###
+
+[Version 1](https://www.sharebutton.co/fonts/entypo.zip)
+
+Includes:
+- full font set
+- full css file containing all font mappings
+- minimized css file containing only necessary font mappings
+
+[Version 2](https://www.sharebutton.co/fonts/v2/entypo.zip)
+
+Includes:
+- minimized font set containing only necessary font glyphs
+- minimized css file containing only necessary font mappings
+
 ### Inspiration
 
 This project was inspired by [this dribbble shot](http://dribbble.com/shots/1072278) and [this cssdeck experiment](http://cssdeck.com/labs/css-social-share-button) - huge props to these two guys for some incredible ideas and work.
