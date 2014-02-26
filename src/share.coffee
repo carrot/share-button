@@ -18,6 +18,7 @@ $.fn.share = (opts) ->
   $head = $('head')
   $body = $('body')
 
+
   #########################
   # Iterate over elements #
   #########################
@@ -47,13 +48,14 @@ $.fn.share = (opts) ->
 
     ## Basic Configurations
 
-    config.url    = opts.url || window.location.href
-    config.text   = opts.text || $('meta[name=description]').attr('content') || ''
-    config.app_id = opts.app_id
-    config.title  = opts.title
-    config.image  = opts.image
-    config.flyout = opts.flyout || 'top center'
-
+    config.url        = opts.url || window.location.href
+    config.text       = opts.text || $('meta[name=description]').attr('content') || ''
+    config.app_id     = opts.app_id
+    config.title      = opts.title
+    config.image      = opts.image
+    config.flyout     = opts.flyout || 'top center'
+    config.text_font  = if typeof(opts.text_font) is 'boolean' then opts.text_font else true
+ 
     ## UI Configurations
 
     config.button_color      = opts.color || '#333'
@@ -105,17 +107,6 @@ $.fn.share = (opts) ->
       ).appendTo $("head")
 
 
-    ################
-    # Inject Fonts #
-    ################
-
-    unless $('link[href="'+config.protocol+'fonts.googleapis.com/css?family=Lato:900"]').length
-      $("<link />").attr(
-        rel: "stylesheet"
-        href: "#{config.protocol}fonts.googleapis.com/css?family=Lato:900&text=#{config.button_text}"
-      ).appendTo $("head")
-
-
     ##############
     # Inject CSS #
     ##############
@@ -124,6 +115,17 @@ $.fn.share = (opts) ->
       $('head').append(getStyles(config))
                .append("<meta name='sharer#{config.selector}'>")
 
+
+    ################
+    # Inject Fonts #
+    ################
+    
+    if config.text_font
+      unless $('link[href="'+config.protocol+'fonts.googleapis.com/css?family=Lato:900"]').length
+        $("<link />").attr(
+          rel: "stylesheet"
+          href: "#{config.protocol}fonts.googleapis.com/css?family=Lato:900&text=#{config.button_text}"
+        ).appendTo $("head")
 
     ###############
     # Inject HTML #

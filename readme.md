@@ -41,6 +41,7 @@ You can pass an options object when you call `share` on an element to make thing
 **icon**: change the icon to the left. choose from [this set](http://weloveiconfonts.com/#entypo), _default: `export`_    
 **button_text**: change the text of the button, _default: `Share`_    
 **flyout**: change the flyout direction of the shares. chose from `top left`, `top center`, `top right`, `bottom left`, `bottom right`, or `bottom center`. _default: `top center`_
+**text_font**: include the Lato font set from the Google Fonts API. _default: `true`_
 
 **Example:**
 
@@ -80,6 +81,7 @@ $('.element').share({
   url: 'http://www.youtube.com/watch?v=oHg5SJYRHA0',
   text: 'check out this awesome video guys!',
   flyout: 'top center',
+  text_font: true,
   twitter: {
     text: 'peep this great video #great #video #hashtag'
   }
