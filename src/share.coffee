@@ -49,13 +49,13 @@ $.fn.share = (opts) ->
     ## Basic Configurations
 
     config.url        = opts.url || window.location.href
-    config.text       = opts.text || $('meta[name=description]').attr('content') || ''
+    config.text       = opts.text || $('meta[property="og:description"]').attr('content') || $('meta[name="twitter:description"]').attr('content') || $('meta[name="description"]').attr('content') || ''
+    config.title      = opts.title || $('meta[property="og:title"]').attr('content') || $('meta[name="twitter:title"]').attr('content')
+    config.image      = opts.image || $('meta[property="og:image"]').attr('content') || $('meta[name="twitter:image"]').attr('content')
     config.app_id     = opts.app_id
-    config.title      = opts.title
-    config.image      = opts.image
     config.flyout     = opts.flyout || 'top center'
     config.text_font  = if typeof(opts.text_font) is 'boolean' then opts.text_font else true
- 
+
     ## UI Configurations
 
     config.button_color      = opts.color || '#333'
@@ -119,7 +119,7 @@ $.fn.share = (opts) ->
     ################
     # Inject Fonts #
     ################
-    
+
     if config.text_font
       unless $('link[href="'+config.protocol+'fonts.googleapis.com/css?family=Lato:900"]').length
         $("<link />").attr(
