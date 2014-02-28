@@ -13,7 +13,8 @@ If you are opening an issue to suggest a feature, that's totally fine, although 
 ### Getting Set Up
 
 - Clone the project down
-- Make sure [nodejs](http://nodejs.org) has been installed and is above version `0.10.x`
+- Install [nodejs](http://nodejs.org) (version 0.10.x and up) and [CoffeeScript](http://coffeescript.org/#installation)
+- *Windows users only:* Install [Python](https://wiki.python.org/moin/BeginnersGuide/Download) (version 2.x.x) and set up [environment path](http://stackoverflow.com/a/6318188/1308734).
 - Run `npm install`
 - Make changes to the files in the `src` folder
 - Run `cake build` to build the js files into `dist` one time
