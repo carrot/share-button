@@ -1,13 +1,24 @@
 {
   "name": "share-button",
-  "version": "0.0.5",
-  "author": "Jeff Escalante <hello@jenius.me>",
   "description": "fast, beautiful, and painless social shares",
+  "version": "0.1.0",
+  "homepage": "http://sharebutton.co",
+  "bugs": {
+    "url": "https://github.com/carrot/share-button/issues"
+  },
+  "author": "Jeff Escalante <hello@jenius.me>",
+  "contributors": [
+    {
+      "name": "Tom Milewski",
+      "email": "tmilewski@gmail.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/carrot/share-button"
   },
   "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
     "mocha": "*",
     "should": "*",
@@ -20,11 +31,16 @@
     "clean-css": "2.x.x",
     "coffee-script": "1.x.x",
     "uglifyjs": "2.x.x",
-    "node-uuid": "1.x.x",
     "colors": "0.6.x",
-    "monocle": "1.x.x"
+    "monocle": "1.x.x",
+    "umd": "~2.0.0"
   },
   "scripts": {
     "test": "mocha test"
-  }
+  },
+  "keywords": [
+    "share", 
+    "social"
+  ],
+  "engines": {}
 }

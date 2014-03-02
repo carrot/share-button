@@ -13,21 +13,18 @@
   <meta name='og:image' content='http://carrot.is/img/fb-share.jpg'>
 </head>
 <body>
-  <a class='fork' href="https://github.com/carrot/share-button"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://www.sharebutton.co/images/fork-me.png" alt="Fork me on GitHub"></a>
-  <div class='share-button share-button-top'></div>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js'></script>
+  <a class='fork' href="https://github.com/carrot/share-button">
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://www.sharebutton.co/images/fork-me.png" alt="Fork me on GitHub">
+  </a>
+  <div id="share-button-top" class='share-button share-button-top'></div>
   <script src='build/share.js'></script>
   <script>
-    $(function(){
-      $('.share-button').share({
-        title: 'Share Button Test',
-        image: 'http://carrot.is/img/fb-share.jpg',
-        app_id: '602752456409826',
-        background: 'rgba(255,255,255,.5)',
-        color: '#3B2B45',
-        flyout: 'top center',
-        text_font: true
-      });
+    var share = new Share("#share-button-top", {
+      networks: {
+        facebook: {
+          app_id: "602752456409826",
+        }
+      }
     });
   </script>
 </body>

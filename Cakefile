@@ -7,8 +7,8 @@ accord = require 'accord'
 stylus = accord.load('stylus')
 axis = require 'axis-css'
 autoprefixer = require 'autoprefixer-stylus'
-uuid = require 'node-uuid'
 monocle = require 'monocle'
+umd = require 'umd'
 
 # tasks
 
@@ -39,9 +39,9 @@ task 'watch', 'rebuild on change in src folder', ->
 # logic
 
 class Builder
-
   constructor: ->
-    @js_path = path.join(__dirname, 'src/share.coffee')
+    @utils_js_path = path.join(__dirname, 'src/share_utils.coffee')
+    @share_js_path = path.join(__dirname, 'src/share.coffee')
     @css_path = path.join(__dirname, 'src/styles.styl')
 
   build: (opts) ->
@@ -49,35 +49,37 @@ class Builder
     @compile_css().then(@compile_js.bind(@))
 
   compile_css: (opts) ->
-    tokens = set_tokens(['selector', 'button_color', 'button_background'])
+    tokens = ['config.selector', "config.ui.button_color", "config.ui.button_background"]
 
-    stylus.renderFile(@css_path, { use: [define_tokens(tokens), axis(), autoprefixer()] })
+    stylus.renderFile(@css_path, { use: [axis(), autoprefixer()] })
       .then((css) ->
           accord.load('minify-css').render(css).then (css) ->
-            return "<style>#{replace_tokens(css, tokens)}</style>"
+            return replace_tokens(css, tokens)
       ).then (css) ->
         "function getStyles(config){ return \"#{css}\"};"
 
   compile_js: (css) ->
-    accord.load('coffee-script').renderFile(@js_path, { bare: true })
-      .then (js) =>
-        if @opts.minify
-          accord.load('minify-js').render(js).then (js) ->
-            "!function(){#{css}#{js}}.call(this)"
-        else
-          return "!function(){#{css}#{js}}.call(this)"
+    cs = accord.load('coffee-script')
+    cs.renderFile(@utils_js_path, { bare: true })
+      .then (utils_js) =>
+        cs.renderFile(@share_js_path, { bare: true })
+          .then (share_js) =>
+            if @opts.minify
+              accord.load('minify-js').render("#{utils_js}#{share_js}").then (js) ->
+                "#{css}#{js}"
+            else
+              "#{css}#{utils_js}#{share_js}"
+          .then (out) ->
+            umd('Share', "#{out} return Share;")
+
 
   # 
   # @api private
   # 
   
-  set_tokens = (arr) ->
-    arr.reduce(((m,v) -> m[v] = uuid.v1(); m), {})
-
   replace_tokens = (res, tokens) ->
-    for k, v of tokens
-      res = res.replace(new RegExp(v, 'g'), "\"+config.#{k}+\"")
-    return res
+    for token in tokens
+      normalized_token = token.replace(/\./g, "-")
+      res = res.replace(new RegExp(normalized_token, 'g'), "\"+#{token}+\"")
 
-  define_tokens = (tokens) ->
-    return (style) -> style.define(k, v) for k, v of tokens
+    return res

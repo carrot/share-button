@@ -13,41 +13,51 @@
   <meta name='og:image' content='http://carrot.is/img/fb-share.jpg'>
 </head>
 <body>
-  <a class='fork' href="https://github.com/carrot/share-button"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://www.sharebutton.co/images/fork-me.png" alt="Fork me on GitHub"></a>
+  <a class='fork' href="https://github.com/carrot/share-button">
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://www.sharebutton.co/images/fork-me.png" alt="Fork me on GitHub">
+  </a>
   <div class='share-button share-button-top'></div>
   <div class='share-button share-button-left'></div>
   <div class='share-button share-button-bottom'></div>
   <div class='share-button share-button-bottom'></div>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js'></script>
   <script src='build/share.js'></script>
   <script>
-    $(function(){
-      $('.share-button-top').share({
-        title: 'Share Button Mutiple Element Test',
-        image: 'http://carrot.is/img/fb-share.jpg',
-        app_id: '602752456409826',
-        background: 'rgba(255,255,255,.5)',
-        color: '#3B2B45',
-        flyout: 'top center'
-      });
+    var share_button_top = new Share(".share-button-top", {
+      title: "Share Button Multiple Element Test",
+      ui: {
+        flyout: "top center"
+      },
+      networks: {
+        facebook: {
+          app_id: "602752456409826",
+        }
+      }
+    });
 
-      $('.share-button-left').share({
-        title: 'Share Button Multiple Instantiation Test',
-        image: 'http://carrot.is/img/fb-share.jpg',
-        app_id: '602752456409826',
-        background: 'rgba(255,255,255,.5)',
-        color: '#3B2B45',
-        flyout: 'bottom left'
-      });
+    var share_button_left = new Share(".share-button-left", {
+      title: "Share Button Multiple Instantiation Test",
+      ui: {
+        flyout: "top left",
+        button_text: "Left"
+      },
+      networks: {
+        facebook: {
+          app_id: "602752456409826",
+        }
+      }
+    });
 
-      $('.share-button-bottom').share({
-        title: 'Share Button Multiple Instantiation Test',
-        image: 'http://carrot.is/img/fb-share.jpg',
-        app_id: '602752456409826',
-        background: 'rgba(255,255,255,.5)',
-        color: '#3B2B45',
-        flyout: 'top right'
-      });
+    var share_button_right = new Share(".share-button-bottom", {
+      title: "Share Button Multiple Instantiation Test",
+      ui: {
+        flyout: "bottom right",
+        button_text: "Right"
+      },
+      networks: {
+        facebook: {
+          app_id: "602752456409826",
+        }
+      }
     });
   </script>
 </body>
