@@ -1,19 +1,8 @@
 Share
 =====
-Simple, light, flexible, and good-looking share button jquery plugin. Ermahgerd. [See it in action here](http://sharebutton.co/).
+Simple, light, flexible, and good-looking share button jquery plugin. Ermahgerd. [See it in action here](http://carrot.github.io/share-button/).
 
 <p align="center"><a><img src="http://cl.ly/Ti66/prev.jpg" /></a></p>
-
-
-```js
-new Share(".share-button", {
-  network: {
-    facebook: {
-      app_id: "abc123"
-    }
-  }
-});
-```
 
 ### Why Should You Use This?
 
@@ -28,100 +17,75 @@ Let's take a quick look at the alternative, using this little js plugin:
 
 1. It doesn't load any iframes or extra javascript and overall load time is tons faster.
 2. It looks simple and clean by default, and can be customized in any and every way.
-3. All you have to do to use it is include the script and call `new Share` on an empty div. That's two lines of code total, the script link and the share call.
+3. All you have to do to use it is include the script and call `.share()` on an empty div. That's two lines of code total, the script link and the share call.
 4. It's tiny and compact, expanding only when the user actually wants to share something.
 
 ### Setup
 
-1. [Download the script](https://github.com/carrot/share-button/releases/download/v0.0.6/share.min.js) and include it on your page.
+1. [Download the script](https://github.com/carrot/share-button/releases/download/v0.0.3/share.min.js) and include it on your page.
 2. Make an empty div on your page
-3. In your javascript, call `new Share('.element')`
+3. In your javascript, call `$('.element').share()`
 4. Pass options to the share call if you want (details below)
 5. Profit!
 
-### All Options
+### Options
 
-You can pass an options object when you call `Share` on an element to make things a little more flexible.
+You can pass an options object when you call `share` on an element to make things a little more flexible.
 
-```js
-config = {
-  protocol: // the protocol you'd prefer to use. [Default: your current protocol]
-  url: // the url you'd like to share. [Default: `window.location.href`]
-  title: // title to be shared alongside your link [Default: your page's meta description]
-  text: // text to be shared alongside your link, [Default: your page's meta description]   
-  image: // image to be shared [Default: your page's meta description]
-  ui: {
-    flyout: // change the flyout direction of the shares. chose from `top left`, `top center`, `top right`, `bottom left`, `bottom right`, or `bottom center` [Default: `top center`]
-    button_font: // include the Lato font set from the Google Fonts API. [Default: `true`]
-    button_text: // change the text of the button, [Default: `Share`]
-    button_icon: // change the icon to the left. choose from http://weloveiconfonts.com/#entypo) [Default: 'export']
-    button_background: // background color of the button [Default: #e1e1e1]
-    button_color: // text color of the button, [Default: #333]  
-  },
-  network: {
-    google_plus: {
-      enabled: // Enable Google+. [Default: true] (not yet implemented)
-      url: // the url you'd like to share to Google+ [Default: config.url]
-    },
-    twitter: {
-      enabled: // Enable Twitter. [Default: true] (not yet implemented)
-      url: // the url you'd like to share to Twitter [Default: config.url]
-      text: // text to be shared alongside your link to Twitter [Default: config.text]
-    },
-    facebook: {
-      enabled: // Enable Facebook. [Default: true] (not fully implemented)
-      url: // the url you'd like to share to Facebook [Default: config.url]
-      app_id: // Facebook app id for tracking shares. if provided, will use the facebook API
-      title: // title to be shared alongside your link to Facebook [Default: config.title]
-      caption: // caption to be shared alongside your link to Facebook [Default: null]
-      text: // text to be shared alongside your link to Facebook [Default: config.text]
-      image: // image to be shared to Facebook [Default: config.image]
-    }
-  }
-}
-```
-
-### Network Filter Options
-
-```js
-config = {
-  network: {
-    facebook: {
-      before: function() {
-        this.url   = "https://github.com/carrot/share-button";
-        this.text  = "Changing the Facebook Share Configurations";
-        return this
-      },
-      after: function() {
-        console.log("User shared:", this.url);
-      }
-    }
-  }
-}
-```
-
-
+**url**: the url you want to share. _default: `window.location.href`_    
+**text**: text to be tweeted alongside your link, _default: your page's meta description_    
+**image**: image to be shared (facebook-specific)    
+**app_id**: facebook app id for tracking shares. if provided, will use the facebook API    
+**background**: background color of the button, _default: `#e1e1e1`_    
+**color**: text color of the button, _default: '#333'_    
+**icon**: change the icon to the left. choose from [this set](http://weloveiconfonts.com/#entypo), _default: `export`_    
+**button_text**: change the text of the button, _default: `Share`_    
+**flyout**: change the flyout direction of the shares. chose from `top left`, `top center`, `top right`, `bottom left`, `bottom right`, or `bottom center`. _default: `top center`_
+**text_font**: include the Lato font set from the Google Fonts API. _default: `true`_
 
 **Example:**
 
 ```js
-new Share(".share-button-top", {
-  title: "Share Button",
-  network: {
-    facebook: {
-      app_id: "602752456409826",
-      before: function() {
-        console.log("BEFORE", this);
-        this.url   = "https://github.com/carrot/share-button";
-        this.text  = "Changing the Facebook Share Configurations";
-        return this
-      },
-      after: function() {
-        console.log("User shared:", this.url);
-      }
-    }
+$('.element').share({
+  url: 'http://www.youtube.com/watch?v=oHg5SJYRHA0',
+  text: 'check out this awesome video guys!'
+})
+```
+
+#### network-specific options
+If you pass an object called `twitter`, `facebook`, and/or `gplus` into the main options, you can get more granular with the share info, specifying different information for different networks. Example objects shown below, with all options specified:
+
+```js
+facebook: {
+  name: 'title'
+  link: 'url'
+  image: 'share image'
+  caption: 'picture caption'
+  text: 'short description'
+}
+
+twitter: {
+  text: 'tweet text'
+  link: 'url'
+}
+
+gplus: {
+  link: 'url'
+}
+```
+
+**Example:**
+
+```js
+$('.element').share({
+  url: 'http://www.youtube.com/watch?v=oHg5SJYRHA0',
+  text: 'check out this awesome video guys!',
+  flyout: 'top center',
+  text_font: true,
+  twitter: {
+    text: 'peep this great video #great #video #hashtag'
   }
-});
+})
 ```
 
 ### Public API
