@@ -1,8 +1,8 @@
 // dep: https://www.sharebutton.co/fonts/entypo.min.css
 // dep: http://fonts.googleapis.com/css?family=Lato:900 (if `text_font: true`)
 
-{ selector }
-  size: 90px 20px
+{ config-selector }
+  size: 91px 20px
 
   [class*='entypo-']:before
     font-family: 'entypo', sans-serif;
@@ -13,8 +13,8 @@
     margin: 0
     padding: 5px 10px
     border-radius: 5px
-    background: unquote(button_background)
-    color: unquote(button_color)
+    background: unquote(config-ui-button_background)
+    color: unquote(config-ui-button_color)
     transition()
 
     &:hover
@@ -135,3 +135,4 @@
     li[class*='gplus']
       background: #E34429
       padding: 12px 0
+
