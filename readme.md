@@ -46,36 +46,36 @@ You can pass an options object when you call `Share` on an element to make thing
 ```js
 config = {
   protocol: // the protocol you'd prefer to use. [Default: your current protocol]
-  url: // the url you'd like to share. [Default: `window.location.href`]
-  title: // title to be shared alongside your link [Default: your page's meta description]
-  text: // text to be shared alongside your link, [Default: your page's meta description]   
-  image: // image to be shared [Default: your page's meta description]
+  url:      // the url you'd like to share. [Default: `window.location.href`]
+  title:    // title to be shared alongside your link [Default: your page's meta description]
+  text:     // text to be shared alongside your link, [Default: your page's meta description]   
+  image:    // image to be shared [Default: your page's meta description]
   ui: {
-    flyout: // change the flyout direction of the shares. chose from `top left`, `top center`, `top right`, `bottom left`, `bottom right`, or `bottom center` [Default: `top center`]
-    button_font: // include the Lato font set from the Google Fonts API. [Default: `true`]
-    button_text: // change the text of the button, [Default: `Share`]
-    button_icon: // change the icon to the left. choose from http://weloveiconfonts.com/#entypo) [Default: 'export']
+    flyout:            // change the flyout direction of the shares. chose from `top left`, `top center`, `top right`, `bottom left`, `bottom right`, or `bottom center` [Default: `top center`]
+    button_font:       // include the Lato font set from the Google Fonts API. [Default: `true`]
+    button_text:       // change the text of the button, [Default: `Share`]
+    button_icon:       // change the icon to the left. choose from http://weloveiconfonts.com/#entypo) [Default: 'export']
     button_background: // background color of the button [Default: #e1e1e1]
-    button_color: // text color of the button, [Default: #333]  
+    button_color:      // text color of the button, [Default: #333]  
   },
   networks: {
     google_plus: {
       enabled: // Enable Google+. [Default: true] (not yet implemented)
-      url: // the url you'd like to share to Google+ [Default: config.url]
+      url:     // the url you'd like to share to Google+ [Default: config.url]
     },
     twitter: {
       enabled: // Enable Twitter. [Default: true] (not yet implemented)
-      url: // the url you'd like to share to Twitter [Default: config.url]
-      text: // text to be shared alongside your link to Twitter [Default: config.text]
+      url:     // the url you'd like to share to Twitter [Default: config.url]
+      text:    // text to be shared alongside your link to Twitter [Default: config.text]
     },
     facebook: {
-      enabled: // Enable Facebook. [Default: true] (not fully implemented)
-      url: // the url you'd like to share to Facebook [Default: config.url]
-      app_id: // Facebook app id for tracking shares. if provided, will use the facebook API
-      title: // title to be shared alongside your link to Facebook [Default: config.title]
-      caption: // caption to be shared alongside your link to Facebook [Default: null]
-      text: // text to be shared alongside your link to Facebook [Default: config.text]
-      image: // image to be shared to Facebook [Default: config.image]
+      enabled:  // Enable Facebook. [Default: true] (not fully implemented)
+      url:      // the url you'd like to share to Facebook [Default: config.url]
+      app_id:   // Facebook app id for tracking shares. if provided, will use the facebook API
+      title:    // title to be shared alongside your link to Facebook [Default: config.title]
+      caption:  // caption to be shared alongside your link to Facebook [Default: null]
+      text:     // text to be shared alongside your link to Facebook [Default: config.text]
+      image:    // image to be shared to Facebook [Default: config.image]
     }
   }
 }
