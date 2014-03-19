@@ -142,6 +142,7 @@ Share = (function(_super) {
         },
         facebook: {
           enabled: true,
+          load_sdk: true,
           url: null,
           app_id: null,
           title: null,
@@ -165,7 +166,7 @@ Share = (function(_super) {
     if (this.config.ui.button_font) {
       this.inject_fonts();
     }
-    if (this.config.networks.facebook.enabled) {
+    if (this.config.networks.facebook.enabled && this.config.networks.facebook.load_sdk) {
       this.inject_facebook_sdk();
     }
     for (index = _i = 0, _len = instances.length; _i < _len; index = ++_i) {
@@ -251,17 +252,21 @@ Share = (function(_super) {
   };
 
   Share.prototype.network_facebook = function() {
-    if (!window.FB) {
-      return console.error("The Facebook JS SDK hasn't loaded yet.");
+    if (this.config.networks.facebook.load_sdk) {
+      if (!window.FB) {
+        return console.error("The Facebook JS SDK hasn't loaded yet.");
+      }
+      return FB.ui({
+        method: 'feed',
+        name: this.config.networks.facebook.title,
+        link: this.config.networks.facebook.url,
+        picture: this.config.networks.facebook.image,
+        caption: this.config.networks.facebook.caption,
+        description: this.config.networks.facebook.description
+      });
+    } else {
+      return this.popup("https://www.facebook.com/sharer/sharer.php?u=" + this.config.networks.facebook.url);
     }
-    return FB.ui({
-      method: 'feed',
-      name: this.config.networks.facebook.title,
-      link: this.config.networks.facebook.url,
-      picture: this.config.networks.facebook.image,
-      caption: this.config.networks.facebook.caption,
-      description: this.config.networks.facebook.description
-    });
   };
 
   Share.prototype.network_twitter = function() {
@@ -372,6 +377,10 @@ Share = (function(_super) {
   Share.prototype.normalize_filter_config_updates = function(opts) {
     if (this.config.networks.facebook.app_id !== opts.app_id) {
       console.warn("You are unable to change the Facebook app_id after the button has been initialized. Please update your Facebook filters accordingly.");
+      delete opts.app_id;
+    }
+    if (this.config.networks.facebook.load_sdk !== opts.load_sdk) {
+      console.warn("You are unable to change the Facebook load_sdk option after the button has been initialized. Please update your Facebook filters accordingly.");
       delete opts.app_id;
     }
     return opts;

@@ -69,13 +69,16 @@ config = {
       text:    // text to be shared alongside your link to Twitter [Default: config.text]
     },
     facebook: {
-      enabled:  // Enable Facebook. [Default: true] (not fully implemented)
-      url:      // the url you'd like to share to Facebook [Default: config.url]
-      app_id:   // Facebook app id for tracking shares. if provided, will use the facebook API
-      title:    // title to be shared alongside your link to Facebook [Default: config.title]
-      caption:  // caption to be shared alongside your link to Facebook [Default: null]
-      text:     // text to be shared alongside your link to Facebook [Default: config.text]
-      image:    // image to be shared to Facebook [Default: config.image]
+      enabled: // Enable Facebook. [Default: true] (not fully implemented)
+      load_sdk: // Load the FB SDK. If false, it will default to Facebook's sharer.php implementation. 
+                // NOTE: This will disable the ability to dynamically set values and rely directly on applicable Open Graph tags.
+                // [Default: true]
+      url: // the url you'd like to share to Facebook [Default: config.url]
+      app_id: // Facebook app id for tracking shares. if provided, will use the facebook API
+      title: // title to be shared alongside your link to Facebook [Default: config.title]
+      caption: // caption to be shared alongside your link to Facebook [Default: null]
+      text: // text to be shared alongside your link to Facebook [Default: config.text]
+      image: // image to be shared to Facebook [Default: config.image]
     }
   }
 }

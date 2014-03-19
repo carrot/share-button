@@ -35,6 +35,7 @@ class Share extends ShareUtils
           text: null
         facebook:
           enabled: true
+          load_sdk: true
           url: null
           app_id: null
           title: null
@@ -64,7 +65,7 @@ class Share extends ShareUtils
     @inject_fonts() if @config.ui.button_font
 
     ## Inject Facebook JS SDK (if Facebook is enabled)
-    @inject_facebook_sdk() if @config.networks.facebook.enabled
+    @inject_facebook_sdk() if @config.networks.facebook.enabled and @config.networks.facebook.load_sdk
 
     ## Loop through and initialize each instance
     @setup_instance(element, index) for instance, index in instances
@@ -150,15 +151,18 @@ class Share extends ShareUtils
 
 
   network_facebook: ->
-    if not window.FB then return console.error "The Facebook JS SDK hasn't loaded yet."
+    if @config.networks.facebook.load_sdk
+      if not window.FB then return console.error "The Facebook JS SDK hasn't loaded yet."
 
-    FB.ui
-      method:       'feed',
-      name:         @config.networks.facebook.title
-      link:         @config.networks.facebook.url
-      picture:      @config.networks.facebook.image
-      caption:      @config.networks.facebook.caption
-      description:  @config.networks.facebook.description
+      FB.ui
+        method:       'feed',
+        name:         @config.networks.facebook.title
+        link:         @config.networks.facebook.url
+        picture:      @config.networks.facebook.image
+        caption:      @config.networks.facebook.caption
+        description:  @config.networks.facebook.description
+    else
+      @popup("https://www.facebook.com/sharer/sharer.php?u=#{@config.networks.facebook.url}")
 
   network_twitter: ->
     @popup("https://twitter.com/intent/tweet?text=#{@config.networks.twitter.text}&url=#{@config.networks.twitter.url}")
@@ -175,7 +179,7 @@ class Share extends ShareUtils
   # - Must be https:// due to CDN CORS caching issues
   # - To include the full entypo set, change URL to: https://www.sharebutton.co/fonts/entypo.css
   inject_icons: -> @inject_stylesheet("https://www.sharebutton.co/fonts/v2/entypo.min.css")
-  inject_fonts:  -> @inject_stylesheet("http://fonts.googleapis.com/css?family=Lato:900&text=#{@config.ui.button_text}")
+  inject_fonts: -> @inject_stylesheet("http://fonts.googleapis.com/css?family=Lato:900&text=#{@config.ui.button_text}")
 
   inject_stylesheet: (url) ->
     unless @el.head.querySelector("link[href=\"#{url}\"]")
@@ -257,6 +261,10 @@ class Share extends ShareUtils
   normalize_filter_config_updates: (opts) ->
     if @config.networks.facebook.app_id isnt opts.app_id
       console.warn "You are unable to change the Facebook app_id after the button has been initialized. Please update your Facebook filters accordingly."
+      delete opts.app_id
+
+    if @config.networks.facebook.load_sdk isnt opts.load_sdk
+      console.warn "You are unable to change the Facebook load_sdk option after the button has been initialized. Please update your Facebook filters accordingly."
       delete opts.app_id
 
     return opts
