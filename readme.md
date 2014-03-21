@@ -129,6 +129,24 @@ new Share(".share-button-top", {
 });
 ```
 
+On a page with multiple share buttons, you can use the `before` hook to dynamically set the share URL:
+
+```js
+new Share(".share-button", {
+  networks: {
+    facebook: {
+      before: function(element) {
+        this.url = element.getAttribute("data-url");
+        return this
+      },
+      after: function() {
+        console.log("User shared:", this.url);
+      }
+    }
+  }
+});
+```
+
 ### Public API
 
 The share button also returns a small api that can be used to control it down the line if you need to. Example shown below:
