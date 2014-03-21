@@ -65,7 +65,7 @@ class ShareUtils
   is_encoded: (str) ->
     decodeURIComponent(str) isnt str
 
-  popup: (url) ->
+  popup: (url, params = {}) ->
     popup =
       width:  500
       height: 350
@@ -73,4 +73,7 @@ class ShareUtils
     popup.top  = (screen.height/2) - (popup.height/2)
     popup.left = (screen.width/2)  - (popup.width/2)
 
-    window.open(url, 'targetWindow', "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=#{popup.left},top=#{popup.top},width=#{popup.width},height=#{popup.height}")
+    qs = (k+'='+encodeURIComponent(v) for k, v of params).join '&'
+    qs = '?'+qs if qs
+
+    window.open(url+qs, 'targetWindow', "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=#{popup.left},top=#{popup.top},width=#{popup.width},height=#{popup.height}")
