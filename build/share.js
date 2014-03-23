@@ -222,9 +222,9 @@ Share = (function(_super) {
   Share.prototype.event_network = function(instance, network) {
     var name;
     name = network.getAttribute("data-network");
-    this.hook("before", name);
+    this.hook("before", name, instance);
     this["network_" + name]();
-    return this.hook("after", name);
+    return this.hook("after", name, instance);
   };
 
   Share.prototype.open = function() {
@@ -330,11 +330,11 @@ Share = (function(_super) {
     }
   };
 
-  Share.prototype.hook = function(type, network) {
+  Share.prototype.hook = function(type, network, instance) {
     var fn, opts;
     fn = this.config.networks[network][type];
     if (typeof fn === "function") {
-      opts = fn.call(this.config.networks[network]);
+      opts = fn.call(this.config.networks[network], instance);
       if (opts !== void 0) {
         opts = this.normalize_filter_config_updates(opts);
         this.extend(this.config.networks[network], opts, true);
