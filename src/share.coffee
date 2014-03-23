@@ -124,9 +124,9 @@ class Share extends ShareUtils
 
   event_network: (instance, network) ->
     name = network.getAttribute("data-network")
-    @hook("before", name)
+    @hook("before", name, instance)
     @["network_#{name}"]()
-    @hook("after", name)
+    @hook("after", name, instance)
 
 
   ##############
@@ -228,11 +228,11 @@ class Share extends ShareUtils
   # HELPERS #
   ###########
 
-  hook: (type, network) ->
+  hook: (type, network, instance) ->
     fn = @config.networks[network][type]
 
     if typeof(fn) is "function"
-      opts = fn.call(@config.networks[network])
+      opts = fn.call(@config.networks[network], instance)
       unless opts is undefined
         opts = @normalize_filter_config_updates(opts)
 
