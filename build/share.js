@@ -87,15 +87,38 @@ ShareUtils = (function() {
     return decodeURIComponent(str) !== str;
   };
 
-  ShareUtils.prototype.popup = function(url) {
-    var popup;
+  ShareUtils.prototype.encode = function(str) {
+    if (this.is_encoded(str)) {
+      return str;
+    } else {
+      return encodeURIComponent(str);
+    }
+  };
+
+  ShareUtils.prototype.popup = function(url, params) {
+    var k, popup, qs, v;
+    if (params == null) {
+      params = {};
+    }
     popup = {
       width: 500,
       height: 350
     };
     popup.top = (screen.height / 2) - (popup.height / 2);
     popup.left = (screen.width / 2) - (popup.width / 2);
-    return window.open(url, 'targetWindow', "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=" + popup.left + ",top=" + popup.top + ",width=" + popup.width + ",height=" + popup.height);
+    qs = ((function() {
+      var _results;
+      _results = [];
+      for (k in params) {
+        v = params[k];
+        _results.push("" + k + "=" + (this.encode(v)));
+      }
+      return _results;
+    }).call(this)).join('&');
+    if (qs) {
+      qs = "?" + qs;
+    }
+    return window.open(url + qs, 'targetWindow', "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=" + popup.left + ",top=" + popup.top + ",width=" + popup.width + ",height=" + popup.height);
   };
 
   return ShareUtils;
@@ -265,16 +288,23 @@ Share = (function(_super) {
         description: this.config.networks.facebook.description
       });
     } else {
-      return this.popup("https://www.facebook.com/sharer/sharer.php?u=" + this.config.networks.facebook.url);
+      return this.popup('https://www.facebook.com/sharer/sharer.php', {
+        u: this.config.networks.facebook.url
+      });
     }
   };
 
   Share.prototype.network_twitter = function() {
-    return this.popup("https://twitter.com/intent/tweet?text=" + this.config.networks.twitter.text + "&url=" + this.config.networks.twitter.url);
+    return this.popup('https://twitter.com/intent/tweet', {
+      text: this.config.networks.twitter.text,
+      url: this.config.networks.twitter.url
+    });
   };
 
   Share.prototype.network_google_plus = function() {
-    return this.popup("https://plus.google.com/share?url=" + this.config.networks.google_plus.url);
+    return this.popup('https://plus.google.com/share', {
+      url: this.config.networks.google_plus.url
+    });
   };
 
   Share.prototype.inject_icons = function() {

@@ -162,13 +162,13 @@ class Share extends ShareUtils
         caption:      @config.networks.facebook.caption
         description:  @config.networks.facebook.description
     else
-      @popup("https://www.facebook.com/sharer/sharer.php?u=#{@config.networks.facebook.url}")
+      @popup('https://www.facebook.com/sharer/sharer.php', u: @config.networks.facebook.url)
 
   network_twitter: ->
-    @popup("https://twitter.com/intent/tweet?text=#{@config.networks.twitter.text}&url=#{@config.networks.twitter.url}")
+    @popup('https://twitter.com/intent/tweet', text: @config.networks.twitter.text, url: @config.networks.twitter.url)
 
   network_google_plus: ->
-    @popup("https://plus.google.com/share?url=#{@config.networks.google_plus.url}")
+    @popup('https://plus.google.com/share', url: @config.networks.google_plus.url)
 
 
   #############
