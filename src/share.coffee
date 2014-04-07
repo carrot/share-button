@@ -219,8 +219,9 @@ class Share extends ShareUtils
     if !window.FB && @config.networks.facebook.app_id && !@el.body.querySelector('#fb-root')
       script      = document.createElement("script")
       script.text = "window.fbAsyncInit=function(){FB.init({appId:'#{@config.networks.facebook.app_id}',status:true,xfbml:true})};(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n)){return}r=e.createElement(t);r.id=n;r.src='#{@config.protocol}connect.facebook.net/en_US/all.js';i.parentNode.insertBefore(r,i)})(document,'script','facebook-jssdk')"
-
-      @el.body.innerHTML += "<div id='fb-root'></div>"
+      fb_root     = document.createElement("div")
+      fb_root.id  = "fb-root"
+      @el.body.appendChild(fb_root)
       @el.body.appendChild(script)
 
 
