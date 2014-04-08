@@ -351,11 +351,13 @@ Share = (function(_super) {
   };
 
   Share.prototype.inject_facebook_sdk = function() {
-    var script;
+    var fb_root, script;
     if (!window.FB && this.config.networks.facebook.app_id && !this.el.body.querySelector('#fb-root')) {
       script = document.createElement("script");
       script.text = "window.fbAsyncInit=function(){FB.init({appId:'" + this.config.networks.facebook.app_id + "',status:true,xfbml:true})};(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n)){return}r=e.createElement(t);r.id=n;r.src='" + this.config.protocol + "connect.facebook.net/en_US/all.js';i.parentNode.insertBefore(r,i)})(document,'script','facebook-jssdk')";
-      this.el.body.innerHTML += "<div id='fb-root'></div>";
+      fb_root = document.createElement("div");
+      fb_root.id = "fb-root";
+      this.el.body.appendChild(fb_root);
       return this.el.body.appendChild(script);
     }
   };
