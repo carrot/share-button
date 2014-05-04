@@ -2,7 +2,7 @@ Share
 =====
 Simple, light, flexible, and good-looking share button jquery plugin. Ermahgerd. [See it in action here](http://sharebutton.co/).
 
-<p align="center"><a><img src="http://cl.ly/Ti66/prev.jpg" /></a></p>
+<p align="center"><a><img src="https://cloud.githubusercontent.com/assets/791818/2873934/f3e5415a-d3c7-11e3-9f08-9c82e5eba175.gif" /></a></p>
 
 
 ```js
