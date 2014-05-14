@@ -97,8 +97,6 @@ class Share extends ShareUtils
     button   = instance.getElementsByClassName("social")[0]
     networks = instance.getElementsByTagName('li')
 
-    @show(button)
-    
     ## Add listener to activate buttons
     label.addEventListener "click", => @event_toggle(button)
 
