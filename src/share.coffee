@@ -96,6 +96,8 @@ class Share extends ShareUtils
     label    = instance.getElementsByTagName("label")[0]
     button   = instance.getElementsByClassName("social")[0]
     networks = instance.getElementsByTagName('li')
+
+    @show(button)
     
     ## Add listener to activate buttons
     label.addEventListener "click", => @event_toggle(button)
@@ -119,7 +121,12 @@ class Share extends ShareUtils
     else
       @event_open(button)
 
-  event_open: (button)  -> @add_class(button, "active")
+  event_open: (button)  -> 
+    if @has_class(button, "load")
+      @remove_class(button, "load")
+
+    @add_class(button, "active")
+
   event_close: (button) -> @remove_class(button, "active")
 
   event_network: (instance, network) ->
@@ -213,7 +220,7 @@ class Share extends ShareUtils
       @el.head.appendChild(meta)
 
   inject_html: (instance) ->
-    instance.innerHTML = "<label class='entypo-#{@config.ui.button_icon}'><span>#{@config.ui.button_text}</span></label><div class='social #{@config.ui.flyout}'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='google_plus'></li></ul></div>"
+    instance.innerHTML = "<label class='entypo-#{@config.ui.button_icon}'><span>#{@config.ui.button_text}</span></label><div class='social load #{@config.ui.flyout}'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='google_plus'></li></ul></div>"
 
   inject_facebook_sdk: ->
     if !window.FB && @config.networks.facebook.app_id && !@el.body.querySelector('#fb-root')
