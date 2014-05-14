@@ -1,6 +1,6 @@
 Share
 =====
-Simple, light, flexible, and good-looking share button jquery plugin. Ermahgerd. [See it in action here](http://sharebutton.co/).
+Simple, light, flexible, and good-looking share button Javascript plugin. [See it in action here](http://sharebutton.co/).
 
 <p align="center"><a><img src="https://cloud.githubusercontent.com/assets/791818/2873934/f3e5415a-d3c7-11e3-9f08-9c82e5eba175.gif" /></a></p>
 
@@ -60,11 +60,11 @@ config = {
   },
   networks: {
     google_plus: {
-      enabled: // Enable Google+. [Default: true] (not yet implemented)
+      enabled: // Enable Google+. [Default: true] (toggle not yet implemented)
       url:     // the url you'd like to share to Google+ [Default: config.url]
     },
     twitter: {
-      enabled: // Enable Twitter. [Default: true] (not yet implemented)
+      enabled: // Enable Twitter. [Default: true] (toggle not yet implemented)
       url:     // the url you'd like to share to Twitter [Default: config.url]
       text:    // text to be shared alongside your link to Twitter [Default: config.text]
     },
