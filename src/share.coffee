@@ -256,6 +256,10 @@ class Share extends ShareUtils
           @config.networks[network][option] = @config[option]
 
   normalize_network_configuration: ->
+    ## Don't load FB SDK if FB app_id isn't present
+    unless @config.networks.facebook.app_id
+      @config.networks.facebook.load_sdk = false
+
     ## Encode Twitter text for URL
     unless @is_encoded(@config.networks.twitter.text)
       @config.networks.twitter.text = encodeURIComponent(@config.networks.twitter.text)

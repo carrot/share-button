@@ -401,6 +401,9 @@ Share = (function(_super) {
   };
 
   Share.prototype.normalize_network_configuration = function() {
+    if (!this.config.networks.facebook.app_id) {
+      this.config.networks.facebook.load_sdk = false;
+    }
     if (!this.is_encoded(this.config.networks.twitter.text)) {
       this.config.networks.twitter.text = encodeURIComponent(this.config.networks.twitter.text);
     }
