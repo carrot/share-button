@@ -45,37 +45,87 @@
     &.load
       transition: none !important
 
-    &.active
-      opacity: 1
-      transition: all .4s ease
+    ///////////////////////////////////////////////////
+    // Width & Margin based on # of networks enabled //
+    ///////////////////////////////////////////////////
+    &.right
+      margin-left: 15px
 
-      // Arrow Offsets
+    &.networks-1
+      &.center
+        margin-left: -5px
+
+      &.left
+        margin-left: -5px
+
+      ul
+        width: 60px
+    &.networks-2
+      &.center
+        margin-left: -13px
+
+      &.left
+        margin-left: -55px
+
+      ul
+        width: 120px
+
+    &.networks-3
+      &.center
+        margin-left: -45px
+
+      &.left
+        margin-left: -117px
+
+      ul
+        width: 180px
+
+    &.networks-4
+      &.center
+        margin-left: -75px
+
+      &.left
+        margin-left: -172px
+
+      ul  
+        width: 240px
+
+    &.networks-5
       &.center
         margin-left: -105px
 
       &.left
         margin-left: -250px
 
-      &.right
-        margin-left: 15px
+      ul
+        width: 300px
+
+    &.active
+      opacity: 1
+      transition: all .4s ease
 
       // Arrow x-positioning & colors
       &.top
         transform: scale(1) translateY(-90px)
         margin-top: 5px
 
+        ul
+          border-bottom: 1px solid #A29BAA
+
       &.bottom
         transform: scale(1) translateY(45px)
         margin-top: -25px
 
+        ul
+          border-top: 1px solid #A29BAA
+
     ul
       relative: left 0 right 0
-      size: 300px 46px
+      height: 46px
       color: #fff
       margin: auto
       padding: 0
       list-style: none
-      border-bottom: 1px solid #A29BAA
 
       li
         font-size: 20px
@@ -85,7 +135,7 @@
         padding: 12px 0
         text-align: center
         float: left
-        display: block
+        display: none
         height: 22px
         position: relative
         z-index: 2
@@ -105,15 +155,20 @@
 
     li[class*='facebook']
       background: #3B5998
+      display: unquote(config-networks-facebook-display)
 
     li[class*='twitter']
       background: #6CDFEA
+      display: unquote(config-networks-twitter-display)
 
     li[class*='gplus']
       background: #E34429
+      display: unquote(config-networks-google_plus-display)
 
     li[class*='pinterest']
       background: #C5282F
+      display: unquote(config-networks-pinterest-display)
  
     li[class*='paper-plane']
       background: #42C5B0
+      display: unquote(config-networks-email-display)

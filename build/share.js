@@ -1,5 +1,5 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Share=e()}}(function(){var define,module,exports;
-function getStyles(config){ return ""+config.selector+"{width:92px;height:20px;-webkit-touch-callout:none;-khtml-user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}"+config.selector+" [class*=entypo-]:before{font-family:entypo,sans-serif}"+config.selector+" label{font-size:16px;cursor:pointer;margin:0;padding:5px 10px;border-radius:5px;background:"+config.ui.button_background+";color:"+config.ui.button_color+";-webkit-transition:all .3s ease;transition:all .3s ease}"+config.selector+" label:hover{opacity:.8}"+config.selector+" label span{text-transform:uppercase;font-size:.9em;font-family:Lato,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;padding-left:6px}"+config.selector+" .social{-webkit-transform-origin:50% 0;-ms-transform-origin:50% 0;transform-origin:50% 0;-webkit-transform:scale(0) translateY(-190px);-ms-transform:scale(0) translateY(-190px);transform:scale(0) translateY(-190px);opacity:0;-webkit-transition:all .4s ease;transition:all .4s ease;margin-left:-15px}"+config.selector+" .social.load{-webkit-transition:none!important;transition:none!important}"+config.selector+" .social.active{opacity:1;-webkit-transition:all .4s ease;transition:all .4s ease}"+config.selector+" .social.active.center{margin-left:-105px}"+config.selector+" .social.active.left{margin-left:-250px}"+config.selector+" .social.active.right{margin-left:15px}"+config.selector+" .social.active.top{-webkit-transform:scale(1) translateY(-90px);-ms-transform:scale(1) translateY(-90px);transform:scale(1) translateY(-90px);margin-top:5px}"+config.selector+" .social.active.bottom{-webkit-transform:scale(1) translateY(45px);-ms-transform:scale(1) translateY(45px);transform:scale(1) translateY(45px);margin-top:-25px}"+config.selector+" .social ul{position:relative;left:0;right:0;width:300px;height:46px;color:#fff;margin:auto;padding:0;list-style:none;border-bottom:1px solid #a29baa}"+config.selector+" .social ul li{font-size:20px;cursor:pointer;width:60px;margin:0;padding:12px 0;text-align:center;float:left;display:block;height:22px;position:relative;z-index:2;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;-webkit-transition:all .3s ease;transition:all .3s ease}"+config.selector+" .social ul li:hover{color:rgba(0,0,0,.5)}"+config.selector+" .social ul:after{content:'';display:block;width:0;height:0;position:absolute;left:0;right:0;border-left:20px solid transparent;border-right:20px solid transparent}"+config.selector+" .social li[class*=facebook]{background:#3b5998}"+config.selector+" .social li[class*=twitter]{background:#6cdfea}"+config.selector+" .social li[class*=gplus]{background:#e34429}"+config.selector+" .social li[class*=pinterest]{background:#c5282f}"+config.selector+" .social li[class*=paper-plane]{background:#42c5b0}"};var ShareUtils;
+function getStyles(config){ return ""+config.selector+"{width:92px;height:20px;-webkit-touch-callout:none;-khtml-user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}"+config.selector+" [class*=entypo-]:before{font-family:entypo,sans-serif}"+config.selector+" label{font-size:16px;cursor:pointer;margin:0;padding:5px 10px;border-radius:5px;background:"+config.ui.button_background+";color:"+config.ui.button_color+";-webkit-transition:all .3s ease;transition:all .3s ease}"+config.selector+" label:hover{opacity:.8}"+config.selector+" label span{text-transform:uppercase;font-size:.9em;font-family:Lato,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;padding-left:6px}"+config.selector+" .social{-webkit-transform-origin:50% 0;-ms-transform-origin:50% 0;transform-origin:50% 0;-webkit-transform:scale(0) translateY(-190px);-ms-transform:scale(0) translateY(-190px);transform:scale(0) translateY(-190px);opacity:0;-webkit-transition:all .4s ease;transition:all .4s ease;margin-left:-15px}"+config.selector+" .social.load{-webkit-transition:none!important;transition:none!important}"+config.selector+" .social.right{margin-left:15px}"+config.selector+" .social.networks-1.center,"+config.selector+" .social.networks-1.left{margin-left:-5px}"+config.selector+" .social.networks-1 ul{width:60px}"+config.selector+" .social.networks-2.center{margin-left:-13px}"+config.selector+" .social.networks-2.left{margin-left:-55px}"+config.selector+" .social.networks-2 ul{width:120px}"+config.selector+" .social.networks-3.center{margin-left:-45px}"+config.selector+" .social.networks-3.left{margin-left:-117px}"+config.selector+" .social.networks-3 ul{width:180px}"+config.selector+" .social.networks-4.center{margin-left:-75px}"+config.selector+" .social.networks-4.left{margin-left:-172px}"+config.selector+" .social.networks-4 ul{width:240px}"+config.selector+" .social.networks-5.center{margin-left:-105px}"+config.selector+" .social.networks-5.left{margin-left:-250px}"+config.selector+" .social.networks-5 ul{width:300px}"+config.selector+" .social.active{opacity:1;-webkit-transition:all .4s ease;transition:all .4s ease}"+config.selector+" .social.active.top{-webkit-transform:scale(1) translateY(-90px);-ms-transform:scale(1) translateY(-90px);transform:scale(1) translateY(-90px);margin-top:5px}"+config.selector+" .social.active.top ul{border-bottom:1px solid #a29baa}"+config.selector+" .social.active.bottom{-webkit-transform:scale(1) translateY(45px);-ms-transform:scale(1) translateY(45px);transform:scale(1) translateY(45px);margin-top:-25px}"+config.selector+" .social.active.bottom ul{border-top:1px solid #a29baa}"+config.selector+" .social ul{position:relative;left:0;right:0;height:46px;color:#fff;margin:auto;padding:0;list-style:none}"+config.selector+" .social ul li{font-size:20px;cursor:pointer;width:60px;margin:0;padding:12px 0;text-align:center;float:left;display:none;height:22px;position:relative;z-index:2;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;-webkit-transition:all .3s ease;transition:all .3s ease}"+config.selector+" .social ul li:hover{color:rgba(0,0,0,.5)}"+config.selector+" .social ul:after{content:'';display:block;width:0;height:0;position:absolute;left:0;right:0;border-left:20px solid transparent;border-right:20px solid transparent}"+config.selector+" .social li[class*=facebook]{background:#3b5998;display:"+config.networks.facebook.display+"}"+config.selector+" .social li[class*=twitter]{background:#6cdfea;display:"+config.networks.twitter.display+"}"+config.selector+" .social li[class*=gplus]{background:#e34429;display:"+config.networks.google_plus.display+"}"+config.selector+" .social li[class*=pinterest]{background:#c5282f;display:"+config.networks.pinterest.display+"}"+config.selector+" .social li[class*=paper-plane]{background:#42c5b0;display:"+config.networks.email.display+"}"};var ShareUtils;
 
 if ((!("classList" in document.documentElement)) && Object.defineProperty && typeof HTMLElement !== "undefined") {
   Object.defineProperty(HTMLElement.prototype, "classList", {
@@ -139,6 +139,7 @@ Share = (function(_super) {
       body: document.getElementsByTagName('body')[0]
     };
     this.config = {
+      enabled_networks: 0,
       protocol: ['http', 'https'].indexOf(window.location.href.split(':')[0]) === -1 ? 'https://' : '//',
       url: window.location.href,
       caption: null,
@@ -223,6 +224,7 @@ Share = (function(_super) {
     label = instance.getElementsByTagName("label")[0];
     button = instance.getElementsByClassName("social")[0];
     networks = instance.getElementsByTagName('li');
+    this.add_class(button, "networks-" + this.config.enabled_networks);
     label.addEventListener("click", function() {
       return _this.event_toggle(button);
     });
@@ -406,23 +408,23 @@ Share = (function(_super) {
   };
 
   Share.prototype.set_global_configuration = function() {
-    var network, option, options, _ref, _results;
+    var display, network, option, options, _ref, _results;
     _ref = this.config.networks;
     _results = [];
     for (network in _ref) {
       options = _ref[network];
-      _results.push((function() {
-        var _results1;
-        _results1 = [];
-        for (option in options) {
-          if (this.config.networks[network][option] == null) {
-            _results1.push(this.config.networks[network][option] = this.config[option]);
-          } else {
-            _results1.push(void 0);
-          }
+      for (option in options) {
+        if (this.config.networks[network][option] == null) {
+          this.config.networks[network][option] = this.config[option];
         }
-        return _results1;
-      }).call(this));
+      }
+      if (this.config.networks[network].enabled) {
+        display = 'block';
+        this.config.enabled_networks += 1;
+      } else {
+        display = 'none';
+      }
+      _results.push(this.config.networks[network].display = display);
     }
     return _results;
   };

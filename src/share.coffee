@@ -5,6 +5,7 @@ class Share extends ShareUtils
       body: document.getElementsByTagName('body')[0]
 
     @config =
+      enabled_networks: 0
       protocol: if ['http', 'https'].indexOf(window.location.href.split(':')[0]) is -1 then 'https://' else '//'
       url: window.location.href
       caption: null
@@ -107,6 +108,8 @@ class Share extends ShareUtils
     label    = instance.getElementsByTagName("label")[0]
     button   = instance.getElementsByClassName("social")[0]
     networks = instance.getElementsByTagName('li')
+
+    @add_class(button, "networks-#{@config.enabled_networks}")
 
     ## Add listener to activate buttons
     label.addEventListener "click", => @event_toggle(button)
@@ -267,10 +270,19 @@ class Share extends ShareUtils
     ## Update network-specific configuration with global configurations
     for network, options of @config.networks
       for option of options
-        #if @config.networks[network][option] is null
         unless @config.networks[network][option]?
           @config.networks[network][option] = @config[option]
 
+      ## Check for enabled networks and display them
+      if @config.networks[network].enabled
+        display = 'block'
+        @config.enabled_networks += 1
+      else
+        display = 'none'
+
+      @config.networks[network].display = display
+
+      
   normalize_network_configuration: ->
     ## Don't load FB SDK if FB app_id isn't present
     unless @config.networks.facebook.app_id

@@ -49,7 +49,16 @@ class Builder
     @compile_css().then(@compile_js.bind(@))
 
   compile_css: (opts) ->
-    tokens = ['config.selector', "config.ui.button_color", "config.ui.button_background"]
+    tokens = [
+      "config.selector",
+      "config.ui.button_color",
+      "config.ui.button_background",
+      "config.networks.pinterest.display",
+      "config.networks.twitter.display",
+      "config.networks.facebook.display",
+      "config.networks.google_plus.display",
+      "config.networks.email.display"
+    ]
 
     stylus.renderFile(@css_path, { use: [axis(), autoprefixer()] })
       .then((css) ->
