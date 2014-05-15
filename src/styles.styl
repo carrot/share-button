@@ -4,6 +4,13 @@
 { config-selector }
   size: 92px 20px
 
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
   [class*='entypo-']:before
     font-family: 'entypo', sans-serif;
 
@@ -44,66 +51,31 @@
 
       // Arrow Offsets
       &.center
-        margin-left: -45px
+        margin-left: -105px
 
       &.left
-        margin-left: -115px
+        margin-left: -250px
 
       &.right
-        margin-left: 10px
+        margin-left: 15px
 
       // Arrow x-positioning & colors
       &.top
         transform: scale(1) translateY(-90px)
-
-        &.center
-          ul
-            &:after
-              margin: 35px auto
-              border-top: 20px solid #3B5998
-
-        &.left
-          ul
-            &:after
-              margin: 35px 0px 0px 129px
-              border-top: 20px solid #E34429
-
-        &.right
-          ul
-            &:after
-              margin: 35px 0px 0px 10px
-              border-top: 20px solid #6CDFEA
+        margin-top: 5px
 
       &.bottom
         transform: scale(1) translateY(45px)
-        margin-top: -14px
-
-        &.center
-          ul
-            &:after
-              margin: -10px auto
-              border-bottom: 20px solid #3B5998
-
-        &.left
-          ul
-            &:after
-              margin: -10px 0px 0px 129px
-              border-bottom: 20px solid #E34429
-
-        &.right
-          ul
-            &:after
-              margin: -10px 0px 0px 10px
-              border-bottom: 20px solid #6CDFEA
+        margin-top: -25px
 
     ul
       relative: left 0 right 0
-      size: 180px 46px
+      size: 300px 46px
       color: #fff
-      background: #3B5998
       margin: auto
       padding: 0
       list-style: none
+      border-bottom: 1px solid #A29BAA
 
       li
         font-size: 20px
@@ -131,11 +103,17 @@
         border-left: 20px solid transparent
         border-right: 20px solid transparent
 
+    li[class*='facebook']
+      background: #3B5998
+
     li[class*='twitter']
       background: #6CDFEA
-      padding: 12px 0
 
     li[class*='gplus']
       background: #E34429
-      padding: 12px 0
 
+    li[class*='pinterest']
+      background: #C5282F
+ 
+    li[class*='paper-plane']
+      background: #42C5B0

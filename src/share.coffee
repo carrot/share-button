@@ -40,8 +40,19 @@ class Share extends ShareUtils
           app_id: null
           title: null
           caption: null
+          description: null
           text: null
           image: null
+        pinterest:
+          enabled: true
+          url: null
+          image: null
+          description: null
+        email:
+          enabled: true
+          subject: null
+          body: null
+
 
     @setup(element, options)
 
@@ -175,6 +186,11 @@ class Share extends ShareUtils
   network_google_plus: ->
     @popup('https://plus.google.com/share', url: @config.networks.google_plus.url)
 
+  network_pinterest: ->
+    @popup('https://www.pinterest.com/pin/create/button', url: @config.networks.pinterest.url, media: @config.networks.pinterest.image, description: @config.networks.pinterest.description)
+
+  network_email: ->
+    @popup('mailto:', subject: @config.networks.email.subject, body: @config.networks.email.body)
 
   #############
   # INJECTORS #
@@ -218,7 +234,7 @@ class Share extends ShareUtils
       @el.head.appendChild(meta)
 
   inject_html: (instance) ->
-    instance.innerHTML = "<label class='entypo-#{@config.ui.button_icon}'><span>#{@config.ui.button_text}</span></label><div class='social load #{@config.ui.flyout}'><ul><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='google_plus'></li></ul></div>"
+    instance.innerHTML = "<label class='entypo-#{@config.ui.button_icon}'><span>#{@config.ui.button_text}</span></label><div class='social load #{@config.ui.flyout}'><ul><li class='entypo-pinterest' data-network='pinterest'></li><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='google_plus'></li><li class='entypo-paper-plane' data-network='email'></li></ul></div>"
 
   inject_facebook_sdk: ->
     if !window.FB && @config.networks.facebook.app_id && !@el.body.querySelector('#fb-root')
