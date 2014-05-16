@@ -1,16 +1,6 @@
 # Share
 
-<p align="center"><a><img src="https://i.cloudup.com/RTIOZex9-i.gif" /></a></p>
-
-```js
-new Share(".share-button", {
-  networks: {
-    facebook: {
-      app_id: "abc123"
-    }
-  }
-});
-```
+<p align="center"><img src="https://i.cloudup.com/RTIOZex9-i.gif" /></p>
 
 ## An Introduction
 
@@ -40,6 +30,16 @@ Let's take a quick look at the alternative, using this little plugin:
 3. In your javascript, call `new Share('.element')`
 4. Pass options to the share call if you want (details below)
 5. Profit!
+
+```js
+new Share(".share-button", {
+  networks: {
+    facebook: {
+      app_id: "abc123"
+    }
+  }
+});
+```
 
 ---
 
