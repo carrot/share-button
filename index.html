@@ -8,15 +8,21 @@
     .share-button { margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
     .fork img { opacity: .6; -webkit-transition: all .5s ease; transition: all .5s ease; }
     .fork img:hover { opacity: 1; }
+    pre { display: block; margin: auto; position: absolute; top: 57%; left: 0; bottom: 0; right: 0; color: #839496; text-align: center; font-family: 'Source Code Pro'; font-size: 13px; }
+    pre span.class { color: #b58900; }
+    pre span.string { color: #2aa198; }
+    pre span.new { color: #859900; }
   </style>
   <meta name='description' content='A simple, light, flexible, and good-looking share button'>
   <meta name='og:image' content='http://carrot.is/img/fb-share.jpg'>
+  <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:700&text=new+Share(".share-button");' rel='stylesheet' type='text/css'>
 </head>
 <body>
   <a class='fork' href="https://github.com/carrot/share-button">
     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://www.sharebutton.co/images/fork-me.png" alt="Fork me on GitHub">
   </a>
   <div id="share-button-top" class='share-button share-button-top'></div>
+  <pre><span class="new">new</span> <span class="class">Share</span>(<span class="string">".share-button"</span>);</pre>
   <script src='build/share.js'></script>
   <script>
     var share = new Share("#share-button-top", {
