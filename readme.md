@@ -1,9 +1,6 @@
-Share
-=====
-Simple, light, flexible, and good-looking share button Javascript plugin. [See it in action here](http://sharebutton.co/).
+# Share
 
-<p align="center"><a><img src="https://cloud.githubusercontent.com/assets/791818/2873934/f3e5415a-d3c7-11e3-9f08-9c82e5eba175.gif" /></a></p>
-
+<p align="center"><a><img src="https://i.cloudup.com/RTIOZex9-i.gif" /></a></p>
 
 ```js
 new Share(".share-button", {
@@ -15,29 +12,36 @@ new Share(".share-button", {
 });
 ```
 
-### Why Should You Use This?
+## An Introduction
 
-All the major social networks have their own share buttons you can put on your page, but doing it like this sucks for a lot of reasons:
+Simple, light, flexible, and good-looking share button. [See it in action!](http://sharebutton.co/)
 
-1. They are slow-loading, and inject a lot of extra javascript onto your page that's not needed which makes your page slower.
-2. They don't look sexy and fit nicely with your site like you want, and you can't change how they look.
-3. Every time you need them, you have to google 'twitter share button' and 'facebook like button' and such and go through their interface and copy and paste code and this is repetitive and stupid. It also takes up a ton of space and looks messy in your code.
-4. The buttons themselves take up a lot of space (especially the facebook like button).
+#### Why Should You Use This?
 
-Let's take a quick look at the alternative, using this little js plugin:
+All major social networks have their own share widgets you can put on your page, but this isn't ideal for a variety of reasons:
 
-1. It doesn't load any iframes or extra javascript and overall load time is tons faster.
+1. They tend to be slow-loading.
+2. They inject extra javascript and DOM elements into your page making it slower.
+3. They generally aren't customizable enough to fit the design of your site.
+4. Mananging each provider's code snippets etc is repetitive and needless. Additionally, they can make your front-end code quite messy.
+5. The buttons themselves take up a lot of space (especially the Facebook share button).
+
+Let's take a quick look at the alternative, using this little plugin:
+
+1. It doesn't load any iframes or extra javascript making the overall load time much faster.
 2. It looks simple and clean by default, and can be customized in any and every way.
 3. All you have to do to use it is include the script and call `new Share` on an empty div. That's two lines of code total, the script link and the share call.
 4. It's tiny and compact, expanding only when the user actually wants to share something.
 
-### Setup
+## Getting Started
 
 1. [Download the script](https://github.com/carrot/share-button/releases/download/v0.1.3/share.min.js) and include it on your page.
 2. Make an empty div on your page
 3. In your javascript, call `new Share('.element')`
 4. Pass options to the share call if you want (details below)
 5. Profit!
+
+---
 
 ### All Options
 
