@@ -60,13 +60,7 @@ You are able to set `before` and `after` hooks when a user clicks a network. Thi
 The share button also returns a simple API that can be used to control it should you need to. Example shown below:
 
 ```js
-var share = new Share(".share-button", {
-  networks: {
-    facebook: {
-      app_id: "abc123"
-    }
-  }
-});
+var share = new Share(".share-button");
 
 share.toggle(); // toggles the share button popup
 share.open();   // open the share button popup
