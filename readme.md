@@ -41,119 +41,23 @@ new Share(".share-button", {
 });
 ```
 
----
+## Customization
 
-### All Options
+#### Configuration Options
 
-You can pass an options object when you call `Share` on an element to make things a little more flexible.
+The share button is extremely flexible. As such we provide the ability to pass a wide array of options for additional configuration. All configuration options are available here: [Configuration Options](https://github.com/carrot/share-button/wiki/Configuration-Options)
 
-```js
-config = {
-  protocol: // the protocol you'd prefer to use. [Default: your current protocol]
-  url:      // the url you'd like to share. [Default: `window.location.href`]
-  title:    // title to be shared alongside your link [Default: your page's meta description]
-  text:     // text to be shared alongside your link, [Default: your page's meta description]   
-  image:    // image to be shared [Default: your page's meta description]
-  ui: {
-    flyout:            // change the flyout direction of the shares. chose from `top left`, `top center`, `top right`, `bottom left`, `bottom right`, or `bottom center` [Default: `top center`]
-    button_font:       // include the Lato font set from the Google Fonts API. [Default: `true`]
-    button_text:       // change the text of the button, [Default: `Share`]
-    button_icon:       // change the icon to the left. choose from http://weloveiconfonts.com/#entypo) [Default: 'export']
-    button_background: // background color of the button [Default: #e1e1e1]
-    button_color:      // text color of the button, [Default: #333]  
-  },
-  networks: {
-    google_plus: {
-      enabled: // Enable Google+. [Default: true] (toggle not yet implemented)
-      url:     // the url you'd like to share to Google+ [Default: config.url]
-    },
-    twitter: {
-      enabled: // Enable Twitter. [Default: true] (toggle not yet implemented)
-      url:     // the url you'd like to share to Twitter [Default: config.url]
-      text:    // text to be shared alongside your link to Twitter [Default: config.text]
-    },
-    facebook: {
-      enabled: // Enable Facebook. [Default: true] (not fully implemented)
-      load_sdk: // Load the FB SDK. If false, it will default to Facebook's sharer.php implementation. 
-                // NOTE: This will disable the ability to dynamically set values and rely directly on applicable Open Graph tags.
-                // [Default: true]
-      url: // the url you'd like to share to Facebook [Default: config.url]
-      app_id: // Facebook app id for tracking shares. if provided, will use the facebook API
-      title: // title to be shared alongside your link to Facebook [Default: config.title]
-      caption: // caption to be shared alongside your link to Facebook [Default: null]
-      text: // text to be shared alongside your link to Facebook [Default: config.text]
-      image: // image to be shared to Facebook [Default: config.image]
-    }
-  }
-}
-```
+#### Styles
 
-### Network Hooks
+Additionally, you're able to customize the look and feel of the button and animations though CSS. All CSS styles and how to modify them are available here: [CSS Styles](https://github.com/carrot/share-button/wiki/CSS-Styles)
 
-You are now able to set `before` and `after` hooks when a user clicks a network. The context passed to the hook is the current network's configuration. To change any of the network's configuration before or after instantiating the share, you must alter the value and return `this` as shown in the examples below.
+#### Hooks
 
-```js
-config = {
-  networks: {
-    facebook: {
-      before: function() {
-        this.url   = "https://github.com/carrot/share-button";
-        this.text  = "Changing the Facebook Share Configurations";
-        return this
-      },
-      after: function() {
-        console.log("User shared:", this.url);
-      }
-    }
-  }
-}
-```
+You are able to set `before` and `after` hooks when a user clicks a network. This allows you to dynamically change attributes for that button. For more information: [click here](https://github.com/carrot/share-button/wiki/Network-Hooks)
 
+## Public API
 
-
-**Example:**
-
-```js
-new Share(".share-button-top", {
-  title: "Share Button",
-  networks: {
-    facebook: {
-      app_id: "602752456409826",
-      before: function() {
-        console.log("BEFORE", this);
-        this.url   = "https://github.com/carrot/share-button";
-        this.text  = "Changing the Facebook Share Configurations";
-        return this
-      },
-      after: function() {
-        console.log("User shared:", this.url);
-      }
-    }
-  }
-});
-```
-
-On a page with multiple share buttons, you can use the `before` hook to dynamically set the share URL:
-
-```js
-new Share(".share-button", {
-  networks: {
-    facebook: {
-      before: function(element) {
-        this.url = element.getAttribute("data-url");
-        return this
-      },
-      after: function() {
-        console.log("User shared:", this.url);
-      }
-    }
-  }
-});
-```
-
-### Public API
-
-The share button also returns a small api that can be used to control it down the line if you need to. Example shown below:
+The share button also returns a simple API that can be used to control it should you need to. Example shown below:
 
 ```js
 var share = new Share(".share-button", {
@@ -163,37 +67,24 @@ var share = new Share(".share-button", {
     }
   }
 });
+
 share.toggle(); // toggles the share button popup
 share.open();   // open the share button popup
 share.close();  // closes the share button popup
 share.config;   // exposes the configurations listed above
 ```
 
-This will likely become more powerful down the line as this project continues to be developed - open an issue if there's anything you wish the api would have.
+## Fonts
 
-### Fonts ###
+We utilize the fontset `Entypo` for all icon fonts. Additionally we provide hosting/delivery of a minimized version of the fontset through [Cloudflare](http://cloudflare.com).
 
-#### Entypo ###
+For more information and download links, please [click here](https://github.com/carrot/share-button/wiki/Fonts).
 
-[Version 1](https://www.sharebutton.co/fonts/entypo.zip)
-
-Includes:
-- full font set
-- full css file containing all font mappings
-- minimized css file containing only necessary font mappings
-
-[Version 2](https://www.sharebutton.co/fonts/v2/entypo.zip)
-
-Includes:
-- minimized font set containing only necessary font glyphs
-- minimized css file containing only necessary font mappings
-
-### Inspiration
+## Inspiration
 
 This project was inspired by [this dribbble shot](http://dribbble.com/shots/1072278) and [this cssdeck experiment](http://cssdeck.com/labs/css-social-share-button) - huge props to these two guys for some incredible ideas and work.
 
-### Contributing and License
+## Contributing and License
 
 - Contributing Guidelines can be found [here](contributing.md)
 - Licenced under MIT - [details here](license.md)
-
