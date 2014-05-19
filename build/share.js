@@ -143,9 +143,9 @@ Share = (function(_super) {
       protocol: ['http', 'https'].indexOf(window.location.href.split(':')[0]) === -1 ? 'https://' : '//',
       url: window.location.href,
       caption: null,
-      title: (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) ? content.getAttribute('content') : void 0,
+      title: (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) ? content.getAttribute('content') : (content = document.querySelector('title')) ? content.innerText : void 0,
       image: (content = document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]')) ? content.getAttribute('content') : void 0,
-      text: (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) ? content.getAttribute('content') : '',
+      description: (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) ? content.getAttribute('content') : '',
       ui: {
         flyout: 'top center',
         button_font: true,
@@ -162,7 +162,7 @@ Share = (function(_super) {
         twitter: {
           enabled: true,
           url: null,
-          text: null
+          description: null
         },
         facebook: {
           enabled: true,
@@ -172,7 +172,6 @@ Share = (function(_super) {
           title: null,
           caption: null,
           description: null,
-          text: null,
           image: null
         },
         pinterest: {
@@ -183,8 +182,8 @@ Share = (function(_super) {
         },
         email: {
           enabled: true,
-          subject: null,
-          body: null
+          title: null,
+          description: null
         }
       }
     };
@@ -313,7 +312,7 @@ Share = (function(_super) {
 
   Share.prototype.network_twitter = function() {
     return this.popup('https://twitter.com/intent/tweet', {
-      text: this.config.networks.twitter.text,
+      text: this.config.networks.twitter.description,
       url: this.config.networks.twitter.url
     });
   };
@@ -334,8 +333,8 @@ Share = (function(_super) {
 
   Share.prototype.network_email = function() {
     return this.popup('mailto:', {
-      subject: this.config.networks.email.subject,
-      body: this.config.networks.email.body
+      subject: this.config.networks.email.title,
+      body: this.config.networks.email.description
     });
   };
 
@@ -433,8 +432,8 @@ Share = (function(_super) {
     if (!this.config.networks.facebook.app_id) {
       this.config.networks.facebook.load_sdk = false;
     }
-    if (!this.is_encoded(this.config.networks.twitter.text)) {
-      this.config.networks.twitter.text = encodeURIComponent(this.config.networks.twitter.text);
+    if (!this.is_encoded(this.config.networks.twitter.description)) {
+      this.config.networks.twitter.description = encodeURIComponent(this.config.networks.twitter.description);
     }
     if (typeof this.config.networks.facebook.app_id === 'integer') {
       return this.config.networks.facebook.app_id = this.config.networks.facebook.app_id.toString();

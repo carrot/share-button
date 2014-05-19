@@ -9,11 +9,14 @@ class Share extends ShareUtils
       protocol: if ['http', 'https'].indexOf(window.location.href.split(':')[0]) is -1 then 'https://' else '//'
       url: window.location.href
       caption: null
-      title: if content = (document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]'))
-        content.getAttribute('content')
+      title:
+        if content = (document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]'))
+          content.getAttribute('content')
+        else if content = document.querySelector('title')
+          content.innerText
       image: if content = (document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]'))
         content.getAttribute('content')
-      text: if content = (document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') ||  document.querySelector('meta[name="description"]'))
+      description: if content = (document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') ||  document.querySelector('meta[name="description"]'))
         content.getAttribute('content')
       else
         ''
@@ -33,7 +36,7 @@ class Share extends ShareUtils
         twitter:
           enabled: true
           url: null
-          text: null
+          description: null # Text
         facebook:
           enabled: true
           load_sdk: true
@@ -42,7 +45,6 @@ class Share extends ShareUtils
           title: null
           caption: null
           description: null
-          text: null
           image: null
         pinterest:
           enabled: true
@@ -51,13 +53,14 @@ class Share extends ShareUtils
           description: null
         email:
           enabled: true
-          subject: null
-          body: null
+          title: null       # Subject
+          description: null # Body
 
 
     @setup(element, options)
 
     return @
+
 
   setup: (element, opts) ->
     ## Record all instances
@@ -184,7 +187,7 @@ class Share extends ShareUtils
       @popup('https://www.facebook.com/sharer/sharer.php', u: @config.networks.facebook.url)
 
   network_twitter: ->
-    @popup('https://twitter.com/intent/tweet', text: @config.networks.twitter.text, url: @config.networks.twitter.url)
+    @popup('https://twitter.com/intent/tweet', text: @config.networks.twitter.description, url: @config.networks.twitter.url)
 
   network_google_plus: ->
     @popup('https://plus.google.com/share', url: @config.networks.google_plus.url)
@@ -193,11 +196,13 @@ class Share extends ShareUtils
     @popup('https://www.pinterest.com/pin/create/button', url: @config.networks.pinterest.url, media: @config.networks.pinterest.image, description: @config.networks.pinterest.description)
 
   network_email: ->
-    @popup('mailto:', subject: @config.networks.email.subject, body: @config.networks.email.body)
+    @popup('mailto:', subject: @config.networks.email.title, body: @config.networks.email.description)
+
 
   #############
   # INJECTORS #
   #############
+
 
   # Notes
   # - Must be https:// due to CDN CORS caching issues
@@ -282,19 +287,20 @@ class Share extends ShareUtils
 
       @config.networks[network].display = display
 
-      
+  
   normalize_network_configuration: ->
     ## Don't load FB SDK if FB app_id isn't present
     unless @config.networks.facebook.app_id
       @config.networks.facebook.load_sdk = false
 
-    ## Encode Twitter text for URL
-    unless @is_encoded(@config.networks.twitter.text)
-      @config.networks.twitter.text = encodeURIComponent(@config.networks.twitter.text)
+    ## Encode Twitter description for URL
+    unless @is_encoded(@config.networks.twitter.description)
+      @config.networks.twitter.description = encodeURIComponent(@config.networks.twitter.description)
 
     ## Typecast Facebook app_id to a String
     if typeof(@config.networks.facebook.app_id) is 'integer'
       @config.networks.facebook.app_id = @config.networks.facebook.app_id.toString()
+
 
   normalize_filter_config_updates: (opts) ->
     if @config.networks.facebook.app_id isnt opts.app_id
