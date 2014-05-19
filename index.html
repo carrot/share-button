@@ -5,10 +5,10 @@
   <style>
     html { width: 100%; height: 100%; overflow: hidden; }
     body { -webkit-font-smoothing: antialiased;width: 100%; height: 100%;overflow: hidden;margin: 0; padding: 0;background: #4f3b5b;background: -moz-radial-gradient(center, ellipse cover,  #4f3b5b 0%, #231733 100%);background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#4f3b5b), color-stop(100%,#231733));background: -webkit-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: -o-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: -ms-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: radial-gradient(ellipse at center,  #4f3b5b 0%,#231733 100%);}
-    .share-button { margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; }
+    .share-button { margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 100; }
     .fork img { opacity: .6; -webkit-transition: all .5s ease; transition: all .5s ease; }
     .fork img:hover { opacity: 1; }
-    pre { display: block; margin: auto; position: absolute; top: 57%; left: 0; bottom: 0; right: 0; color: #839496; text-align: center; font-family: 'Source Code Pro'; font-size: 13px; text-shadow: 1px 1px 1px #333; }
+    pre { display: block; margin: auto; position: absolute; top: 57%; left: 0; bottom: 0; right: 0; color: #839496; text-align: center; font-family: 'Source Code Pro'; font-size: 13px; text-shadow: 1px 1px 1px #333; z-index: 10;}
     pre span.class { color: #b58900; }
     pre span.string { color: #2aa198; }
     pre span.new { color: #859900; }
@@ -29,10 +29,6 @@
       networks: {
         facebook: {
           app_id: "602752456409826",
-        },
-        email: {
-          subject: "sharebutton.co",
-          body: "A simple, light, flexible, and good-looking share button! http://sharebutton.co"
         }
       }
     });

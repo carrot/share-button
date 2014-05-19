@@ -136,7 +136,7 @@ class Share extends ShareUtils
     else
       @event_open(button)
 
-  event_open: (button)  -> 
+  event_open: (button)  ->
     if @has_class(button, "load")
       @remove_class(button, "load")
 

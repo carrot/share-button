@@ -1,6 +1,22 @@
 // dep: https://www.sharebutton.co/fonts/entypo.min.css
 // dep: http://fonts.googleapis.com/css?family=Lato:900 (if `text_font: true`)
 
+network($width, $center, $left, $middle-left)
+  width: $width
+
+  &.center
+    margin-left: $center
+
+  &.left
+    margin-left: $left
+
+  &.middle
+    &.left
+      margin-left: $middle-left
+
+  ul
+    width: $width
+
 { config-selector }
   size: 92px 20px
 
@@ -36,11 +52,30 @@
       padding-left: 6px
 
   .social
-    transform-origin: 50% 0%
-    transform: scale(0) translateY(-190px)
     opacity: 0
     transition: all .4s ease
     margin-left: -15px
+
+    &.top
+      transform-origin: 0% 0%
+      margin-top: -80px
+
+    &.bottom
+      transform-origin: 0% 0%
+      margin-top: 5px
+
+    &.middle
+      margin-top: -34px
+
+      &.right
+        transform-origin: 5% 50%
+        margin-left: 105px
+
+      &.left
+        transform-origin: 5% 50%
+
+    &.right
+      margin-left: 14px
 
     &.load
       transition: none !important
@@ -48,76 +83,34 @@
     ///////////////////////////////////////////////////
     // Width & Margin based on # of networks enabled //
     ///////////////////////////////////////////////////
-    &.right
-      margin-left: 15px
 
     &.networks-1
-      &.center
-        margin-left: -5px
-
-      &.left
-        margin-left: -5px
-
-      ul
-        width: 60px
+      network(60px, 14px, 14px, -70px)
     &.networks-2
-      &.center
-        margin-left: -13px
-
-      &.left
-        margin-left: -55px
-
-      ul
-        width: 120px
-
+      network(120px, -13px, -44px, -130px)
     &.networks-3
-      &.center
-        margin-left: -45px
-
-      &.left
-        margin-left: -117px
-
-      ul
-        width: 180px
-
+      network(180px, -45px, -102px, -190px)
     &.networks-4
-      &.center
-        margin-left: -75px
-
-      &.left
-        margin-left: -172px
-
-      ul  
-        width: 240px
-
+      network(240px, -75px, 162px, -250px)
     &.networks-5
-      &.center
-        margin-left: -105px
-
-      &.left
-        margin-left: -250px
-
-      ul
-        width: 300px
+      network(300px, -105px, -225px, -320px)
 
     &.active
       opacity: 1
       transition: all .4s ease
 
-      // Arrow x-positioning & colors
       &.top
-        transform: scale(1) translateY(-90px)
-        margin-top: 5px
-
-        ul
-          border-bottom: 1px solid #A29BAA
+        transform: scale(1) translateY(-10px)
 
       &.bottom
-        transform: scale(1) translateY(45px)
-        margin-top: -25px
+        transform: scale(1) translateY(15px)
 
-        ul
-          border-top: 1px solid #A29BAA
+      &.middle
+        &.right
+          transform: scale(1) translateX(10px)
+
+        &.left
+          transform: scale(1) translateX(-10px)
 
     ul
       relative: left 0 right 0
