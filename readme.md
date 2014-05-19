@@ -25,7 +25,7 @@ Let's take a quick look at the alternative, using this little plugin:
 
 ## Getting Started
 
-1. [Download the script](https://github.com/carrot/share-button/releases/download/v0.1.3/share.min.js) and include it on your page.
+1. [Download the script](https://github.com/carrot/share-button/releases/download/v0.2.0/share.min.js) and include it on your page.
 2. Make an empty div on your page
 3. In your javascript, call `new Share('.element')`
 4. Pass options to the share call if you want (details below)
