@@ -1,7 +1,7 @@
 {
   "name": "share-button",
   "description": "fast, beautiful, and painless social shares",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "homepage": "http://sharebutton.co",
   "bugs": {
     "url": "https://github.com/carrot/share-button/issues"
