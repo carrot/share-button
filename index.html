@@ -21,11 +21,11 @@
   <a class='fork' href="https://github.com/carrot/share-button">
     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://www.sharebutton.co/images/fork-me.png" alt="Fork me on GitHub">
   </a>
-  <div id="share-button-top" class='share-button share-button-top'></div>
+  <div class='share-button'></div>
   <pre><span class="new">new</span> <span class="class">Share</span>(<span class="string">".share-button"</span>);</pre>
   <script src='build/share.js'></script>
   <script>
-    var share = new Share("#share-button-top", {
+    var share = new Share(".share-button", {
       networks: {
         facebook: {
           app_id: "602752456409826",
