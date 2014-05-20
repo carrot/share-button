@@ -23,11 +23,8 @@ class Share extends ShareUtils
 
       ui:
         flyout: 'top center'
-        button_font: true
-        button_color: '#333333'
-        button_background: '#a29baa'
-        button_icon: 'export'
         button_text: 'Share'
+        button_font: true
 
       networks:
         google_plus:
@@ -55,7 +52,6 @@ class Share extends ShareUtils
           enabled: true
           title: null       # Subject
           description: null # Body
-
 
     @setup(element, options)
 
@@ -242,7 +238,7 @@ class Share extends ShareUtils
       @el.head.appendChild(meta)
 
   inject_html: (instance) ->
-    instance.innerHTML = "<label class='entypo-#{@config.ui.button_icon}'><span>#{@config.ui.button_text}</span></label><div class='social load #{@config.ui.flyout}'><ul><li class='entypo-pinterest' data-network='pinterest'></li><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='google_plus'></li><li class='entypo-paper-plane' data-network='email'></li></ul></div>"
+    instance.innerHTML = "<label class='entypo-export'><span>#{@config.ui.button_text}</span></label><div class='social load #{@config.ui.flyout}'><ul><li class='entypo-pinterest' data-network='pinterest'></li><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='google_plus'></li><li class='entypo-paper-plane' data-network='email'></li></ul></div>"
 
   inject_facebook_sdk: ->
     if !window.FB && @config.networks.facebook.app_id && !@el.body.querySelector('#fb-root')

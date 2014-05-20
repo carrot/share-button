@@ -51,8 +51,6 @@ class Builder
   compile_css: (opts) ->
     tokens = [
       "config.selector",
-      "config.ui.button_color",
-      "config.ui.button_background",
       "config.networks.pinterest.display",
       "config.networks.twitter.display",
       "config.networks.facebook.display",

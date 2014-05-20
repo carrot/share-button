@@ -36,8 +36,8 @@ network($width, $center, $left, $middle-left)
     margin: 0
     padding: 5px 10px
     border-radius: 5px
-    background: unquote(config-ui-button_background)
-    color: unquote(config-ui-button_color)
+    background: #a29baa
+    color: #333333
     transition()
 
     &:hover
@@ -137,14 +137,6 @@ network($width, $center, $left, $middle-left)
 
         &:hover
           color: rgba(0,0,0,.5)
-
-      &:after
-        content: ''
-        display: block
-        size: 0
-        absolute: left 0 right 0
-        border-left: 20px solid transparent
-        border-right: 20px solid transparent
 
     li[class*='facebook']
       background: #3B5998
