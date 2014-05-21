@@ -25,7 +25,7 @@ class Share extends ShareUtils
         flyout: 'top center'
         button_text: 'Share'
         button_font: true
-        button_icon: true
+        icon_font: true
 
       networks:
         google_plus:
@@ -71,7 +71,7 @@ class Share extends ShareUtils
     @normalize_network_configuration()
 
     ## Inject Icon Fontset
-    @inject_icons() if @config.ui.button_icon
+    @inject_icons() if @config.ui.icon_font
 
     ## Inject Google's Lato Fontset (if enabled)
     @inject_fonts() if @config.ui.button_font
