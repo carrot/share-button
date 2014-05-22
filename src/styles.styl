@@ -55,6 +55,7 @@ network($width, $center, $left, $middle-left)
     opacity: 0
     transition: all .4s ease
     margin-left: -15px
+    visibility: hidden
 
     &.top
       transform-origin: 0% 0%
@@ -98,6 +99,7 @@ network($width, $center, $left, $middle-left)
     &.active
       opacity: 1
       transition: all .4s ease
+      visibility: visible
 
       &.top
         transform: scale(1) translateY(-10px)
