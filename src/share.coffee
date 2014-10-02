@@ -295,7 +295,7 @@ class Share extends ShareUtils
       @config.networks.twitter.description = encodeURIComponent(@config.networks.twitter.description)
 
     ## Typecast Facebook app_id to a String
-    if typeof(@config.networks.facebook.app_id) is 'integer'
+    if typeof(@config.networks.facebook.app_id) is 'number'
       @config.networks.facebook.app_id = @config.networks.facebook.app_id.toString()
 
 

@@ -35,6 +35,11 @@ if ("classList" not of document.documentElement) and Object.defineProperty and t
 
       ret
 
+String::to_rfc3986 = ->
+  tmp = encodeURIComponent(this)
+  tmp.replace /[!'()*]/g, (c) ->
+    "%" + c.charCodeAt(0).toString(16)
+
 ####
 
 class ShareUtils
@@ -63,10 +68,11 @@ class ShareUtils
     el.classList.remove(class_name)
 
   is_encoded: (str) ->
+    str = str.to_rfc3986()
     decodeURIComponent(str) isnt str
 
-  encode: (str)->
-    if @is_encoded(str) then str else encodeURIComponent(str)
+  encode: (str) ->
+    if typeof(str) is "undefined" or @is_encoded(str) then str else str.to_rfc3986()
 
   popup: (url, params = {}) ->
     popup =
@@ -80,3 +86,4 @@ class ShareUtils
     if qs then qs = "?#{qs}"
 
     window.open(url+qs, 'targetWindow', "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=#{popup.left},top=#{popup.top},width=#{popup.width},height=#{popup.height}")
+
