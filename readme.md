@@ -22,6 +22,7 @@ Let's take a quick look at the alternative, using this little plugin:
 4. It's tiny and compact, expanding only when the user actually wants to share something.
 
 ## Getting Started
+
 1. [Download the script](https://github.com/carrot/share-button/releases/download/v0.5.0/share.min.js) and include it on your page.
 2. Make an empty div on your page
 3. In your javascript, call `new Share('.element')`
