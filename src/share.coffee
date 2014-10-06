@@ -9,17 +9,9 @@ class Share extends ShareUtils
       protocol: if ['http', 'https'].indexOf(window.location.href.split(':')[0]) is -1 then 'https://' else '//'
       url: window.location.href
       caption: null
-      title:
-        if content = (document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]'))
-          content.getAttribute('content')
-        else if content = document.querySelector('title')
-          content.innerText
-      image: if content = (document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]'))
-        content.getAttribute('content')
-      description: if content = (document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') ||  document.querySelector('meta[name="description"]'))
-        content.getAttribute('content')
-      else
-        ''
+      title: @default_title()
+      image: @default_image()
+      description: @default_description()
 
       ui:
         flyout: 'top center'
@@ -213,7 +205,7 @@ class Share extends ShareUtils
       link.setAttribute("rel", "stylesheet")
       link.setAttribute("href", url)
       @el.head.appendChild(link)
-  
+
   inject_css: (instance) ->
     selector = ".#{instance.getAttribute('class').split(" ").join(".")}"
 
@@ -229,7 +221,7 @@ class Share extends ShareUtils
         style.styleSheet.cssText = css
       else
         style.appendChild document.createTextNode(css)
-      
+
       @el.head.appendChild style
 
       delete @config.selector # TODO: Temporary
@@ -268,6 +260,29 @@ class Share extends ShareUtils
 
     return
 
+  default_title: ->
+    ## Get default title
+    if content = (document.querySelector('meta[property="og:title"]') ||
+                  document.querySelector('meta[name="twitter:title"]'))
+      content.getAttribute('content')
+    else if content = document.querySelector('title')
+      content.innerText
+
+  default_image: ->
+    ## Get default image
+    image: if content = (document.querySelector('meta[property="og:image"]') ||
+                         document.querySelector('meta[name="twitter:image"]'))
+      content.getAttribute('content')
+
+  default_description: ->
+    ## Get default description
+      description: if content = (document.querySelector('meta[property="og:description"]') ||
+                                 document.querySelector('meta[name="twitter:description"]') ||
+                                 document.querySelector('meta[name="description"]'))
+        content.getAttribute('content')
+      else
+        ''
+
   set_global_configuration: ->
     ## Update network-specific configuration with global configurations
     for network, options of @config.networks
@@ -284,7 +299,7 @@ class Share extends ShareUtils
 
       @config.networks[network].display = display
 
-  
+
   normalize_network_configuration: ->
     ## Don't load FB SDK if FB app_id isn't present
     unless @config.networks.facebook.app_id
