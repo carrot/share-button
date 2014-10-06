@@ -15,7 +15,7 @@ describe 'basic functionality', ->
       .then(browser.wait.bind(browser))
       .then ->
         $ = browser.document.window.jQuery
-        done()    
+        done()
 
   it 'should open when clicked', (done) ->
     $('.social').css('opacity').should.equal '0'

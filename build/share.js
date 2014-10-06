@@ -141,7 +141,6 @@ Share = (function(_super) {
   __extends(Share, _super);
 
   function Share(element, options) {
-    var content;
     this.element = element;
     this.el = {
       head: document.getElementsByTagName('head')[0],
@@ -152,9 +151,9 @@ Share = (function(_super) {
       protocol: ['http', 'https'].indexOf(window.location.href.split(':')[0]) === -1 ? 'https://' : '//',
       url: window.location.href,
       caption: null,
-      title: (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) ? content.getAttribute('content') : (content = document.querySelector('title')) ? content.innerText : void 0,
-      image: (content = document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]')) ? content.getAttribute('content') : void 0,
-      description: (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) ? content.getAttribute('content') : '',
+      title: this.default_title(),
+      image: this.default_image(),
+      description: this.default_description(),
       ui: {
         flyout: 'top center',
         button_text: 'Share',
@@ -413,6 +412,29 @@ Share = (function(_super) {
         this.normalize_network_configuration();
       }
     }
+  };
+
+  Share.prototype.default_title = function() {
+    var content;
+    if (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) {
+      return content.getAttribute('content');
+    } else if (content = document.querySelector('title')) {
+      return content.innerText;
+    }
+  };
+
+  Share.prototype.default_image = function() {
+    var content;
+    return {
+      image: (content = document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]')) ? content.getAttribute('content') : void 0
+    };
+  };
+
+  Share.prototype.default_description = function() {
+    var content;
+    return {
+      description: (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) ? content.getAttribute('content') : ''
+    };
   };
 
   Share.prototype.set_global_configuration = function() {
