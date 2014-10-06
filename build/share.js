@@ -501,18 +501,16 @@ Share = (function(superClass) {
 
   Share.prototype.default_image = function() {
     var content;
-    if (content = document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]')) {
-      return content.getAttribute('content');
-    }
+    return {
+      image: (content = document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]')) ? content.getAttribute('content') : void 0
+    };
   };
 
   Share.prototype.default_description = function() {
     var content;
-    if (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) {
-      return content.getAttribute('content');
-    } else {
-      return '';
-    }
+    return {
+      description: (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) ? content.getAttribute('content') : ''
+    };
   };
 
   Share.prototype.set_global_configuration = function() {
