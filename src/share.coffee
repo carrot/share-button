@@ -270,18 +270,18 @@ class Share extends ShareUtils
 
   default_image: ->
     ## Get default image
-    image: if content = (document.querySelector('meta[property="og:image"]') ||
+    if content = (document.querySelector('meta[property="og:image"]') ||
                          document.querySelector('meta[name="twitter:image"]'))
       content.getAttribute('content')
 
   default_description: ->
     ## Get default description
-      description: if content = (document.querySelector('meta[property="og:description"]') ||
-                                 document.querySelector('meta[name="twitter:description"]') ||
-                                 document.querySelector('meta[name="description"]'))
-        content.getAttribute('content')
-      else
-        ''
+    if content = (document.querySelector('meta[property="og:description"]') ||
+                               document.querySelector('meta[name="twitter:description"]') ||
+                               document.querySelector('meta[name="description"]'))
+      content.getAttribute('content')
+    else
+      ''
 
   set_global_configuration: ->
     ## Update network-specific configuration with global configurations
