@@ -64,10 +64,27 @@ class Share extends ShareUtils
 
     return @
 
+  isNodeList: (nodes) ->
+    stringRepr = Object.prototype.toString.call(nodes)
+
+    return typeof nodes is 'object' and
+        /^\[object (HTMLCollection|NodeList|Object)\]$/.test(stringRepr) and
+        nodes.hasOwnProperty('length') and
+        (nodes.length == 0 || (typeof nodes[0] is "object" and nodes[0].nodeType > 0))
+
+  isNode: (node) ->
+    return node and node.nodeType and
+      (node.nodeType == 1 || node.nodeType == 11)
 
   setup: (element, opts) ->
     ## Record all instances
-    instances = document.querySelectorAll(element) # TODO: Use more efficient method.
+
+    if @isNodeList(element)
+      instances = element
+    else if @isNode(element)
+      instances = [element]
+    else
+      instances = document.querySelectorAll(element) # TODO: Use more efficient method.
 
     ## Extend config object
     @extend(@config, opts, true)
@@ -93,7 +110,11 @@ class Share extends ShareUtils
 
   setup_instance: (element, index) ->
     ## Get instance - (Note: Reload Element. gS/qSA doesn't support live NodeLists)
-    instance = document.querySelectorAll(element)[index] # TODO: Use more efficient method.
+
+    if @isNode(element)
+      instance = element
+    else
+      instance = document.querySelectorAll(element)[index] # TODO: Use more efficient method.
 
     ## Hide instance
     @hide(instance)
@@ -102,7 +123,8 @@ class Share extends ShareUtils
     @add_class(instance, "sharer-#{index}")
 
     ## Get instance - (Note: Reload Element. gS/qSA doesn't support live NodeLists)
-    instance = document.querySelectorAll(element)[index] # TODO: Use more efficient method.
+    if not @isNode(element)
+      instance = document.querySelectorAll(element)[index] # TODO: Use more efficient method.
 
     ## Inject HTML and CSS
     @inject_css(instance) if @config.inject_css
