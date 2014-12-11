@@ -18,6 +18,7 @@ class Share extends ShareUtils
         button_text: 'Share'
         button_font: true
         icon_font: true
+        check_overflow: false
 
       networks:
         google_plus:
@@ -128,6 +129,18 @@ class Share extends ShareUtils
   event_open: (button)  ->
     if @has_class(button, "load")
       @remove_class(button, "load")
+
+    if @config.ui.check_overflow
+      button.style.position = ''
+      button.style.right = ''
+
+      ww = window.innerWidth
+      br = button.getBoundingClientRect()
+      diff = br.right - ww
+
+      if diff > 0
+        button.style.position = 'relative'
+        button.style.right = (diff + 10) + 'px'
 
     @add_class(button, "active")
 
