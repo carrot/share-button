@@ -351,7 +351,7 @@ Share = (function(_super) {
   };
 
   Share.prototype.inject_fonts = function() {
-    return this.inject_stylesheet("http://fonts.googleapis.com/css?family=Lato:900&text=" + this.config.ui.button_text);
+    return this.inject_stylesheet("https://fonts.googleapis.com/css?family=Lato:900&text=" + this.config.ui.button_text);
   };
 
   Share.prototype.inject_stylesheet = function(url) {
