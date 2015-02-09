@@ -197,7 +197,7 @@ class Share extends ShareUtils
   # - Must be https:// due to CDN CORS caching issues
   # - To include the full entypo set, change URL to: https://www.sharebutton.co/fonts/entypo.css
   inject_icons: -> @inject_stylesheet("https://www.sharebutton.co/fonts/v2/entypo.min.css")
-  inject_fonts: -> @inject_stylesheet("http://fonts.googleapis.com/css?family=Lato:900&text=#{@config.ui.button_text}")
+  inject_fonts: -> @inject_stylesheet("https://fonts.googleapis.com/css?family=Lato:900&text=#{@config.ui.button_text}")
 
   inject_stylesheet: (url) ->
     unless @el.head.querySelector("link[href=\"#{url}\"]")
