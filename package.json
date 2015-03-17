@@ -20,20 +20,20 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "accord": "0.0.4",
+    "accord": "0.16.x",
     "autoprefixer-stylus": "0.0.2",
-    "axis-css": "^0.2.0-rc.3",
-    "clean-css": "^2.1.8",
-    "coffee-script": "^1.7.1",
-    "colors": "^0.6.2",
-    "mocha": "^1.19.0",
-    "monocle": "^1.1.51",
-    "should": "^3.3.2",
-    "stylus": "^0.38.0",
-    "uglifyjs": "^2.3.6",
-    "umd": "^2.1.0",
-    "when": "^2.8.0",
-    "zombie": "*"
+    "axis": "0.3.x",
+    "clean-css": "3.x",
+    "coffee-script": "1.9.x",
+    "colors": "1.x",
+    "mocha": "2.x",
+    "monocle": "1.1.x",
+    "should": "5.x",
+    "stylus": "0.50.x",
+    "uglify-js": "2.x",
+    "umd": "3.x",
+    "when": "3.x",
+    "zombie": "3.x"
   },
   "scripts": {
     "test": "mocha test"

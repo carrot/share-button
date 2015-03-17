@@ -1,5 +1,5 @@
 // dep: https://www.sharebutton.co/fonts/entypo.min.css
-// dep: https://fonts.googleapis.com/css?family=Lato:900 (if `text_font: true`)
+// dep: https://fonts.googleapis.com/css?family=Lato:900 (if text_font: true)
 
 network($width, $center, $left, $middle-left)
   width: $width
@@ -20,12 +20,7 @@ network($width, $center, $left, $middle-left)
 { config-selector }
   size: 92px 20px
 
-  -webkit-touch-callout: none
-  -webkit-user-select: none
-  -khtml-user-select: none
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
+  no-select()
 
   [class*='entypo-']:before
     font-family: 'entypo', sans-serif;
@@ -81,9 +76,9 @@ network($width, $center, $left, $middle-left)
     &.load
       transition: none !important
 
-    ///////////////////////////////////////////////////
-    // Width & Margin based on # of networks enabled //
-    ///////////////////////////////////////////////////
+    //
+    // Width & Margin based on # of networks enabled
+    //
 
     &.networks-1
       network(60px, 14px, 14px, -70px)
@@ -155,7 +150,7 @@ network($width, $center, $left, $middle-left)
     li[class*='pinterest']
       background: #C5282F
       display: unquote(config-networks-pinterest-display)
- 
+
     li[class*='paper-plane']
       background: #42C5B0
       display: unquote(config-networks-email-display)
