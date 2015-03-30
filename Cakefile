@@ -1,14 +1,15 @@
 require 'colors'
-fs = require 'fs'
-path = require 'path'
-W = require 'when'
-nodefn = require 'when/node/function'
-accord = require 'accord'
-stylus = accord.load('stylus')
-axis = require 'axis-css'
+
+fs           = require 'fs'
+path         = require 'path'
+W            = require 'when'
+nodefn       = require 'when/node/function'
+accord       = require 'accord'
+axis         = require 'axis'
 autoprefixer = require 'autoprefixer-stylus'
-monocle = require 'monocle'
-umd = require 'umd'
+monocle      = require 'monocle'
+umd          = require 'umd'
+stylus       = accord.load('stylus')
 
 # tasks
 
@@ -58,10 +59,10 @@ class Builder
       "config.networks.email.display"
     ]
 
-    stylus.renderFile(@css_path, { use: [axis(), autoprefixer()] })
-      .then((css) ->
-          accord.load('minify-css').render(css).then (css) ->
-            return replace_tokens(css, tokens)
+    stylus.renderFile(@css_path, { use: [axis()] })
+      .then((res) ->
+          accord.load('minify-css').render(res.result).then (res_min) ->
+            return replace_tokens(res_min.result, tokens)
       ).then (css) ->
         "function getStyles(config){ return \"#{css}\"};"
 
@@ -72,18 +73,18 @@ class Builder
         cs.renderFile(@share_js_path, { bare: true })
           .then (share_js) =>
             if @opts.minify
-              accord.load('minify-js').render("#{utils_js}#{share_js}").then (js) ->
-                "#{css}#{js}"
+              accord.load('minify-js').render("#{utils_js.result}#{share_js.result}").then (js) ->
+                "#{css}#{js.result}"
             else
-              "#{css}#{utils_js}#{share_js}"
+              "#{css}#{utils_js.result}#{share_js.result}"
           .then (out) ->
             umd('Share', "#{out} return Share;")
 
 
-  # 
+  #
   # @api private
-  # 
-  
+  #
+
   replace_tokens = (res, tokens) ->
     for token in tokens
       normalized_token = token.replace(/\./g, "-")

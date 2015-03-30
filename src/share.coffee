@@ -46,7 +46,7 @@ class Share extends ShareUtils
           title: null       # Subject
           description: null # Body
 
-    @setup(element, options)
+    @setup(@element, options)
 
     return @
 

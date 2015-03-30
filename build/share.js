@@ -1,5 +1,5 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Share=e()}}(function(){var define,module,exports;
-function getStyles(config){ return ""+config.selector+"{width:92px;height:20px;-webkit-touch-callout:none;-khtml-user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}"+config.selector+" [class*=entypo-]:before{font-family:entypo,sans-serif}"+config.selector+" label{font-size:16px;cursor:pointer;margin:0;padding:5px 10px;border-radius:5px;background:#a29baa;color:#333;-webkit-transition:all .3s ease;transition:all .3s ease}"+config.selector+" label:hover{opacity:.8}"+config.selector+" label span{text-transform:uppercase;font-size:.9em;font-family:Lato,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;padding-left:6px}"+config.selector+" .social{opacity:0;-webkit-transition:all .4s ease;transition:all .4s ease;margin-left:-15px;visibility:hidden}"+config.selector+" .social.top{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0;margin-top:-80px}"+config.selector+" .social.bottom{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0;margin-top:5px}"+config.selector+" .social.middle{margin-top:-34px}"+config.selector+" .social.middle.right{-webkit-transform-origin:5% 50%;-ms-transform-origin:5% 50%;transform-origin:5% 50%;margin-left:105px}"+config.selector+" .social.middle.left{-webkit-transform-origin:5% 50%;-ms-transform-origin:5% 50%;transform-origin:5% 50%}"+config.selector+" .social.right{margin-left:14px}"+config.selector+" .social.load{-webkit-transition:none!important;transition:none!important}"+config.selector+" .social.networks-1{width:60px}"+config.selector+" .social.networks-1.center,"+config.selector+" .social.networks-1.left{margin-left:14px}"+config.selector+" .social.networks-1.middle.left{margin-left:-70px}"+config.selector+" .social.networks-1 ul{width:60px}"+config.selector+" .social.networks-2{width:120px}"+config.selector+" .social.networks-2.center{margin-left:-13px}"+config.selector+" .social.networks-2.left{margin-left:-44px}"+config.selector+" .social.networks-2.middle.left{margin-left:-130px}"+config.selector+" .social.networks-2 ul{width:120px}"+config.selector+" .social.networks-3{width:180px}"+config.selector+" .social.networks-3.center{margin-left:-45px}"+config.selector+" .social.networks-3.left{margin-left:-102px}"+config.selector+" .social.networks-3.middle.left{margin-left:-190px}"+config.selector+" .social.networks-3 ul{width:180px}"+config.selector+" .social.networks-4{width:240px}"+config.selector+" .social.networks-4.center{margin-left:-75px}"+config.selector+" .social.networks-4.left{margin-left:162px}"+config.selector+" .social.networks-4.middle.left{margin-left:-250px}"+config.selector+" .social.networks-4 ul{width:240px}"+config.selector+" .social.networks-5{width:300px}"+config.selector+" .social.networks-5.center{margin-left:-105px}"+config.selector+" .social.networks-5.left{margin-left:-225px}"+config.selector+" .social.networks-5.middle.left{margin-left:-320px}"+config.selector+" .social.networks-5 ul{width:300px}"+config.selector+" .social.active{opacity:1;-webkit-transition:all .4s ease;transition:all .4s ease;visibility:visible}"+config.selector+" .social.active.top{-webkit-transform:scale(1) translateY(-10px);-ms-transform:scale(1) translateY(-10px);transform:scale(1) translateY(-10px)}"+config.selector+" .social.active.bottom{-webkit-transform:scale(1) translateY(15px);-ms-transform:scale(1) translateY(15px);transform:scale(1) translateY(15px)}"+config.selector+" .social.active.middle.right{-webkit-transform:scale(1) translateX(10px);-ms-transform:scale(1) translateX(10px);transform:scale(1) translateX(10px)}"+config.selector+" .social.active.middle.left{-webkit-transform:scale(1) translateX(-10px);-ms-transform:scale(1) translateX(-10px);transform:scale(1) translateX(-10px)}"+config.selector+" .social ul{position:relative;left:0;right:0;height:46px;color:#fff;margin:auto;padding:0;list-style:none}"+config.selector+" .social ul li{font-size:20px;cursor:pointer;width:60px;margin:0;padding:12px 0;text-align:center;float:left;display:none;height:22px;position:relative;z-index:2;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;-webkit-transition:all .3s ease;transition:all .3s ease}"+config.selector+" .social ul li:hover{color:rgba(0,0,0,.5)}"+config.selector+" .social li[class*=facebook]{background:#3b5998;display:"+config.networks.facebook.display+"}"+config.selector+" .social li[class*=twitter]{background:#6cdfea;display:"+config.networks.twitter.display+"}"+config.selector+" .social li[class*=gplus]{background:#e34429;display:"+config.networks.google_plus.display+"}"+config.selector+" .social li[class*=pinterest]{background:#c5282f;display:"+config.networks.pinterest.display+"}"+config.selector+" .social li[class*=paper-plane]{background:#42c5b0;display:"+config.networks.email.display+"}"};var ShareUtils;
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Share = f()}})(function(){var define,module,exports;
+function getStyles(config){ return ""+config.selector+" .social.bottom,"+config.selector+" .social.top{-webkit-transform-origin:0 0;-moz-transform-origin:0 0;-o-transform-origin:0 0}"+config.selector+"{width:92px;height:20px;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}"+config.selector+" [class*=entypo-]:before{font-family:entypo,sans-serif}"+config.selector+" label{font-size:16px;cursor:pointer;margin:0;padding:5px 10px;border-radius:5px;background:#a29baa;color:#333;transition:all .3s ease}"+config.selector+" label:hover{opacity:.8}"+config.selector+" label span{text-transform:uppercase;font-size:.9em;font-family:Lato,sans-serif;font-weight:700;-webkit-font-smoothing:antialiased;padding-left:6px}"+config.selector+" .social{opacity:0;transition:all .4s ease;margin-left:-15px;visibility:hidden}"+config.selector+" .social.top{-ms-transform-origin:0 0;transform-origin:0 0;margin-top:-80px}"+config.selector+" .social.bottom{-ms-transform-origin:0 0;transform-origin:0 0;margin-top:5px}"+config.selector+" .social.middle.left,"+config.selector+" .social.middle.right{-ms-transform-origin:5% 50%;transform-origin:5% 50%;-webkit-transform-origin:5% 50%;-moz-transform-origin:5% 50%;-o-transform-origin:5% 50%}"+config.selector+" .social.middle{margin-top:-34px}"+config.selector+" .social.middle.right{margin-left:105px}"+config.selector+" .social.networks-1.center,"+config.selector+" .social.networks-1.left,"+config.selector+" .social.right{margin-left:14px}"+config.selector+" .social.load{transition:none!important}"+config.selector+" .social.networks-1{width:60px}"+config.selector+" .social.networks-1.middle.left{margin-left:-70px}"+config.selector+" .social.networks-1 ul{width:60px}"+config.selector+" .social.networks-2,"+config.selector+" .social.networks-2 ul{width:120px}"+config.selector+" .social.networks-2.center{margin-left:-13px}"+config.selector+" .social.networks-2.left{margin-left:-44px}"+config.selector+" .social.networks-2.middle.left{margin-left:-130px}"+config.selector+" .social.networks-3,"+config.selector+" .social.networks-3 ul{width:180px}"+config.selector+" .social.networks-3.center{margin-left:-45px}"+config.selector+" .social.networks-3.left{margin-left:-102px}"+config.selector+" .social.networks-3.middle.left{margin-left:-190px}"+config.selector+" .social.networks-4,"+config.selector+" .social.networks-4 ul{width:240px}"+config.selector+" .social.networks-4.center{margin-left:-75px}"+config.selector+" .social.networks-4.left{margin-left:162px}"+config.selector+" .social.networks-4.middle.left{margin-left:-250px}"+config.selector+" .social.networks-5,"+config.selector+" .social.networks-5 ul{width:300px}"+config.selector+" .social.networks-5.center{margin-left:-105px}"+config.selector+" .social.networks-5.left{margin-left:-225px}"+config.selector+" .social.networks-5.middle.left{margin-left:-320px}"+config.selector+" .social.active{opacity:1;transition:all .4s ease;visibility:visible}"+config.selector+" .social.active.top{-webkit-transform:scale(1)translateY(-10px);-moz-transform:scale(1)translateY(-10px);-o-transform:scale(1)translateY(-10px);-ms-transform:scale(1)translateY(-10px);transform:scale(1)translateY(-10px)}"+config.selector+" .social.active.bottom{-webkit-transform:scale(1)translateY(15px);-moz-transform:scale(1)translateY(15px);-o-transform:scale(1)translateY(15px);-ms-transform:scale(1)translateY(15px);transform:scale(1)translateY(15px)}"+config.selector+" .social.active.middle.right{-webkit-transform:scale(1)translateX(10px);-moz-transform:scale(1)translateX(10px);-o-transform:scale(1)translateX(10px);-ms-transform:scale(1)translateX(10px);transform:scale(1)translateX(10px)}"+config.selector+" .social.active.middle.left{-webkit-transform:scale(1)translateX(-10px);-moz-transform:scale(1)translateX(-10px);-o-transform:scale(1)translateX(-10px);-ms-transform:scale(1)translateX(-10px);transform:scale(1)translateX(-10px)}"+config.selector+" .social ul{position:relative;left:0;right:0;height:46px;color:#fff;margin:auto;padding:0;list-style:none}"+config.selector+" .social ul li{font-size:20px;cursor:pointer;width:60px;margin:0;padding:12px 0;text-align:center;float:left;display:none;height:22px;position:relative;z-index:2;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;transition:all .3s ease}"+config.selector+" .social ul li:hover{color:rgba(0,0,0,.5)}"+config.selector+" .social li[class*=facebook]{background:#3b5998;display:"+config.networks.facebook.display+"}"+config.selector+" .social li[class*=twitter]{background:#6cdfea;display:"+config.networks.twitter.display+"}"+config.selector+" .social li[class*=gplus]{background:#e34429;display:"+config.networks.google_plus.display+"}"+config.selector+" .social li[class*=pinterest]{background:#c5282f;display:"+config.networks.pinterest.display+"}"+config.selector+" .social li[class*=paper-plane]{background:#42c5b0;display:"+config.networks.email.display+"}"};var ShareUtils;
 
 if ((!("classList" in document.documentElement)) && Object.defineProperty && typeof HTMLElement !== "undefined") {
   Object.defineProperty(HTMLElement.prototype, "classList", {
@@ -116,13 +116,13 @@ ShareUtils = (function() {
     popup.top = (screen.height / 2) - (popup.height / 2);
     popup.left = (screen.width / 2) - (popup.width / 2);
     qs = ((function() {
-      var _results;
-      _results = [];
+      var results;
+      results = [];
       for (k in params) {
         v = params[k];
-        _results.push("" + k + "=" + (this.encode(v)));
+        results.push(k + "=" + (this.encode(v)));
       }
-      return _results;
+      return results;
     }).call(this)).join('&');
     if (qs) {
       qs = "?" + qs;
@@ -134,14 +134,14 @@ ShareUtils = (function() {
 
 })();
 var Share,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
-Share = (function(_super) {
-  __extends(Share, _super);
+Share = (function(superClass) {
+  extend(Share, superClass);
 
-  function Share(element, options) {
-    this.element = element;
+  function Share(element1, options) {
+    this.element = element1;
     this.el = {
       head: document.getElementsByTagName('head')[0],
       body: document.getElementsByTagName('body')[0]
@@ -193,12 +193,12 @@ Share = (function(_super) {
         }
       }
     };
-    this.setup(element, options);
+    this.setup(this.element, options);
     return this;
   }
 
   Share.prototype.setup = function(element, opts) {
-    var index, instance, instances, _i, _len;
+    var i, index, instance, instances, len;
     instances = document.querySelectorAll(element);
     this.extend(this.config, opts, true);
     this.set_global_configuration();
@@ -212,15 +212,14 @@ Share = (function(_super) {
     if (this.config.networks.facebook.enabled && this.config.networks.facebook.load_sdk) {
       this.inject_facebook_sdk();
     }
-    for (index = _i = 0, _len = instances.length; _i < _len; index = ++_i) {
+    for (index = i = 0, len = instances.length; i < len; index = ++i) {
       instance = instances[index];
       this.setup_instance(element, index);
     }
   };
 
   Share.prototype.setup_instance = function(element, index) {
-    var button, instance, label, network, networks, _i, _len, _results,
-      _this = this;
+    var _this, button, i, instance, label, len, network, networks, results;
     instance = document.querySelectorAll(element)[index];
     this.hide(instance);
     this.add_class(instance, "sharer-" + index);
@@ -232,19 +231,21 @@ Share = (function(_super) {
     button = instance.getElementsByClassName("social")[0];
     networks = instance.getElementsByTagName('li');
     this.add_class(button, "networks-" + this.config.enabled_networks);
-    label.addEventListener("click", function() {
-      return _this.event_toggle(button);
-    });
+    label.addEventListener("click", (function(_this) {
+      return function() {
+        return _this.event_toggle(button);
+      };
+    })(this));
     _this = this;
-    _results = [];
-    for (index = _i = 0, _len = networks.length; _i < _len; index = ++_i) {
+    results = [];
+    for (index = i = 0, len = networks.length; i < len; index = ++i) {
       network = networks[index];
-      _results.push(network.addEventListener("click", function() {
+      results.push(network.addEventListener("click", function() {
         _this.event_network(instance, this);
         return _this.event_close(button);
       }));
     }
-    return _results;
+    return results;
   };
 
   Share.prototype.event_toggle = function(button) {
@@ -287,15 +288,15 @@ Share = (function(_super) {
   };
 
   Share.prototype["public"] = function(action) {
-    var button, index, instance, _i, _len, _ref, _results;
-    _ref = document.querySelectorAll(this.element);
-    _results = [];
-    for (index = _i = 0, _len = _ref.length; _i < _len; index = ++_i) {
-      instance = _ref[index];
+    var button, i, index, instance, len, ref, results;
+    ref = document.querySelectorAll(this.element);
+    results = [];
+    for (index = i = 0, len = ref.length; i < len; index = ++i) {
+      instance = ref[index];
       button = instance.getElementsByClassName("social")[0];
-      _results.push(this["event_" + action](button));
+      results.push(this["event_" + action](button));
     }
-    return _results;
+    return results;
   };
 
   Share.prototype.network_facebook = function() {
@@ -440,11 +441,11 @@ Share = (function(_super) {
   };
 
   Share.prototype.set_global_configuration = function() {
-    var display, network, option, options, _ref, _results;
-    _ref = this.config.networks;
-    _results = [];
-    for (network in _ref) {
-      options = _ref[network];
+    var display, network, option, options, ref, results;
+    ref = this.config.networks;
+    results = [];
+    for (network in ref) {
+      options = ref[network];
       for (option in options) {
         if (this.config.networks[network][option] == null) {
           this.config.networks[network][option] = this.config[option];
@@ -456,9 +457,9 @@ Share = (function(_super) {
       } else {
         display = 'none';
       }
-      _results.push(this.config.networks[network].display = display);
+      results.push(this.config.networks[network].display = display);
     }
-    return _results;
+    return results;
   };
 
   Share.prototype.normalize_network_configuration = function() {
