@@ -5,7 +5,7 @@ class Share extends ShareUtils
       body: document.getElementsByTagName('body')[0]
 
     @config =
-      enabled_networks: 0
+      enabled_networks: []
       protocol: if ['http', 'https'].indexOf(window.location.href.split(':')[0]) is -1 then 'https://' else '//'
       url: window.location.href
       caption: null
@@ -20,10 +20,12 @@ class Share extends ShareUtils
 
       ui:
         flyout: 'top center'
+        button: true
         button_text: 'Share'
         button_font: true
         icon_font: true
         check_overflow: false
+        close_after_click: true
 
       networks:
         google_plus:
@@ -33,6 +35,12 @@ class Share extends ShareUtils
           enabled: true
           url: null
           description: null # Text
+        linkedin:
+          enabled: true
+          title: null
+          url: null
+          description: null
+          source: null
         facebook:
           enabled: true
           load_sdk: true
@@ -103,22 +111,22 @@ class Share extends ShareUtils
     ## Show instance
     @show(instance)
 
-    label    = instance.getElementsByTagName("label")[0]
     button   = instance.getElementsByClassName("social")[0]
     networks = instance.getElementsByTagName('li')
 
-    @add_class(button, "networks-#{@config.enabled_networks}")
+    @add_class(button, "networks-#{@config.enabled_networks.length}")
 
-    ## Add listener to activate buttons
-    ( label.addEventListener "click", => @event_toggle(button) ) if @config.ontoggle
+    if @config.ui.button
+      label    = instance.getElementsByTagName("label")[0]
+      ## Add listener to activate buttons
+      label.addEventListener "click", => @event_toggle(button)
 
     ## Add listener to activate networks and close button
     _this = @
     for network, index in networks
       network.addEventListener "click", ->
         _this.event_network(instance, @)
-        _this.event_close(button) if _this.config.ontoggle
-
+        _this.event_close(button) if _this.config.ui.close_after_click
 
   ##########
   # EVENTS #
@@ -138,14 +146,28 @@ class Share extends ShareUtils
     if @config.ui.check_overflow
       button.style.position = ''
       button.style.right = ''
+      button.style.left = ''
+      button.style.top = ''
+      button.style.bottom = ''
 
       ww = window.innerWidth
       br = button.getBoundingClientRect()
-      diff = br.right - ww
 
-      if diff > 0
+      if br.right - ww > 0
         button.style.position = 'relative'
-        button.style.right = (diff + 10) + 'px'
+        button.style.right = ((br.right - ww) + 10) + 'px'
+      
+      if br.left - ww > 0
+        button.style.position = 'relative'
+        button.style.left = ((br.left - ww) + 10) + 'px'
+
+      if br.top - ww > 0
+        button.style.position = 'relative'
+        button.style.top = ((br.top - ww) + 10) + 'px'
+
+      if br.bottom - ww > 0
+        button.style.position = 'relative'
+        button.style.bottom = ((br.bottom - ww) + 10) + 'px'
 
     @add_class(button, "active")
 
@@ -205,6 +227,10 @@ class Share extends ShareUtils
   network_email: ->
     @popup('mailto:', subject: @config.networks.email.title, body: @config.networks.email.description)
 
+  network_linkedin: ->
+    linkedin = @config.networks.linkedin
+    @popup('https://www.linkedin.com/shareArticle', url: linkedin.url, title: linkedin.title, source: linkedin.source, summary: linkedin.description, mini: 'true')
+
 
   #############
   # INJECTORS #
@@ -249,7 +275,22 @@ class Share extends ShareUtils
       @el.head.appendChild(meta)
 
   inject_html: (instance) ->
-    instance.innerHTML = "<label class='entypo-export'><span>#{@config.ui.button_text}</span></label><div class='social load #{@config.ui.flyout}'><ul><li class='entypo-pinterest' data-network='pinterest'></li><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='google_plus'></li><li class='entypo-paper-plane' data-network='email'></li></ul></div>"
+    html = ''
+    html += "<label class='entypo-export'><span>#{@config.ui.button_text}</span></label>" if @config.ui.button
+    html += "<div class='social load #{@config.ui.flyout}'><ul>"
+    for network in @config.enabled_networks
+      html += "<li class='entypo-#{@icon_for_network(network)}' data-network='#{network}'></li>"
+    html += '</ul></div>'
+    instance.innerHTML = html
+
+  icon_for_network: (network) ->
+    switch network
+      when 'google_plus'
+       'gplus'
+      when 'email'
+        'paper-plane'
+      else
+        network
 
   inject_facebook_sdk: ->
     if !window.FB && @config.networks.facebook.app_id && !@el.body.querySelector('#fb-root')
@@ -309,11 +350,11 @@ class Share extends ShareUtils
           @config.networks[network][option] = @config[option]
 
       ## Check for enabled networks and display them
-      if @config.networks[network].enabled
-        display = 'block'
-        @config.enabled_networks += 1
+      display = if @config.networks[network].enabled
+        @config.enabled_networks.push(network)
+        'block'
       else
-        display = 'none'
+        'none'
 
       @config.networks[network].display = display
 

@@ -56,7 +56,8 @@ class Builder
       "config.networks.twitter.display",
       "config.networks.facebook.display",
       "config.networks.google_plus.display",
-      "config.networks.email.display"
+      "config.networks.email.display",
+      "config.networks.linkedin.display"
     ]
 
     stylus.renderFile(@css_path, { use: [axis()] })
