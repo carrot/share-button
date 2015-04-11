@@ -12,6 +12,11 @@ class Share extends ShareUtils
       title: @default_title()
       image: @default_image()
       description: @default_description()
+      # share visible on click
+      ontoggle: true
+      inject_css: true
+      inject_html: true
+
 
       ui:
         flyout: 'top center'
@@ -92,8 +97,8 @@ class Share extends ShareUtils
     instance = document.querySelectorAll(element)[index] # TODO: Use more efficient method.
 
     ## Inject HTML and CSS
-    @inject_css(instance)
-    @inject_html(instance)
+    @inject_css(instance) if @config.inject_css
+    @inject_html(instance) if @config.inject_html
 
     ## Show instance
     @show(instance)
@@ -105,14 +110,14 @@ class Share extends ShareUtils
     @add_class(button, "networks-#{@config.enabled_networks}")
 
     ## Add listener to activate buttons
-    label.addEventListener "click", => @event_toggle(button)
+    ( label.addEventListener "click", => @event_toggle(button) ) if @config.ontoggle
 
     ## Add listener to activate networks and close button
     _this = @
     for network, index in networks
       network.addEventListener "click", ->
         _this.event_network(instance, @)
-        _this.event_close(button)
+        _this.event_close(button) if _this.config.ontoggle
 
 
   ##########
