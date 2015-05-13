@@ -55,6 +55,11 @@ class Share extends ShareUtils
           url: null
           image: null
           description: null
+        linkedin:
+          enabled: true,
+          url: null,
+          title: null,
+          description: null
         email:
           enabled: true
           title: null       # Subject
@@ -238,13 +243,16 @@ class Share extends ShareUtils
       @popup('https://www.facebook.com/sharer/sharer.php', u: @config.networks.facebook.url)
 
   network_twitter: ->
-    @popup('https://twitter.com/intent/tweet', text: @config.networks.twitter.description, url: @config.networks.twitter.url)
+    @popup('https://twitter.com/intent/tweet', text: encodeURIComponent(@config.networks.twitter.description), url: encodeURIComponent(@config.networks.twitter.url))
 
   network_google_plus: ->
     @popup('https://plus.google.com/share', url: @config.networks.google_plus.url)
 
   network_pinterest: ->
     @popup('https://www.pinterest.com/pin/create/button', url: @config.networks.pinterest.url, media: @config.networks.pinterest.image, description: @config.networks.pinterest.description)
+
+  network_linkedin: ->
+    @popup('https://www.linkedin.com/shareArticle', mini: 'true', url: encodeURIComponent(@config.networks.linkedin.url), title: encodeURIComponent(@config.networks.linkedin.title), summary: @config.networks.linkedin.description)
 
   network_email: ->
     window.location.href = 'mailto:?subject=' + this.config.networks.email.title + '&body=' + this.config.networks.email.description
