@@ -29,10 +29,12 @@
   "dependencies": {},
   "devDependencies": {
     "autoprefixer-stylus": "latest",
+    "axis": "^0.4.0",
     "del": "latest",
     "gulp": "latest",
     "gulp-accord": "latest",
     "gulp-babel": "latest",
+    "gulp-concat": "latest",
     "gulp-minify-css": "latest",
     "gulp-rename": "latest",
     "gulp-uglify": "latest",

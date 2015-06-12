@@ -5,8 +5,10 @@ var rename = require('gulp-rename');
 var babel = require('gulp-babel');
 var accord = require('gulp-accord');
 var minifyCss = require('gulp-minify-css');
+var concat = require('gulp-concat');
 var del = require('del');
 var autoprefixer = require('autoprefixer-stylus');
+var axis = require('axis');
 
 gulp.task('clean', function(cb) {
     del(['dist/*[.js, .css]']);
@@ -15,22 +17,23 @@ gulp.task('clean', function(cb) {
 
 gulp.task('style', ['clean'], function(file) {
   var styleShareButton = gulp
-    .src('lib/styles.styl')
+    .src('src/styles.styl')
     .pipe(accord('stylus', {
-      use: autoprefixer()
+      use: [autoprefixer(), axis()]
     }))
     .pipe(gulp.dest('dist/'))
     .pipe(minifyCss())
     .pipe(rename({
       suffix: '.min'
     }))
-    .pipe(gulp.dist('dist/'));
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('script', ['clean'], function(file) {
     var umdShareButton = gulp
-        .src('lib/index.js')
-        .pipe(babel())
+        .src(['src/polyfills.js', 'src/shareUtils.js', 'src/shareButton.js'])
+        .pipe(babel({ blacklist: [] }))
+        .pipe(concat('ShareButton.js'))
         .pipe(wrap({
         	namespace: 'ShareButton',
             exports: 'ShareButton'
