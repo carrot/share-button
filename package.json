@@ -1,7 +1,7 @@
 {
   "name": "share-button",
   "description": "fast, beautiful, and painless social shares",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "homepage": "http://sharebutton.co",
   "bugs": {
     "url": "https://github.com/carrot/share-button/issues"
@@ -11,6 +11,14 @@
     {
       "name": "Tom Milewski",
       "email": "tmilewski@gmail.com"
+    },
+    {
+      "name": "Henry Snopek",
+      "email": "hhsnopek@gmail.com"
+    },
+    {
+      "name": "Patrick Bacon-Blaber",
+      "email": "pablaber225@gmail.com"
     }
   ],
   "repository": {
@@ -20,23 +28,23 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "accord": "0.16.x",
-    "autoprefixer-stylus": "0.0.2",
-    "axis": "0.3.x",
-    "clean-css": "3.x",
-    "coffee-script": "1.9.x",
-    "colors": "1.x",
-    "mocha": "2.x",
-    "monocle": "1.1.x",
-    "should": "5.x",
-    "stylus": "0.50.x",
-    "uglify-js": "2.x",
-    "umd": "3.x",
-    "when": "3.x",
-    "zombie": "3.x"
+    "autoprefixer-stylus": "latest",
+    "del": "latest",
+    "gulp": "latest",
+    "gulp-accord": "latest",
+    "gulp-babel": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-rename": "latest",
+    "gulp-uglify": "latest",
+    "gulp-wrap-umd": "latest",
+    "mocha": "latest",
+    "should": "latest",
+    "stylus": "latest",
+    "when": "latest",
+    "zombie": "latest"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha"
   },
   "keywords": [
     "share",
