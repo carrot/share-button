@@ -31,7 +31,8 @@ class ShareButton extends ShareUtils {
         buttonText: 'Share',
         buttonFont: true,
         iconFont: true,
-        css: true
+        css: true,
+        collision: false
       },
 
       networks: {
@@ -149,6 +150,8 @@ class ShareButton extends ShareUtils {
 
     this._hide(instance); // hide instance
 
+    this.clicked = false; // for collision detection listening
+
     // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
     this._addClass(instance, `sharer-${index}`);
     instance = document.querySelectorAll(element)[index]; // reload instance
@@ -165,7 +168,7 @@ class ShareButton extends ShareUtils {
     let networks = instance.getElementsByTagName('li');
 
     this._addClass(button, `networks-${this.config.enabledNetworks}`);
-    label.addEventListener('click', () => this._eventToggle(button));
+    label.addEventListener('click', () => this._eventToggle(button, label));
 
     // Add listener to activate networks and close button
     for (let k in Object.keys(networks)) {
@@ -185,12 +188,13 @@ class ShareButton extends ShareUtils {
    * @private
    *
    * @param {DOMNode} button
+   * @param {DOMNode} label
    */
-  _eventToggle(button) {
+  _eventToggle(button, label) {
     if(this._hasClass(button, 'active'))
       this._eventClose(button);
     else
-      this._eventOpen(button);
+      this._eventOpen(button, label);
   }
 
   /**
@@ -199,11 +203,13 @@ class ShareButton extends ShareUtils {
    * @private
    *
    * @param {DOMNode} button
+   * @param {DOMNode} label
    */
-  _eventOpen(button) {
+  _eventOpen(button, label) {
     if(this._hasClass(button, 'load'))
       this._removeClass(button, 'load');
 
+    this._collisionDetection(button, label);
     this._addClass(button, 'active');
   }
 
@@ -232,6 +238,114 @@ class ShareButton extends ShareUtils {
     this._hook('before', name, instance);
     this[`_network${name.capitalizeFirstLetter()}`]();
     this._hook('after', name, instance);
+  }
+
+  /**
+   * @method _collisionDetection
+   * @description Adds listeners the first time the button is clicked to call
+   * this._adjustClasses during scrolls and resizes.
+   * @private
+   *
+   * @param {DOMNode} button - list of social networks
+   * @param {DOMNode} label - share button
+   */
+  _collisionDetection(button, label) {
+    let dimensions = {
+      labelWidth: document.getElementsByClassName("entypo-export")[0].offsetWidth,
+      labelHeight: document.getElementsByClassName("entypo-export")[0].offsetHeight,
+      buttonWidth: document.getElementsByClassName("social")[0].offsetWidth,
+    };
+    this._adjustClasses(button, label, dimensions);
+    if(!this.clicked) {
+      window.addEventListener('scroll', () =>
+        this._adjustClasses(button, label, dimensions));
+      window.addEventListener('resize', () =>
+        this._adjustClasses(button, label, dimensions));
+      this.clicked = true;
+    }
+  }
+
+
+  /**
+   * @method _adjustClasses
+   * @description Adjusts the positioning of the list of social networks based
+   * off of where the share button is relative to the window.
+   *
+   * @private
+   * @param {DOMNode} button
+   * @param {DOMNode} label
+   * @param {Object} dimensions
+   */
+  _adjustClasses(button, label, dimensions) {
+    let windowWidth = window.innerWidth;
+    let windowHeight = window.innerHeight;
+    let leftOffset = label.getBoundingClientRect().left + dimensions.labelWidth / 2;
+    let rightOffset = windowWidth - leftOffset;
+    let buttonOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
+    // let spaceBetween = Math.abs(leftOffset - buttonOffset) // too dynamic
+    let topOffset = label.getBoundingClientRect().top + dimensions.labelHeight / 2;
+    let position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
+
+    // TODO: find dynamic way to get space between (not 220)
+    if(position[1] === "middle" && position[0] !== "center" && (
+      (position[0] === "left" && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2) ||
+      (position[0] === "right" && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2))) {
+        button.classList.add("top");
+        button.classList.remove("middle", "bottom");
+    }
+    else {
+      switch(position[1]) {
+        case "top":
+          button.classList.add("bottom");
+          button.classList.remove("middle", "top");
+          break;
+        case "middle":
+          button.classList.add("middle");
+          button.classList.remove("top", "bottom");
+          break;
+        case "bottom":
+          button.classList.add("top");
+          button.classList.remove("middle", "bottom");
+          break;
+      }
+      switch(position[0]) {
+        case "left":
+          button.classList.add("right");
+          button.classList.remove("center", "left");
+          break;
+        case "center":
+          button.classList.add("center", "top");
+          button.classList.remove("left", "right", "middle");
+          break;
+        case "right":
+          button.classList.add("left");
+          button.classList.remove("center", "right");
+          break;
+      }
+    }
+  }
+
+  /**
+   * @method _findLocation
+   * @description Finds the location of the label given by its x and y value
+   * with respect to the window width and window height given.
+   * @private
+   *
+   * @param {number} labelX
+   * @param {number} labelY
+   * @param {number} windowWidth
+   * @param {number} windowHeight
+   */
+  _findLocation(labelX, labelY, windowWidth, windowHeight) {
+    let xPosition = ["left", "center", "right"];
+    let yPosition = ["top", "middle", "bottom"];
+    let xLocation = Math.trunc(3 * (1 - ((windowWidth - labelX) / windowWidth)));
+    let yLocation = Math.trunc(3 * (1 - ((windowHeight - labelY) / windowHeight)));
+    if (xLocation >= 3) xLocation = 2;
+    else if (xLocation <= -1) xLocation = 0;
+    if (yLocation >= 3) yLocation = 2;
+    else if (yLocation <= -1) yLocation = 0;
+    return [xPosition[xLocation], yPosition[yLocation]];
   }
 
   /**

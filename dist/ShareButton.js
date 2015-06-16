@@ -365,7 +365,8 @@ var ShareButton = (function (_ShareUtils) {
         buttonText: 'Share',
         buttonFont: true,
         iconFont: true,
-        css: true
+        css: true,
+        collision: false
       },
 
       networks: {
@@ -411,23 +412,45 @@ var ShareButton = (function (_ShareUtils) {
     key: 'open',
 
     /**
-     * Public API
+     * @method open
+     * @description Opens Share Button
+     * @public
      */
     value: function open() {
       this._public('Open');
     }
   }, {
     key: 'close',
+
+    /**
+     * @method close
+     * @description Cpens Share Button
+     * @public
+     */
     value: function close() {
       this._public('Close');
     }
   }, {
     key: 'toggle',
+
+    /**
+     * @method toggle
+     * @description Toggles Share Button
+     * @public
+     */
     value: function toggle() {
       this._public('Toggle');
     }
   }, {
     key: '_public',
+
+    /**
+     * @method _public
+     * @description Executes action
+     * @private
+     *
+     * @param {String} action
+     */
     value: function _public(action) {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -525,6 +548,8 @@ var ShareButton = (function (_ShareUtils) {
 
       this._hide(instance); // hide instance
 
+      this.clicked = false; // for collision detection listening
+
       // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
       this._addClass(instance, 'sharer-' + index);
       instance = document.querySelectorAll(element)[index]; // reload instance
@@ -541,7 +566,7 @@ var ShareButton = (function (_ShareUtils) {
 
       this._addClass(button, 'networks-' + this.config.enabledNetworks);
       label.addEventListener('click', function () {
-        return _this._eventToggle(button);
+        return _this._eventToggle(button, label);
       });
 
       var _loop = function (k) {
@@ -568,9 +593,10 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      *
      * @param {DOMNode} button
+     * @param {DOMNode} label
      */
-    value: function _eventToggle(button) {
-      if (this._hasClass(button, 'active')) this._eventClose(button);else this._eventOpen(button);
+    value: function _eventToggle(button, label) {
+      if (this._hasClass(button, 'active')) this._eventClose(button);else this._eventOpen(button, label);
     }
   }, {
     key: '_eventOpen',
@@ -581,10 +607,12 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      *
      * @param {DOMNode} button
+     * @param {DOMNode} label
      */
-    value: function _eventOpen(button) {
+    value: function _eventOpen(button, label) {
       if (this._hasClass(button, 'load')) this._removeClass(button, 'load');
 
+      this._collisionDetection(button, label);
       this._addClass(button, 'active');
     }
   }, {
@@ -617,6 +645,118 @@ var ShareButton = (function (_ShareUtils) {
       this._hook('before', name, instance);
       this['_network' + name.capitalizeFirstLetter()]();
       this._hook('after', name, instance);
+    }
+  }, {
+    key: '_collisionDetection',
+
+    /**
+     * @method _collisionDetection
+     * @description Adds listeners the first time the button is clicked to call
+     * this._adjustClasses during scrolls and resizes.
+     * @private
+     *
+     * @param {DOMNode} button - list of social networks
+     * @param {DOMNode} label - share button
+     */
+    value: function _collisionDetection(button, label) {
+      var _this2 = this;
+
+      var dimensions = {
+        labelWidth: document.getElementsByClassName('entypo-export')[0].offsetWidth,
+        labelHeight: document.getElementsByClassName('entypo-export')[0].offsetHeight,
+        buttonWidth: document.getElementsByClassName('social')[0].offsetWidth
+      };
+      this._adjustClasses(button, label, dimensions);
+      if (!this.clicked) {
+        window.addEventListener('scroll', function () {
+          return _this2._adjustClasses(button, label, dimensions);
+        });
+        window.addEventListener('resize', function () {
+          return _this2._adjustClasses(button, label, dimensions);
+        });
+        this.clicked = true;
+      }
+    }
+  }, {
+    key: '_adjustClasses',
+
+    /**
+     * @method _adjustClasses
+     * @description Adjusts the positioning of the list of social networks based
+     * off of where the share button is relative to the window.
+     *
+     * @private
+     * @param {DOMNode} button
+     * @param {DOMNode} label
+     * @param {Object} dimensions
+     */
+    value: function _adjustClasses(button, label, dimensions) {
+      var windowWidth = window.innerWidth;
+      var windowHeight = window.innerHeight;
+      var leftOffset = label.getBoundingClientRect().left + dimensions.labelWidth / 2;
+      var rightOffset = windowWidth - leftOffset;
+      var buttonOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
+      // let spaceBetween = Math.abs(leftOffset - buttonOffset) // too dynamic
+      var topOffset = label.getBoundingClientRect().top + dimensions.labelHeight / 2;
+      var position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
+
+      // TODO: find dynamic way to get space between (not 220)
+      if (position[1] === 'middle' && position[0] !== 'center' && (position[0] === 'left' && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2 || position[0] === 'right' && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)) {
+        button.classList.add('top');
+        button.classList.remove('middle', 'bottom');
+      } else {
+        switch (position[1]) {
+          case 'top':
+            button.classList.add('bottom');
+            button.classList.remove('middle', 'top');
+            break;
+          case 'middle':
+            button.classList.add('middle');
+            button.classList.remove('top', 'bottom');
+            break;
+          case 'bottom':
+            button.classList.add('top');
+            button.classList.remove('middle', 'bottom');
+            break;
+        }
+        switch (position[0]) {
+          case 'left':
+            button.classList.add('right');
+            button.classList.remove('center', 'left');
+            break;
+          case 'center':
+            button.classList.add('center', 'top');
+            button.classList.remove('left', 'right', 'middle');
+            break;
+          case 'right':
+            button.classList.add('left');
+            button.classList.remove('center', 'right');
+            break;
+        }
+      }
+    }
+  }, {
+    key: '_findLocation',
+
+    /**
+     * @method _findLocation
+     * @description Finds the location of the label given by its x and y value
+     * with respect to the window width and window height given.
+     * @private
+     *
+     * @param {number} labelX
+     * @param {number} labelY
+     * @param {number} windowWidth
+     * @param {number} windowHeight
+     */
+    value: function _findLocation(labelX, labelY, windowWidth, windowHeight) {
+      var xPosition = ['left', 'center', 'right'];
+      var yPosition = ['top', 'middle', 'bottom'];
+      var xLocation = Math.trunc(3 * (1 - (windowWidth - labelX) / windowWidth));
+      var yLocation = Math.trunc(3 * (1 - (windowHeight - labelY) / windowHeight));
+      if (xLocation >= 3) xLocation = 2;else if (xLocation <= -1) xLocation = 0;
+      if (yLocation >= 3) yLocation = 2;else if (yLocation <= -1) yLocation = 0;
+      return [xPosition[xLocation], yPosition[yLocation]];
     }
   }, {
     key: '_networkFacebook',
