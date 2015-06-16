@@ -90,6 +90,8 @@ class ShareButton extends ShareUtils {
       }
     };
 
+    this.listener = null; // listener ID for toggleListen
+
     this._setup(this.element, options);
   }
 
@@ -113,6 +115,14 @@ class ShareButton extends ShareUtils {
    * @public
    */
   toggle() { this._public('Toggle'); }
+
+  /**
+   * @method toggleListen
+   * @description Toggles the Share Button listener, good for updaing share
+   * button for CSS animations.
+   * @public
+   */
+  toggleListen() { this._public('Listen'); }
 
   /**
    * @method _public
@@ -259,6 +269,26 @@ class ShareButton extends ShareUtils {
   }
 
   /**
+   * @method _eventListen
+   * @description Toggles weather or not a button's classes are being
+   * constantly updated regardless of scrolls or window resizes.
+   * @private
+   *
+   * @param {DOMNode} button
+   * @param {DOMNode} label
+   */
+  _eventListen(button, label) {
+    let dimensions = this._getDimensions(button, label);
+    if(this.listener === null)
+      this.listener = window.setInterval(() =>
+        this._adjustClasses(button, label, dimensions), 100);
+    else {
+      window.clearInterval(this.listener);
+      this.listener = null;
+    }
+  }
+
+  /**
    * @method _eventNetwork
    * @description Add 'active' class & remove 'load' class on button
    * @private
@@ -284,11 +314,7 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} label - share button
    */
   _collisionDetection(button, label) {
-    let dimensions = {
-      labelWidth: label.offsetWidth,
-      labelHeight: label.offsetHeight,
-      buttonWidth: button.offsetWidth,
-    };
+    let dimensions = this._getDimensions(button, label);
     this._adjustClasses(button, label, dimensions);
     if(!button.classList.contains('clicked')) {
       window.addEventListener('scroll', () =>
@@ -299,6 +325,22 @@ class ShareButton extends ShareUtils {
     }
   }
 
+  /**
+   * @method _getDimensions
+   * @description Returns an object with the dimensions of the button and
+   * label elements of a Share Button.
+   * @private
+   *
+   * @param {DOMNode} button
+   * @param {DOMNode} label
+   */
+  _getDimensions(button, label) {
+    return {
+      labelWidth: label.offsetWidth,
+      labelHeight: label.offsetHeight,
+      buttonWidth: button.offsetWidth
+    };
+  }
 
   /**
    * @method _adjustClasses

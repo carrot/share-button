@@ -455,6 +455,8 @@ var ShareButton = (function (_ShareUtils) {
       }
     };
 
+    this.listener = null; // listener ID for toggleListen
+
     this._setup(this.element, options);
   }
 
@@ -492,6 +494,18 @@ var ShareButton = (function (_ShareUtils) {
      */
     value: function toggle() {
       this._public('Toggle');
+    }
+  }, {
+    key: 'toggleListen',
+
+    /**
+     * @method toggleListen
+     * @description Toggles the Share Button listener, good for updaing share
+     * button for CSS animations.
+     * @public
+     */
+    value: function toggleListen() {
+      this._public('Listen');
     }
   }, {
     key: '_public',
@@ -686,6 +700,29 @@ var ShareButton = (function (_ShareUtils) {
       this._removeClass(button, 'active');
     }
   }, {
+    key: '_eventListen',
+
+    /**
+     * @method _eventListen
+     * @description Toggles weather or not a button's classes are being
+     * constantly updated regardless of scrolls or window resizes.
+     * @private
+     *
+     * @param {DOMNode} button
+     * @param {DOMNode} label
+     */
+    value: function _eventListen(button, label) {
+      var _this2 = this;
+
+      var dimensions = this._getDimensions(button, label);
+      if (this.listener === null) this.listener = window.setInterval(function () {
+        return _this2._adjustClasses(button, label, dimensions);
+      }, 100);else {
+        window.clearInterval(this.listener);
+        this.listener = null;
+      }
+    }
+  }, {
     key: '_eventNetwork',
 
     /**
@@ -716,23 +753,38 @@ var ShareButton = (function (_ShareUtils) {
      * @param {DOMNode} label - share button
      */
     value: function _collisionDetection(button, label) {
-      var _this2 = this;
+      var _this3 = this;
 
-      var dimensions = {
+      var dimensions = this._getDimensions(button, label);
+      this._adjustClasses(button, label, dimensions);
+      if (!button.classList.contains('clicked')) {
+        window.addEventListener('scroll', function () {
+          return _this3._adjustClasses(button, label, dimensions);
+        });
+        window.addEventListener('resize', function () {
+          return _this3._adjustClasses(button, label, dimensions);
+        });
+        button.classList.add('clicked');
+      }
+    }
+  }, {
+    key: '_getDimensions',
+
+    /**
+     * @method _getDimensions
+     * @description Returns an object with the dimensions of the button and
+     * label elements of a Share Button.
+     * @private
+     *
+     * @param {DOMNode} button
+     * @param {DOMNode} label
+     */
+    value: function _getDimensions(button, label) {
+      return {
         labelWidth: label.offsetWidth,
         labelHeight: label.offsetHeight,
         buttonWidth: button.offsetWidth
       };
-      this._adjustClasses(button, label, dimensions);
-      if (!button.classList.contains('clicked')) {
-        window.addEventListener('scroll', function () {
-          return _this2._adjustClasses(button, label, dimensions);
-        });
-        window.addEventListener('resize', function () {
-          return _this2._adjustClasses(button, label, dimensions);
-        });
-        button.classList.add('clicked');
-      }
     }
   }, {
     key: '_adjustClasses',
