@@ -291,6 +291,23 @@ var ShareUtils = (function () {
         _merge(target, arguments[a]);
       }return target;
     })
+  }, {
+    key: "_objToArray",
+
+    /**
+     * @method _objectToArray
+     * @description Takes an Object and converts it into an array of Objects. This is used when converting a list of DOMNodes into an array.
+     *
+     * @param {Object} obj
+     * @returns {Array} arr
+     */
+    value: function _objToArray(obj) {
+      var arr = [];
+
+      for (var k in obj) {
+        if (typeof obj[k] === "object") arr.push(obj[k]);
+      }return arr;
+    }
   }]);
 
   return ShareUtils;
@@ -344,7 +361,11 @@ var ShareButton = (function (_ShareUtils) {
     _classCallCheck(this, ShareButton);
 
     _get(Object.getPrototypeOf(ShareButton.prototype), 'constructor', this).call(this);
-    this.element = element;
+
+    if (typeof element === 'object') {
+      this.element = undefined;
+      options = element;
+    } else this.element = element;
 
     this.el = {
       head: document.getElementsByTagName('head')[0],
@@ -490,14 +511,17 @@ var ShareButton = (function (_ShareUtils) {
      * @param {Object} opts
      */
     value: function _setup(element, opts) {
-      var instances = document.querySelectorAll(element);
+      var instances = undefined;
+
+      if (typeof element === 'undefined') {
+        instances = this._objToArray(document.getElementsByTagName('share-button'));
+      } else instances = document.querySelectorAll('share-button' + element);
 
       this._merge(this.config, opts); // Combine configs
       this._detectNetworks(); // Set number of networks
-      this._normalizeNetworkConfiguration(); //
+      this._normalizeNetworkConfiguration();
 
-      if (this.config.ui.iconFont) this._injectIcons(); // Inject Icon Fontset
-      if (this.config.ui.buttonFont) this._injectFont(); // Inject Google's Lato Fontset (if enabled)
+      if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
 
       // Inject Facebook JS SDK (if Facebook is enabled)
       if (this.config.networks.facebook.enabled && this.config.networks.facebook.loadSdk) this._injectFacebookSdk();
@@ -512,7 +536,7 @@ var ShareButton = (function (_ShareUtils) {
         for (var _iterator2 = instances[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var instance = _step2.value;
 
-          this._setupInstance(element, index++);
+          this._setupInstance(instance, index++);
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -540,11 +564,8 @@ var ShareButton = (function (_ShareUtils) {
      * @param {DOMNode} element
      * @param {Integer} index
      */
-    value: function _setupInstance(element, index) {
+    value: function _setupInstance(instance, index) {
       var _this = this;
-
-      // Get instance - (Note: Reload Element. gS/qSA doesn't support live NodeLists)
-      var instance = document.querySelectorAll(element)[index];
 
       this._hide(instance); // hide instance
 
@@ -552,7 +573,6 @@ var ShareButton = (function (_ShareUtils) {
 
       // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
       this._addClass(instance, 'sharer-' + index);
-      instance = document.querySelectorAll(element)[index]; // reload instance
 
       // Inject HTML and CSS
       this._injectHtml(instance);
@@ -572,6 +592,7 @@ var ShareButton = (function (_ShareUtils) {
       var _loop = function (k) {
         var network = networks[k];
         if (typeof network !== 'undefined') {
+          network.style.display = _this.config.networks[network.getAttribute('data-network')].display;
           network.addEventListener('click', function () {
             _this._eventNetwork(instance, network);
             _this._eventClose(button);
@@ -887,7 +908,7 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      */
     value: function _injectHtml(instance) {
-      instance.innerHTML = '<label class=\'entypo-export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'entypo-pinterest\' data-network=\'pinterest\'></li><li class=\'entypo-twitter\' data-network=\'twitter\'></li><li class=\'entypo-facebook\' data-network=\'facebook\'></li><li class=\'entypo-gplus\' data-network=\'googlePlus\'></li><li class=\'entypo-paper-plane\' data-network=\'email\'></li></ul></div>';
+      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
     }
   }, {
     key: '_injectFacebookSdk',

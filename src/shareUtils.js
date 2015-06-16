@@ -167,6 +167,22 @@ class ShareUtils {
 
     return target;
   }
+
+  /**
+   * @method _objectToArray
+   * @description Takes an Object and converts it into an array of Objects. This is used when converting a list of DOMNodes into an array.
+   *
+   * @param {Object} obj
+   * @returns {Array} arr
+   */
+  _objToArray(obj) {
+    let arr = [];
+
+    for (let k in obj)
+      if (typeof obj[k] === 'object') arr.push(obj[k]);
+
+    return arr;
+  }
 }
 
 /**

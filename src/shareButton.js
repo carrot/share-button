@@ -10,7 +10,12 @@
 class ShareButton extends ShareUtils {
   constructor(element, options) {
     super();
-    this.element = element;
+
+    if (typeof element === 'object') {
+      this.element = undefined;
+      options = element;
+    } else
+      this.element = element;
 
     this.el = {
       head: document.getElementsByTagName('head')[0],
@@ -116,14 +121,19 @@ class ShareButton extends ShareUtils {
    * @param {Object} opts
    */
   _setup(element, opts) {
-    let instances = document.querySelectorAll(element);
+    let instances;
+
+    if (typeof element === 'undefined') {
+      instances = this._objToArray(document.getElementsByTagName('share-button'));
+    }
+    else
+      instances = document.querySelectorAll(`share-button${element}`);
 
     this._merge(this.config, opts); // Combine configs
     this._detectNetworks(); // Set number of networks
-    this._normalizeNetworkConfiguration(); //
+    this._normalizeNetworkConfiguration();
 
-    if (this.config.ui.iconFont) this._injectIcons(); // Inject Icon Fontset
-    if (this.config.ui.buttonFont) this._injectFont(); // Inject Google's Lato Fontset (if enabled)
+    if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
 
     // Inject Facebook JS SDK (if Facebook is enabled)
     if (this.config.networks.facebook.enabled &&
@@ -132,8 +142,9 @@ class ShareButton extends ShareUtils {
 
     // initialize instances
     let index = 0;
-    for (let instance of instances)
-      this._setupInstance(element, index++);
+    for (let instance of instances) {
+      this._setupInstance(instance, index++);
+    }
   }
 
   /**
@@ -144,17 +155,13 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} element
    * @param {Integer} index
    */
-  _setupInstance(element, index) {
-    // Get instance - (Note: Reload Element. gS/qSA doesn't support live NodeLists)
-    let instance = document.querySelectorAll(element)[index];
-
+  _setupInstance(instance, index) {
     this._hide(instance); // hide instance
 
     this.clicked = false; // for collision detection listening
 
     // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
     this._addClass(instance, `sharer-${index}`);
-    instance = document.querySelectorAll(element)[index]; // reload instance
 
     // Inject HTML and CSS
     this._injectHtml(instance);
@@ -174,6 +181,7 @@ class ShareButton extends ShareUtils {
     for (let k in Object.keys(networks)) {
       let network = networks[k];
       if(typeof(network) !== "undefined") {
+        network.style.display = this.config.networks[network.getAttribute('data-network')].display;
         network.addEventListener('click', () => {
           this._eventNetwork(instance, network);
           this._eventClose(button);
@@ -460,7 +468,7 @@ class ShareButton extends ShareUtils {
    * @private
    */
   _injectHtml(instance) {
-    instance.innerHTML = `<label class='entypo-export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='entypo-pinterest' data-network='pinterest'></li><li class='entypo-twitter' data-network='twitter'></li><li class='entypo-facebook' data-network='facebook'></li><li class='entypo-gplus' data-network='googlePlus'></li><li class='entypo-paper-plane' data-network='email'></li></ul></div>`;
+    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='gplus' data-network='googlePlus'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
   }
 
   /**
