@@ -421,6 +421,12 @@ var ShareButton = (function (_ShareUtils) {
           url: null,
           title: null
         },
+        linkedin: {
+          enabled: true,
+          url: null,
+          title: null,
+          description: null
+        },
         email: {
           enabled: true,
           title: null, // Subject
@@ -851,6 +857,22 @@ var ShareButton = (function (_ShareUtils) {
       });
     }
   }, {
+    key: '_networkLinkedin',
+
+    /**
+     * @method _networkLinkedIn
+     * @description Create & display window
+     * @private
+     */
+    value: function _networkLinkedin() {
+      this.popup('https://www.linkedin.com/shareArticle', {
+        mini: 'true',
+        url: this.config.networks.linkedin.url,
+        title: this.config.networks.linkedin.title,
+        summary: this.config.networks.linkedin.description
+      });
+    }
+  }, {
     key: '_networkEmail',
 
     /**
@@ -927,7 +949,7 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      */
     value: function _injectHtml(instance) {
-      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'reddit\' data-network=\'reddit\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
+      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'reddit\' data-network=\'reddit\'></li><li class=\'entypo-linkedin\' data-network=\'linkedin\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
     }
   }, {
     key: '_injectFacebookSdk',
