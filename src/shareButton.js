@@ -270,8 +270,8 @@ class ShareButton extends ShareUtils {
    */
   _collisionDetection(button, label) {
     let dimensions = {
-      labelWidth: document.getElementsByClassName("entypo-export")[0].offsetWidth,
-      labelHeight: document.getElementsByClassName("entypo-export")[0].offsetHeight,
+      labelWidth: document.getElementsByClassName("export")[0].offsetWidth,
+      labelHeight: document.getElementsByClassName("export")[0].offsetHeight,
       buttonWidth: document.getElementsByClassName("social")[0].offsetWidth,
     };
     this._adjustClasses(button, label, dimensions);
@@ -466,24 +466,6 @@ class ShareButton extends ShareUtils {
   }
 
   /**
-   * @method _injectIcons
-   * @description Inject default icons
-   * @private
-   */
-  _injectIcons() {
-    this._injectStylesheet('https://www.sharebutton.co/fonts/v2/entypo.min.css');
-  }
-
-  /**
-   * @method _injectFont
-   * @description Inject default font
-   * @private
-   */
-  _injectFont(){
-    this._injectStylesheet('https://fonts.googleapis.com/css?family=Lato:900&text=#{@config.ui.buttonText}');
-  }
-
-  /**
    * @method _injectStylesheet
    * @description Inject link to stylesheet
    * @private
@@ -505,7 +487,7 @@ class ShareButton extends ShareUtils {
    * @private
    */
   _injectHtml(instance) {
-    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='gplus' data-network='googlePlus'></li><li class='reddit' data-network='reddit'></li><li class='entypo-linkedin' data-network='linkedin'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
+    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='gplus' data-network='googlePlus'></li><li class='reddit' data-network='reddit'></li><li class='linkedin' data-network='linkedin'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
   }
 
   /**
@@ -561,7 +543,7 @@ class ShareButton extends ShareUtils {
     let content;
     if ((content = (document.querySelector('meta[property="og:title"]') ||
                   document.querySelector('meta[name="twitter:title"]'))))
-                  content.getAttribute('content');
+      return content.getAttribute('content');
     else if ((content = document.querySelector('title')))
       return content.innerText;
   }
@@ -574,8 +556,8 @@ class ShareButton extends ShareUtils {
   _defaultImage() {
     let content;
     if ((content = (document.querySelector('meta[property="og:image"]') ||
-                   document.querySelector('meta[name="twitter:image"]'))))
-                   content.getAttribute('content');
+                    document.querySelector('meta[name="twitter:image"]'))))
+      return content.getAttribute('content');
   }
 
   /**
@@ -590,7 +572,7 @@ class ShareButton extends ShareUtils {
     if((content = (document.querySelector('meta[property="og:description"]') ||
                   document.querySelector('meta[name="twitter:description"]') ||
                   document.querySelector('meta[name="description"]'))))
-                  content.getAttribute('content');
+      return content.getAttribute('content');
     else
       return '';
   }
@@ -604,7 +586,11 @@ class ShareButton extends ShareUtils {
     // Update network-specific configuration with global configurations
     for (let network of Object.keys(this.config.networks)) {
       let display;
-
+      for (let option of Object.keys(this.config.networks[network])) {
+        if(this.config.networks[network][option] === null) {
+          this.config.networks[network][option] = this.config[option];
+        }
+      }
       // Check for enabled networks and display them
       if (this.config.networks[network].enabled) {
         display = 'block';
@@ -629,7 +615,7 @@ class ShareButton extends ShareUtils {
 
     // Encode Twitter description for URL
     if (!!this.config.networks.twitter.description)
-      if (!this.isEncoded(this.config.networks.twitter.description))
+      if (!this._isEncoded(this.config.networks.twitter.description))
         this.config.networks.twitter.description = encodeURIComponent(this.config.networks.twitter.description);
 
     // Typecast Facebook appId to a String
