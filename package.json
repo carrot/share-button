@@ -29,7 +29,8 @@
   "dependencies": {},
   "devDependencies": {
     "autoprefixer-stylus": "latest",
-    "axis": "^0.4.0",
+    "axis": "latest",
+    "babel-core": "latest",
     "del": "latest",
     "gulp": "latest",
     "gulp-accord": "latest",

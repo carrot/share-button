@@ -10,12 +10,11 @@ var del = require('del');
 var autoprefixer = require('autoprefixer-stylus');
 var axis = require('axis');
 
-gulp.task('clean', function(cb) {
+gulp.task('clean', function() {
     del(['dist/*[.js, .css]']);
-    return cb();
 });
 
-gulp.task('style', ['clean'], function(file) {
+gulp.task('style', ['clean'], function() {
   var styleShareButton = gulp
     .src('src/styles.styl')
     .pipe(accord('stylus', {
@@ -29,7 +28,7 @@ gulp.task('style', ['clean'], function(file) {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('script', ['clean'], function(file) {
+gulp.task('script', ['clean'], function() {
     var umdShareButton = gulp
         .src(['src/polyfills.js', 'src/shareUtils.js', 'src/shareButton.js'])
         .pipe(babel({ blacklist: [] }))
@@ -46,5 +45,28 @@ gulp.task('script', ['clean'], function(file) {
         .pipe(gulp.dest('dist/'));
 });
 
+gulp.task('polyfill', function() {
+  var umdShareButton = gulp
+      .src([
+        'node_modules/babel-core/browser-polyfill.js',
+        'src/polyfills.js',
+        'src/shareUtils.js',
+        'src/shareButton.js'
+      ])
+      .pipe(babel({ blacklist: [] }))
+      .pipe(concat('ShareButton-polyfill.js'))
+      .pipe(wrap({
+        namespace: 'ShareButton',
+          exports: 'ShareButton'
+      }))
+      .pipe(gulp.dest('dist/'))
+      .pipe(uglify())
+      .pipe(rename({
+          suffix: '.min'
+      }))
+      .pipe(gulp.dest('dist/'));
+});
+
 gulp.task('build', ['script', 'style']);
+gulp.task('production', ['script', 'polyfill', 'style']);
 gulp.task('default', ['build']);
