@@ -308,6 +308,20 @@ var ShareUtils = (function () {
         if (typeof obj[k] === "object") arr.push(obj[k]);
       }return arr;
     }
+  }, {
+    key: "_isMobile",
+
+    /**
+     * @method _isMobile
+     * @description Returns true if current device is mobile, false otherwise
+     * @author kriskbx
+     * [Original Gist] {@link https://github.com/kriskbx/whatsapp-sharing/blob/master/src/button.js}
+     * @private
+     */
+    value: function _isMobile() {
+      if (navigator.userAgent.match(/Android|iPhone/i) && !navigator.userAgent.match(/iPod|iPad/i)) return true;
+      return false;
+    }
   }]);
 
   return ShareUtils;
@@ -427,6 +441,11 @@ var ShareButton = (function (_ShareUtils) {
           title: null,
           description: null
         },
+        whatsapp: {
+          enabled: true,
+          description: null,
+          url: null
+        },
         email: {
           enabled: true,
           title: null, // Subject
@@ -514,7 +533,7 @@ var ShareButton = (function (_ShareUtils) {
     key: '_setup',
 
     /**
-     * @method setup
+     * @method _setup
      * @description Sets up Share Button
      * @private
      *
@@ -529,6 +548,10 @@ var ShareButton = (function (_ShareUtils) {
       } else instances = document.querySelectorAll('share-button' + element);
 
       this._merge(this.config, opts); // Combine configs
+
+      // If not a mobile device, disable whatsapp display
+      if (this.config.networks.whatsapp.enabled && !this._isMobile()) this.config.networks.whatsapp.enabled = false;
+
       this._detectNetworks(); // Set number of networks
       this._normalizeNetworkConfiguration();
 
@@ -901,6 +924,20 @@ var ShareButton = (function (_ShareUtils) {
       });
     }
   }, {
+    key: '_networkWhatsapp',
+
+    /**
+     * @method _networkWhatsapp
+     * @description Open whatsapp for sending message
+     * @private
+     */
+    value: function _networkWhatsapp() {
+      var url = 'whatsapp://send?text=';
+      url += encodeURIComponent(this.config.networks.whatsapp.description) + '%20';
+      url += encodeURIComponent(this.config.networks.whatsapp.url);
+      this.popup(url);
+    }
+  }, {
     key: '_injectStylesheet',
 
     /**
@@ -927,7 +964,7 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      */
     value: function _injectHtml(instance) {
-      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'reddit\' data-network=\'reddit\'></li><li class=\'linkedin\' data-network=\'linkedin\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
+      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'whatsapp\' data-network=\'whatsapp\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'reddit\' data-network=\'reddit\'></li><li class=\'linkedin\' data-network=\'linkedin\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
     }
   }, {
     key: '_injectFacebookSdk',

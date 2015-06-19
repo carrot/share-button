@@ -183,6 +183,20 @@ class ShareUtils {
 
     return arr;
   }
+
+  /**
+   * @method _isMobile
+   * @description Returns true if current device is mobile, false otherwise
+   * @author kriskbx
+   * [Original Gist] {@link https://github.com/kriskbx/whatsapp-sharing/blob/master/src/button.js}
+   * @private
+   */
+  _isMobile() {
+    if(navigator.userAgent.match(/Android|iPhone/i) &&
+       !navigator.userAgent.match(/iPod|iPad/i))
+      return true;
+    return false;
+  }
 }
 
 /**
