@@ -66,6 +66,11 @@ class ShareButton extends ShareUtils {
           image: null,
           description: null
         },
+        reddit: {
+          enabled: true,
+          url: null,
+          title: null
+        },
         email: {
           enabled: true,
           title: null,      // Subject
@@ -429,6 +434,18 @@ class ShareButton extends ShareUtils {
   }
 
   /**
+   * @method _networkReddit
+   * @description Create & display window
+   * @private
+   */
+  _networkReddit() {
+    this.popup('http://www.reddit.com/submit', {
+      url: this.config.networks.reddit.url,
+      title: this.config.networks.reddit.title
+    });
+  }
+
+  /**
    * @method _injectIcons
    * @description Inject default icons
    * @private
@@ -468,7 +485,7 @@ class ShareButton extends ShareUtils {
    * @private
    */
   _injectHtml(instance) {
-    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='gplus' data-network='googlePlus'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
+    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='gplus' data-network='googlePlus'></li><li class='reddit' data-network='reddit'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
   }
 
   /**
