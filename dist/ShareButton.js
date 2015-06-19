@@ -172,7 +172,7 @@ var ShareUtils = (function () {
      * @param {Boolean}
      */
     value: function _isEncoded(str) {
-      this.str = str.toRFC3986();
+      str = str.toRFC3986();
       return decodeURIComponent(str) !== str;
     }
   }, {
@@ -420,6 +420,12 @@ var ShareButton = (function (_ShareUtils) {
           enabled: true,
           url: null,
           title: null
+        },
+        linkedin: {
+          enabled: true,
+          url: null,
+          title: null,
+          description: null
         },
         email: {
           enabled: true,
@@ -688,8 +694,8 @@ var ShareButton = (function (_ShareUtils) {
       var _this2 = this;
 
       var dimensions = {
-        labelWidth: document.getElementsByClassName('entypo-export')[0].offsetWidth,
-        labelHeight: document.getElementsByClassName('entypo-export')[0].offsetHeight,
+        labelWidth: document.getElementsByClassName('export')[0].offsetWidth,
+        labelHeight: document.getElementsByClassName('export')[0].offsetHeight,
         buttonWidth: document.getElementsByClassName('social')[0].offsetWidth
       };
       this._adjustClasses(button, label, dimensions);
@@ -851,6 +857,22 @@ var ShareButton = (function (_ShareUtils) {
       });
     }
   }, {
+    key: '_networkLinkedin',
+
+    /**
+     * @method _networkLinkedIn
+     * @description Create & display window
+     * @private
+     */
+    value: function _networkLinkedin() {
+      this.popup('https://www.linkedin.com/shareArticle', {
+        mini: 'true',
+        url: this.config.networks.linkedin.url,
+        title: this.config.networks.linkedin.title,
+        summary: this.config.networks.linkedin.description
+      });
+    }
+  }, {
     key: '_networkEmail',
 
     /**
@@ -879,28 +901,6 @@ var ShareButton = (function (_ShareUtils) {
       });
     }
   }, {
-    key: '_injectIcons',
-
-    /**
-     * @method _injectIcons
-     * @description Inject default icons
-     * @private
-     */
-    value: function _injectIcons() {
-      this._injectStylesheet('https://www.sharebutton.co/fonts/v2/entypo.min.css');
-    }
-  }, {
-    key: '_injectFont',
-
-    /**
-     * @method _injectFont
-     * @description Inject default font
-     * @private
-     */
-    value: function _injectFont() {
-      this._injectStylesheet('https://fonts.googleapis.com/css?family=Lato:900&text=#{@config.ui.buttonText}');
-    }
-  }, {
     key: '_injectStylesheet',
 
     /**
@@ -927,7 +927,7 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      */
     value: function _injectHtml(instance) {
-      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'reddit\' data-network=\'reddit\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
+      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'reddit\' data-network=\'reddit\'></li><li class=\'linkedin\' data-network=\'linkedin\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
     }
   }, {
     key: '_injectFacebookSdk',
@@ -987,7 +987,7 @@ var ShareButton = (function (_ShareUtils) {
      */
     value: function _defaultTitle() {
       var content = undefined;
-      if (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) content.getAttribute('content');else if (content = document.querySelector('title')) return content.innerText;
+      if (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) return content.getAttribute('content');else if (content = document.querySelector('title')) return content.innerText;
     }
   }, {
     key: '_defaultImage',
@@ -999,7 +999,7 @@ var ShareButton = (function (_ShareUtils) {
      */
     value: function _defaultImage() {
       var content = undefined;
-      if (content = document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]')) content.getAttribute('content');
+      if (content = document.querySelector('meta[property="og:image"]') || document.querySelector('meta[name="twitter:image"]')) return content.getAttribute('content');
     }
   }, {
     key: '_defaultDescription',
@@ -1013,7 +1013,7 @@ var ShareButton = (function (_ShareUtils) {
      */
     value: function _defaultDescription() {
       var content = undefined;
-      if (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) content.getAttribute('content');else return '';
+      if (content = document.querySelector('meta[property="og:description"]') || document.querySelector('meta[name="twitter:description"]') || document.querySelector('meta[name="description"]')) return content.getAttribute('content');else return '';
     }
   }, {
     key: '_detectNetworks',
@@ -1034,6 +1034,32 @@ var ShareButton = (function (_ShareUtils) {
           var network = _step3.value;
 
           var display = undefined;
+          var _iteratorNormalCompletion4 = true;
+          var _didIteratorError4 = false;
+          var _iteratorError4 = undefined;
+
+          try {
+            for (var _iterator4 = Object.keys(this.config.networks[network])[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+              var option = _step4.value;
+
+              if (this.config.networks[network][option] === null) {
+                this.config.networks[network][option] = this.config[option];
+              }
+            }
+          } catch (err) {
+            _didIteratorError4 = true;
+            _iteratorError4 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion4 && _iterator4['return']) {
+                _iterator4['return']();
+              }
+            } finally {
+              if (_didIteratorError4) {
+                throw _iteratorError4;
+              }
+            }
+          }
 
           // Check for enabled networks and display them
           if (this.config.networks[network].enabled) {
@@ -1071,7 +1097,7 @@ var ShareButton = (function (_ShareUtils) {
       if (!this.config.networks.facebook.appId) this.config.networks.facebook.loadSdk = false;
 
       // Encode Twitter description for URL
-      if (!!this.config.networks.twitter.description) if (!this.isEncoded(this.config.networks.twitter.description)) this.config.networks.twitter.description = encodeURIComponent(this.config.networks.twitter.description);
+      if (!!this.config.networks.twitter.description) if (!this._isEncoded(this.config.networks.twitter.description)) this.config.networks.twitter.description = encodeURIComponent(this.config.networks.twitter.description);
 
       // Typecast Facebook appId to a String
       if (typeof this.config.networks.facebook.appId === 'number') this.config.networks.facebook.appId = this.config.networks.facebook.appId.toString();

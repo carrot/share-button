@@ -72,7 +72,7 @@ class ShareUtils {
    * @param {Boolean}
    */
   _isEncoded(str) {
-    this.str = str.toRFC3986();
+    str = str.toRFC3986();
     return decodeURIComponent(str) !== str;
   }
 
