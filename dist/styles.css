@@ -1,4 +1,5 @@
-.share-button {
+@import url("//fonts.googleapis.com/css?family=Lato");
+share-button {
   width: 92px;
   height: 20px;
   -webkit-touch-callout: none;
@@ -7,10 +8,7 @@
   -ms-user-select: none;
   user-select: none;
 }
-.share-button [class*='entypo-']:before {
-  font-family: 'entypo', sans-serif;
-}
-.share-button label {
+share-button label {
   font-size: 16px;
   cursor: pointer;
   margin: 0;
@@ -21,159 +19,172 @@
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
 }
-.share-button label:hover {
+share-button label:hover {
   opacity: 0.8;
 }
-.share-button label span {
+share-button label.export span {
   text-transform: uppercase;
   font-size: 0.9em;
   font-family: Lato, sans-serif;
-  font-weight: bold;
+  font-weight: 800;
   -webkit-font-smoothing: antialiased;
-  padding-left: 6px;
+  padding-left: 1.5em;
 }
-.share-button .social {
+share-button label.export span:before {
+  position: absolute;
+  content: ' ';
+  width: 1em;
+  height: 1em;
+  top: 0.15em;
+  left: 0.75em;
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#333" d="M15 15H2V6h2.595s.69-.896 2.17-2H1c-.553 0-1 .45-1 1v11c0 .553.447 1 1 1h15c.553 0 1-.447 1-1v-3.746L15 13.9V15zm-1.64-6.95v3.55L20 6.4l-6.64-5v3.132C5.3 4.532 5.3 12.5 5.3 12.5c2.282-3.748 3.686-4.45 8.06-4.45z"/></svg>");
+  background-repeat: no-repeat;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+share-button .social {
   opacity: 0;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
   margin-left: -15px;
   visibility: hidden;
 }
-.share-button .social.top {
+share-button .social.top {
   -webkit-transform-origin: 0% 0%;
   -ms-transform-origin: 0% 0%;
   transform-origin: 0% 0%;
   margin-top: -80px;
 }
-.share-button .social.bottom {
+share-button .social.bottom {
   -webkit-transform-origin: 0% 0%;
   -ms-transform-origin: 0% 0%;
   transform-origin: 0% 0%;
   margin-top: 5px;
 }
-.share-button .social.middle {
+share-button .social.middle {
   margin-top: -34px;
 }
-.share-button .social.middle.right {
+share-button .social.middle.right {
   -webkit-transform-origin: 5% 50%;
   -ms-transform-origin: 5% 50%;
   transform-origin: 5% 50%;
   margin-left: 105px;
 }
-.share-button .social.middle.left {
+share-button .social.middle.left {
   -webkit-transform-origin: 5% 50%;
   -ms-transform-origin: 5% 50%;
   transform-origin: 5% 50%;
 }
-.share-button .social.right {
+share-button .social.right {
   margin-left: 14px;
 }
-.share-button .social.load {
+share-button .social.load {
   -webkit-transition: none !important;
   transition: none !important;
 }
-.share-button .social.networks-1 {
+share-button .social.networks-1 {
   width: 60px;
 }
-.share-button .social.networks-1.center {
+share-button .social.networks-1.center {
   margin-left: 14px;
 }
-.share-button .social.networks-1.left {
+share-button .social.networks-1.left {
   margin-left: 14px;
 }
-.share-button .social.networks-1.middle.left {
+share-button .social.networks-1.middle.left {
   margin-left: -70px;
 }
-.share-button .social.networks-1 ul {
+share-button .social.networks-1 ul {
   width: 60px;
 }
-.share-button .social.networks-2 {
+share-button .social.networks-2 {
   width: 120px;
 }
-.share-button .social.networks-2.center {
+share-button .social.networks-2.center {
   margin-left: -13px;
 }
-.share-button .social.networks-2.left {
+share-button .social.networks-2.left {
   margin-left: -44px;
 }
-.share-button .social.networks-2.middle.left {
+share-button .social.networks-2.middle.left {
   margin-left: -130px;
 }
-.share-button .social.networks-2 ul {
+share-button .social.networks-2 ul {
   width: 120px;
 }
-.share-button .social.networks-3 {
+share-button .social.networks-3 {
   width: 180px;
 }
-.share-button .social.networks-3.center {
+share-button .social.networks-3.center {
   margin-left: -45px;
 }
-.share-button .social.networks-3.left {
+share-button .social.networks-3.left {
   margin-left: -102px;
 }
-.share-button .social.networks-3.middle.left {
+share-button .social.networks-3.middle.left {
   margin-left: -190px;
 }
-.share-button .social.networks-3 ul {
+share-button .social.networks-3 ul {
   width: 180px;
 }
-.share-button .social.networks-4 {
+share-button .social.networks-4 {
   width: 240px;
 }
-.share-button .social.networks-4.center {
+share-button .social.networks-4.center {
   margin-left: -75px;
 }
-.share-button .social.networks-4.left {
+share-button .social.networks-4.left {
   margin-left: 162px;
 }
-.share-button .social.networks-4.middle.left {
+share-button .social.networks-4.middle.left {
   margin-left: -250px;
 }
-.share-button .social.networks-4 ul {
+share-button .social.networks-4 ul {
   width: 240px;
 }
-.share-button .social.networks-5 {
+share-button .social.networks-5 {
   width: 300px;
 }
-.share-button .social.networks-5.center {
+share-button .social.networks-5.center {
   margin-left: -105px;
 }
-.share-button .social.networks-5.left {
+share-button .social.networks-5.left {
   margin-left: -225px;
 }
-.share-button .social.networks-5.middle.left {
+share-button .social.networks-5.middle.left {
   margin-left: -320px;
 }
-.share-button .social.networks-5 ul {
+share-button .social.networks-5 ul {
   width: 300px;
 }
-.share-button .social.active {
+share-button .social.active {
   opacity: 1;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
   visibility: visible;
 }
-.share-button .social.active.top {
+share-button .social.active.top {
   -webkit-transform: scale(1) translateY(-10px);
   -ms-transform: scale(1) translateY(-10px);
   transform: scale(1) translateY(-10px);
 }
-.share-button .social.active.bottom {
+share-button .social.active.bottom {
   -webkit-transform: scale(1) translateY(15px);
   -ms-transform: scale(1) translateY(15px);
   transform: scale(1) translateY(15px);
 }
-.share-button .social.active.middle.right {
+share-button .social.active.middle.right {
   -webkit-transform: scale(1) translateX(10px);
   -ms-transform: scale(1) translateX(10px);
   transform: scale(1) translateX(10px);
 }
-.share-button .social.active.middle.left {
+share-button .social.active.middle.left {
   -webkit-transform: scale(1) translateX(-10px);
   -ms-transform: scale(1) translateX(-10px);
   transform: scale(1) translateX(-10px);
 }
-.share-button .social ul {
+share-button .social ul {
   position: relative;
   left: 0;
   right: 0;
@@ -183,7 +194,7 @@
   padding: 0;
   list-style: none;
 }
-.share-button .social ul li {
+share-button .social ul li {
   font-size: 20px;
   cursor: pointer;
   width: 60px;
@@ -199,26 +210,87 @@
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
 }
-.share-button .social ul li:hover {
-  color: rgba(0,0,0,0.5);
+share-button .social ul li:hover:before {
+  opacity: 0;
 }
-.share-button .social li[class*='facebook'] {
+share-button .social ul li:hover:after {
+  opacity: 0.5;
+}
+share-button .social ul li:before,
+share-button .social ul li:after {
+  position: absolute;
+  content: ' ';
+  width: inherit;
+  height: inherit;
+  -webkit-transform: translate(-20%, 0);
+  -ms-transform: translate(-20%, 0);
+  transform: translate(-20%, 0);
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+share-button .social ul li:before {
+  opacity: 1;
+}
+share-button .social ul li:after {
+  opacity: 0;
+}
+share-button .social li[class*='facebook'] {
   background: #3b5998;
   display: block;
 }
-.share-button .social li[class*='twitter'] {
+share-button .social li[class*='facebook']:before {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64h-64z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='facebook']:after {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#000" d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64h-64z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='twitter'] {
   background: #6cdfea;
   display: block;
 }
-.share-button .social li[class*='gplus'] {
+share-button .social li[class*='twitter']:before {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M17.316 6.246c.008.162.01.326.01.488 0 4.99-3.796 10.742-10.74 10.742-2.132 0-4.115-.625-5.786-1.697.296.034.596.052.9.052 1.77 0 3.397-.604 4.688-1.615-1.65-.03-3.046-1.12-3.526-2.62.23.042.467.065.71.065.345 0 .68-.045.995-.13C2.84 11.18 1.54 9.657 1.54 7.827V7.78c.508.284 1.09.454 1.71.474-1.014-.678-1.68-1.832-1.68-3.143 0-.69.185-1.34.51-1.897C3.943 5.498 6.726 7 9.863 7.158c-.064-.277-.097-.564-.097-.86 0-2.085 1.69-3.774 3.774-3.774 1.085 0 2.066.457 2.755 1.19.86-.17 1.667-.483 2.397-.915-.282.88-.88 1.62-1.66 2.087.764-.092 1.49-.293 2.168-.594-.506.758-1.146 1.422-1.884 1.953z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='twitter']:after {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#000" d="M17.316 6.246c.008.162.01.326.01.488 0 4.99-3.796 10.742-10.74 10.742-2.132 0-4.115-.625-5.786-1.697.296.034.596.052.9.052 1.77 0 3.397-.604 4.688-1.615-1.65-.03-3.046-1.12-3.526-2.62.23.042.467.065.71.065.345 0 .68-.045.995-.13C2.84 11.18 1.54 9.657 1.54 7.827V7.78c.508.284 1.09.454 1.71.474-1.014-.678-1.68-1.832-1.68-3.143 0-.69.185-1.34.51-1.897C3.943 5.498 6.726 7 9.863 7.158c-.064-.277-.097-.564-.097-.86 0-2.085 1.69-3.774 3.774-3.774 1.085 0 2.066.457 2.755 1.19.86-.17 1.667-.483 2.397-.915-.282.88-.88 1.62-1.66 2.087.764-.092 1.49-.293 2.168-.594-.506.758-1.146 1.422-1.884 1.953z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='gplus'] {
   background: #e34429;
   display: block;
 }
-.share-button .social li[class*='pinterest'] {
+share-button .social li[class*='gplus']:before {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M1.99 5.59c0 1.493.498 2.57 1.48 3.204.807.52 1.74.598 2.227.598.118 0 .213-.006.28-.01 0 0-.155 1.004.59 1.996H6.53c-1.29 0-5.493.27-5.493 3.727 0 3.516 3.86 3.695 4.635 3.695.06 0 .097-.002.097-.002.008 0 .063.002.158.002.497 0 1.782-.062 2.975-.643 1.548-.75 2.333-2.06 2.333-3.885 0-1.764-1.196-2.814-2.07-3.582-.532-.47-.993-.873-.993-1.266 0-.4.337-.7.762-1.082.69-.615 1.34-1.492 1.34-3.15 0-1.457-.19-2.436-1.355-3.057.12-.062.55-.107.763-.137.63-.086 1.554-.184 1.554-.7V1.2h-4.6c-.046.002-4.65.172-4.65 4.39zM9.412 14.6c.088 1.406-1.115 2.443-2.922 2.574-1.834.135-3.344-.69-3.432-2.096-.043-.676.254-1.336.835-1.863.59-.533 1.398-.863 2.278-.928.105-.007.208-.013.31-.013 1.7 0 2.85 1 2.933 2.325zm-1.2-9.976c.45 1.588-.23 3.246-1.317 3.553-.125.034-.253.05-.384.05-.994 0-1.98-1.005-2.345-2.392-.204-.776-.187-1.458.047-2.112.23-.645.643-1.078 1.163-1.225.125-.034.254-.052.385-.052 1.2 0 1.972.498 2.45 2.178zM16 8V5h-2v3h-3v2h3v3h2v-3h3V8h-3z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='gplus']:after {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#000" d="M1.99 5.59c0 1.493.498 2.57 1.48 3.204.807.52 1.74.598 2.227.598.118 0 .213-.006.28-.01 0 0-.155 1.004.59 1.996H6.53c-1.29 0-5.493.27-5.493 3.727 0 3.516 3.86 3.695 4.635 3.695.06 0 .097-.002.097-.002.008 0 .063.002.158.002.497 0 1.782-.062 2.975-.643 1.548-.75 2.333-2.06 2.333-3.885 0-1.764-1.196-2.814-2.07-3.582-.532-.47-.993-.873-.993-1.266 0-.4.337-.7.762-1.082.69-.615 1.34-1.492 1.34-3.15 0-1.457-.19-2.436-1.355-3.057.12-.062.55-.107.763-.137.63-.086 1.554-.184 1.554-.7V1.2h-4.6c-.046.002-4.65.172-4.65 4.39zM9.412 14.6c.088 1.406-1.115 2.443-2.922 2.574-1.834.135-3.344-.69-3.432-2.096-.043-.676.254-1.336.835-1.863.59-.533 1.398-.863 2.278-.928.105-.007.208-.013.31-.013 1.7 0 2.85 1 2.933 2.325zm-1.2-9.976c.45 1.588-.23 3.246-1.317 3.553-.125.034-.253.05-.384.05-.994 0-1.98-1.005-2.345-2.392-.204-.776-.187-1.458.047-2.112.23-.645.643-1.078 1.163-1.225.125-.034.254-.052.385-.052 1.2 0 1.972.498 2.45 2.178zM16 8V5h-2v3h-3v2h3v3h2v-3h3V8h-3z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='pinterest'] {
   background: #c5282f;
   display: block;
 }
-.share-button .social li[class*='paper-plane'] {
+share-button .social li[class*='pinterest']:before {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M8.617 13.227C8.09 15.98 7.45 18.62 5.55 20c-.587-4.162.86-7.287 1.533-10.605-1.147-1.93.138-5.812 2.555-4.855 2.975 1.176-2.576 7.172 1.15 7.922 3.89.78 5.48-6.75 3.066-9.2C10.37-.274 3.708 3.18 4.528 8.246c.2 1.238 1.478 1.613.51 3.322-2.23-.494-2.896-2.254-2.81-4.6.138-3.84 3.45-6.527 6.77-6.9 4.202-.47 8.145 1.543 8.69 5.494.613 4.462-1.896 9.294-6.39 8.946-1.217-.095-1.727-.7-2.68-1.28z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='pinterest']:after {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#000" d="M8.617 13.227C8.09 15.98 7.45 18.62 5.55 20c-.587-4.162.86-7.287 1.533-10.605-1.147-1.93.138-5.812 2.555-4.855 2.975 1.176-2.576 7.172 1.15 7.922 3.89.78 5.48-6.75 3.066-9.2C10.37-.274 3.708 3.18 4.528 8.246c.2 1.238 1.478 1.613.51 3.322-2.23-.494-2.896-2.254-2.81-4.6.138-3.84 3.45-6.527 6.77-6.9 4.202-.47 8.145 1.543 8.69 5.494.613 4.462-1.896 9.294-6.39 8.946-1.217-.095-1.727-.7-2.68-1.28z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='paper-plane'] {
   background: #42c5b0;
   display: block;
+}
+share-button .social li[class*='paper-plane']:before {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#fff" d="M18.64 2.634c-.344.12-17.32 6.104-17.656 6.222-.284.1-.347.345-.01.48l3.796 1.52 2.25.9 10.984-8.065c.148-.107.318.096.21.212-.106.117-7.87 8.513-7.87 8.513v.002l-.452.503.6.322 4.98 2.682c.292.156.67.027.753-.334.1-.426 2.845-12.26 2.906-12.525.08-.343-.147-.552-.49-.43zM7 17.162c0 .246.14.315.33.14.252-.228 2.85-2.56 2.85-2.56L7 13.098v4.064z"/></svg>");
+  background-repeat: no-repeat;
+}
+share-button .social li[class*='paper-plane']:after {
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#000" d="M18.64 2.634c-.344.12-17.32 6.104-17.656 6.222-.284.1-.347.345-.01.48l3.796 1.52 2.25.9 10.984-8.065c.148-.107.318.096.21.212-.106.117-7.87 8.513-7.87 8.513v.002l-.452.503.6.322 4.98 2.682c.292.156.67.027.753-.334.1-.426 2.845-12.26 2.906-12.525.08-.343-.147-.552-.49-.43zM7 17.162c0 .246.14.315.33.14.252-.228 2.85-2.56 2.85-2.56L7 13.098v4.064z"/></svg>");
+  background-repeat: no-repeat;
 }

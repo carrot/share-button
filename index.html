@@ -5,7 +5,7 @@
   <style>
     html { width: 100%; height: 100%; overflow: hidden; }
     body { -webkit-font-smoothing: antialiased;width: 100%; height: 100%;overflow: hidden;margin: 0; padding: 0;background: #4f3b5b;background: -moz-radial-gradient(center, ellipse cover,  #4f3b5b 0%, #231733 100%);background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#4f3b5b), color-stop(100%,#231733));background: -webkit-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: -o-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: -ms-radial-gradient(center, ellipse cover,  #4f3b5b 0%,#231733 100%);background: radial-gradient(ellipse at center,  #4f3b5b 0%,#231733 100%);}
-    .share-button { margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 100; }
+    share-button { margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 100; }
     .fork img { opacity: .6; -webkit-transition: all .5s ease; transition: all .5s ease; }
     .fork img:hover { opacity: 1; }
     pre { display: block; margin: auto; position: absolute; top: 57%; left: 0; bottom: 0; right: 0; color: #839496; text-align: center; font-family: 'Source Code Pro'; font-size: 13px; text-shadow: 1px 1px 1px #333; z-index: 10;}
@@ -16,17 +16,16 @@
   <meta name='description' content='A simple, light, flexible, and good-looking share button'>
   <meta name='og:image' content='http://carrot.is/img/fb-share.jpg'>
   <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro:700&text=new+Share(".share-button");' rel='stylesheet' type='text/css'>
-  <link href='dist/styles.css' type='text/css'>
 </head>
 <body>
   <a class='fork' href="https://github.com/carrot/share-button">
     <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://www.sharebutton.co/images/fork-me.png" alt="Fork me on GitHub">
   </a>
-  <div class='share-button'></div>
-  <pre><span class="new">new</span> <span class="class">ShareButton</span>(<span class="string">".share-button"</span>);</pre>
+  <share-button></share-button>
+  <pre><span class="new">new</span> <span class="class">ShareButton</span>();</pre>
   <script src='dist/ShareButton.js'></script>
   <script>
-    var shareButton = new ShareButton(".share-button", {
+    var shareButton = new ShareButton({
       networks: {
         facebook: {
           app_id: "602752456409826",

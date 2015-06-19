@@ -26,7 +26,6 @@
     "url": "https://github.com/carrot/share-button"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "autoprefixer-stylus": "latest",
     "axis": "latest",
