@@ -26,6 +26,9 @@
     "url": "https://github.com/carrot/share-button"
   },
   "license": "MIT",
+  "dependencies": {
+    "pioneer": "^0.11.4"
+  },
   "devDependencies": {
     "autoprefixer-stylus": "latest",
     "axis": "latest",
@@ -38,14 +41,10 @@
     "gulp-minify-css": "latest",
     "gulp-rename": "latest",
     "gulp-uglify": "latest",
-    "mocha": "latest",
-    "should": "latest",
-    "stylus": "latest",
-    "when": "latest",
-    "zombie": "latest"
+    "stylus": "latest"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "pioneer"
   },
   "keywords": [
     "share",

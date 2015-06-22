@@ -1,5 +1,5 @@
 # Share
-<p align="center"><img src="https://i.cloudup.com/RTIOZex9-i.gif" /></p>
+<p align="center"><img src="https://i.cloudup.com/RTIOZex9-i.gif"/></p>
 
 ## v1.0.0
 Currently we're in the process of updating to v1.0.0. The upcoming changes will allow a lot more flexibility and customization for devs. If you have some suggestions create an issue. Otherwise checkout any issue or PR with the label [v1.0.0](https://github.com/carrot/share-button/labels/v1.0.0). Follow the progress here at the branch  [v1.0.0](https://github.com/carrot/share-button/tree/v1.0.0).
@@ -29,7 +29,7 @@ Let's take a quick look at the alternative, using this little plugin:
 5. Profit!
 
 ```js
-new Share(".share-button", {
+new ShareButton(".share-button", {
   networks: {
     facebook: {
       app_id: "abc123"

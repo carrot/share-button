@@ -1,10 +1,13 @@
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.ShareButton=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 _dereq_('../../modules/es6.array.iterator');
 module.exports = _dereq_('../../modules/$').core.Array.values;
-},{"../../modules/$":11,"../../modules/es6.array.iterator":18}],2:[function(_dereq_,module,exports){
+},{"../../modules/$":12,"../../modules/es6.array.iterator":19}],2:[function(_dereq_,module,exports){
+_dereq_('../../modules/es6.math');
+module.exports = _dereq_('../../modules/$').core.Math.trunc;
+},{"../../modules/$":12,"../../modules/es6.math":20}],3:[function(_dereq_,module,exports){
 _dereq_('../../modules/es6.symbol');
 module.exports = _dereq_('../../modules/$').core.Symbol;
-},{"../../modules/$":11,"../../modules/es6.symbol":19}],3:[function(_dereq_,module,exports){
+},{"../../modules/$":12,"../../modules/es6.symbol":21}],4:[function(_dereq_,module,exports){
 var $ = _dereq_('./$');
 function assert(condition, msg1, msg2){
   if(!condition)throw TypeError(msg2 ? msg1 + msg2 : msg1);
@@ -23,7 +26,7 @@ assert.inst = function(it, Constructor, name){
   return it;
 };
 module.exports = assert;
-},{"./$":11}],4:[function(_dereq_,module,exports){
+},{"./$":12}],5:[function(_dereq_,module,exports){
 var $        = _dereq_('./$')
   , TAG      = _dereq_('./$.wks')('toStringTag')
   , toString = {}.toString;
@@ -39,7 +42,7 @@ cof.set = function(it, tag, stat){
   if(it && !$.has(it = stat ? it : it.prototype, TAG))$.hide(it, TAG, tag);
 };
 module.exports = cof;
-},{"./$":11,"./$.wks":17}],5:[function(_dereq_,module,exports){
+},{"./$":12,"./$.wks":18}],6:[function(_dereq_,module,exports){
 var $          = _dereq_('./$')
   , global     = $.g
   , core       = $.core
@@ -82,7 +85,7 @@ function $def(type, name, source){
   }
 }
 module.exports = $def;
-},{"./$":11,"./$.redef":13}],6:[function(_dereq_,module,exports){
+},{"./$":12,"./$.redef":14}],7:[function(_dereq_,module,exports){
 var $ = _dereq_('./$');
 module.exports = function(it){
   var keys       = $.getKeys(it)
@@ -93,13 +96,13 @@ module.exports = function(it){
   });
   return keys;
 };
-},{"./$":11}],7:[function(_dereq_,module,exports){
+},{"./$":12}],8:[function(_dereq_,module,exports){
 module.exports = function($){
   $.FW   = true;
   $.path = $.g;
   return $;
 };
-},{}],8:[function(_dereq_,module,exports){
+},{}],9:[function(_dereq_,module,exports){
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var $ = _dereq_('./$')
   , toString = {}.toString
@@ -120,7 +123,7 @@ module.exports.get = function getOwnPropertyNames(it){
   if(windowNames && toString.call(it) == '[object Window]')return getWindowNames(it);
   return getNames($.toObject(it));
 };
-},{"./$":11}],9:[function(_dereq_,module,exports){
+},{"./$":12}],10:[function(_dereq_,module,exports){
 var $def            = _dereq_('./$.def')
   , $redef          = _dereq_('./$.redef')
   , $               = _dereq_('./$')
@@ -171,7 +174,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE)
     } else $def($def.P + $def.F * $iter.BUGGY, NAME, methods);
   }
 };
-},{"./$":11,"./$.cof":4,"./$.def":5,"./$.iter":10,"./$.redef":13,"./$.wks":17}],10:[function(_dereq_,module,exports){
+},{"./$":12,"./$.cof":5,"./$.def":6,"./$.iter":11,"./$.redef":14,"./$.wks":18}],11:[function(_dereq_,module,exports){
 'use strict';
 var $                 = _dereq_('./$')
   , cof               = _dereq_('./$.cof')
@@ -221,7 +224,7 @@ module.exports = {
     cof.set(Constructor, NAME + ' Iterator');
   }
 };
-},{"./$":11,"./$.assert":3,"./$.cof":4,"./$.shared":14,"./$.wks":17}],11:[function(_dereq_,module,exports){
+},{"./$":12,"./$.assert":4,"./$.cof":5,"./$.shared":15,"./$.wks":18}],12:[function(_dereq_,module,exports){
 'use strict';
 var global = typeof self != 'undefined' ? self : Function('return this')()
   , core   = {}
@@ -318,7 +321,7 @@ var $ = module.exports = _dereq_('./$.fw')({
 /* eslint-disable no-undef */
 if(typeof __e != 'undefined')__e = core;
 if(typeof __g != 'undefined')__g = global;
-},{"./$.fw":7}],12:[function(_dereq_,module,exports){
+},{"./$.fw":8}],13:[function(_dereq_,module,exports){
 var $ = _dereq_('./$');
 module.exports = function(object, el){
   var O      = $.toObject(object)
@@ -328,7 +331,7 @@ module.exports = function(object, el){
     , key;
   while(length > index)if(O[key = keys[index++]] === el)return key;
 };
-},{"./$":11}],13:[function(_dereq_,module,exports){
+},{"./$":12}],14:[function(_dereq_,module,exports){
 var $   = _dereq_('./$')
   , tpl = String({}.hasOwnProperty)
   , SRC = _dereq_('./$.uid').safe('src')
@@ -359,35 +362,35 @@ $.core.inspectSource = function(it){
 };
 
 module.exports = $redef;
-},{"./$":11,"./$.uid":15}],14:[function(_dereq_,module,exports){
+},{"./$":12,"./$.uid":16}],15:[function(_dereq_,module,exports){
 var $      = _dereq_('./$')
   , SHARED = '__core-js_shared__'
   , store  = $.g[SHARED] || ($.g[SHARED] = {});
 module.exports = function(key){
   return store[key] || (store[key] = {});
 };
-},{"./$":11}],15:[function(_dereq_,module,exports){
+},{"./$":12}],16:[function(_dereq_,module,exports){
 var sid = 0;
 function uid(key){
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++sid + Math.random()).toString(36));
 }
 uid.safe = _dereq_('./$').g.Symbol || uid;
 module.exports = uid;
-},{"./$":11}],16:[function(_dereq_,module,exports){
+},{"./$":12}],17:[function(_dereq_,module,exports){
 // 22.1.3.31 Array.prototype[@@unscopables]
 var UNSCOPABLES = _dereq_('./$.wks')('unscopables');
 if(!(UNSCOPABLES in []))_dereq_('./$').hide(Array.prototype, UNSCOPABLES, {});
 module.exports = function(key){
   [][UNSCOPABLES][key] = true;
 };
-},{"./$":11,"./$.wks":17}],17:[function(_dereq_,module,exports){
+},{"./$":12,"./$.wks":18}],18:[function(_dereq_,module,exports){
 var global = _dereq_('./$').g
   , store  = _dereq_('./$.shared')('wks');
 module.exports = function(name){
   return store[name] || (store[name] =
     global.Symbol && global.Symbol[name] || _dereq_('./$.uid').safe('Symbol.' + name));
 };
-},{"./$":11,"./$.shared":14,"./$.uid":15}],18:[function(_dereq_,module,exports){
+},{"./$":12,"./$.shared":15,"./$.uid":16}],19:[function(_dereq_,module,exports){
 var $          = _dereq_('./$')
   , setUnscope = _dereq_('./$.unscope')
   , ITER       = _dereq_('./$.uid').safe('iter')
@@ -422,7 +425,133 @@ Iterators.Arguments = Iterators.Array;
 setUnscope('keys');
 setUnscope('values');
 setUnscope('entries');
-},{"./$":11,"./$.iter":10,"./$.iter-define":9,"./$.uid":15,"./$.unscope":16}],19:[function(_dereq_,module,exports){
+},{"./$":12,"./$.iter":11,"./$.iter-define":10,"./$.uid":16,"./$.unscope":17}],20:[function(_dereq_,module,exports){
+var Infinity = 1 / 0
+  , $def  = _dereq_('./$.def')
+  , E     = Math.E
+  , pow   = Math.pow
+  , abs   = Math.abs
+  , exp   = Math.exp
+  , log   = Math.log
+  , sqrt  = Math.sqrt
+  , ceil  = Math.ceil
+  , floor = Math.floor
+  , EPSILON   = pow(2, -52)
+  , EPSILON32 = pow(2, -23)
+  , MAX32     = pow(2, 127) * (2 - EPSILON32)
+  , MIN32     = pow(2, -126);
+function roundTiesToEven(n){
+  return n + 1 / EPSILON - 1 / EPSILON;
+}
+
+// 20.2.2.28 Math.sign(x)
+function sign(x){
+  return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
+}
+// 20.2.2.5 Math.asinh(x)
+function asinh(x){
+  return !isFinite(x = +x) || x == 0 ? x : x < 0 ? -asinh(-x) : log(x + sqrt(x * x + 1));
+}
+// 20.2.2.14 Math.expm1(x)
+function expm1(x){
+  return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : exp(x) - 1;
+}
+
+$def($def.S, 'Math', {
+  // 20.2.2.3 Math.acosh(x)
+  acosh: function acosh(x){
+    return (x = +x) < 1 ? NaN : isFinite(x) ? log(x / E + sqrt(x + 1) * sqrt(x - 1) / E) + 1 : x;
+  },
+  // 20.2.2.5 Math.asinh(x)
+  asinh: asinh,
+  // 20.2.2.7 Math.atanh(x)
+  atanh: function atanh(x){
+    return (x = +x) == 0 ? x : log((1 + x) / (1 - x)) / 2;
+  },
+  // 20.2.2.9 Math.cbrt(x)
+  cbrt: function cbrt(x){
+    return sign(x = +x) * pow(abs(x), 1 / 3);
+  },
+  // 20.2.2.11 Math.clz32(x)
+  clz32: function clz32(x){
+    return (x >>>= 0) ? 31 - floor(log(x + 0.5) * Math.LOG2E) : 32;
+  },
+  // 20.2.2.12 Math.cosh(x)
+  cosh: function cosh(x){
+    return (exp(x = +x) + exp(-x)) / 2;
+  },
+  // 20.2.2.14 Math.expm1(x)
+  expm1: expm1,
+  // 20.2.2.16 Math.fround(x)
+  fround: function fround(x){
+    var $abs  = abs(x)
+      , $sign = sign(x)
+      , a, result;
+    if($abs < MIN32)return $sign * roundTiesToEven($abs / MIN32 / EPSILON32) * MIN32 * EPSILON32;
+    a = (1 + EPSILON32 / EPSILON) * $abs;
+    result = a - (a - $abs);
+    if(result > MAX32 || result != result)return $sign * Infinity;
+    return $sign * result;
+  },
+  // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
+  hypot: function hypot(value1, value2){ // eslint-disable-line no-unused-vars
+    var sum  = 0
+      , i    = 0
+      , len  = arguments.length
+      , larg = 0
+      , arg, div;
+    while(i < len){
+      arg = abs(arguments[i++]);
+      if(larg < arg){
+        div  = larg / arg;
+        sum  = sum * div * div + 1;
+        larg = arg;
+      } else if(arg > 0){
+        div  = arg / larg;
+        sum += div * div;
+      } else sum += arg;
+    }
+    return larg === Infinity ? Infinity : larg * sqrt(sum);
+  },
+  // 20.2.2.18 Math.imul(x, y)
+  imul: function imul(x, y){
+    var UInt16 = 0xffff
+      , xn = +x
+      , yn = +y
+      , xl = UInt16 & xn
+      , yl = UInt16 & yn;
+    return 0 | xl * yl + ((UInt16 & xn >>> 16) * yl + xl * (UInt16 & yn >>> 16) << 16 >>> 0);
+  },
+  // 20.2.2.20 Math.log1p(x)
+  log1p: function log1p(x){
+    return (x = +x) > -1e-8 && x < 1e-8 ? x - x * x / 2 : log(1 + x);
+  },
+  // 20.2.2.21 Math.log10(x)
+  log10: function log10(x){
+    return log(x) / Math.LN10;
+  },
+  // 20.2.2.22 Math.log2(x)
+  log2: function log2(x){
+    return log(x) / Math.LN2;
+  },
+  // 20.2.2.28 Math.sign(x)
+  sign: sign,
+  // 20.2.2.30 Math.sinh(x)
+  sinh: function sinh(x){
+    return abs(x = +x) < 1 ? (expm1(x) - expm1(-x)) / 2 : (exp(x - 1) - exp(-x - 1)) * (E / 2);
+  },
+  // 20.2.2.33 Math.tanh(x)
+  tanh: function tanh(x){
+    var a = expm1(x = +x)
+      , b = expm1(-x);
+    return a == Infinity ? 1 : b == Infinity ? -1 : (a - b) / (exp(x) + exp(-x));
+  },
+  // 20.2.2.34 Math.trunc(x)
+  trunc: function trunc(it){
+    return (it > 0 ? floor : ceil)(it);
+  }
+});
+},{"./$.def":6}],21:[function(_dereq_,module,exports){
 'use strict';
 // ECMAScript 6 symbols shim
 var $        = _dereq_('./$')
@@ -613,7 +742,7 @@ setTag($Symbol, 'Symbol');
 setTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setTag($.g.JSON, 'JSON', true);
-},{"./$":11,"./$.assert":3,"./$.cof":4,"./$.def":5,"./$.enum-keys":6,"./$.get-names":8,"./$.keyof":12,"./$.redef":13,"./$.shared":14,"./$.uid":15,"./$.wks":17}],20:[function(_dereq_,module,exports){
+},{"./$":12,"./$.assert":4,"./$.cof":5,"./$.def":6,"./$.enum-keys":7,"./$.get-names":9,"./$.keyof":13,"./$.redef":14,"./$.shared":15,"./$.uid":16,"./$.wks":18}],22:[function(_dereq_,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -626,6 +755,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== 'function' 
 
 _dereq_('core-js/fn/symbol');
 _dereq_('core-js/fn/array/iterator');
+_dereq_('core-js/fn/math/trunc');
 var ShareUtils = _dereq_('./shareUtils');
 
 /**
@@ -959,8 +1089,9 @@ var ShareButton = (function (_ShareUtils) {
      */
     value: function _eventOpen(button, label) {
       if (this._hasClass(button, 'load')) this._removeClass(button, 'load');
-
-      this._collisionDetection(button, label);
+      if (this.collision) {
+        this._collisionDetection(button, label);
+      }
       this._addClass(button, 'active');
     }
   }, {
@@ -1064,41 +1195,51 @@ var ShareButton = (function (_ShareUtils) {
       var leftOffset = label.getBoundingClientRect().left + dimensions.labelWidth / 2;
       var rightOffset = windowWidth - leftOffset;
       var buttonOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
-      // let spaceBetween = Math.abs(leftOffset - buttonOffset) // too dynamic
       var topOffset = label.getBoundingClientRect().top + dimensions.labelHeight / 2;
       var position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
 
       // TODO: find dynamic way to get space between (not 220)
       if (position[1] === 'middle' && position[0] !== 'center' && (position[0] === 'left' && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2 || position[0] === 'right' && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)) {
         button.classList.add('top');
-        button.classList.remove('middle', 'bottom');
+        button.classList.remove('middle');
+        button.classList.remove('bottom');
       } else {
         switch (position[1]) {
           case 'top':
             button.classList.add('bottom');
-            button.classList.remove('middle', 'top');
+            button.classList.remove('middle');
+            if (position[0] !== 'center') button.classList.remove('top');
             break;
           case 'middle':
-            button.classList.add('middle');
-            button.classList.remove('top', 'bottom');
+            if (position[0] !== 'center') {
+              button.classList.add('middle');
+              button.classList.remove('top');
+            }
+            button.classList.remove('bottom');
             break;
           case 'bottom':
             button.classList.add('top');
-            button.classList.remove('middle', 'bottom');
+            button.classList.remove('middle');
+            button.classList.remove('bottom');
             break;
         }
         switch (position[0]) {
           case 'left':
             button.classList.add('right');
-            button.classList.remove('center', 'left');
+            button.classList.remove('center');
+            button.classList.remove('left');
             break;
           case 'center':
-            button.classList.add('center', 'top');
-            button.classList.remove('left', 'right', 'middle');
+            if (position[1] !== 'top') button.classList.add('top');
+            button.classList.add('center');
+            button.classList.remove('left');
+            button.classList.remove('right');
+            button.classList.remove('middle');
             break;
           case 'right':
             button.classList.add('left');
-            button.classList.remove('center', 'right');
+            button.classList.remove('center');
+            button.classList.remove('right');
             break;
         }
       }
@@ -1137,7 +1278,9 @@ var ShareButton = (function (_ShareUtils) {
     value: function _networkFacebook(element) {
       if (this.config.networks.facebook.loadSdk) {
         if (!window.FB) return console.error('The Facebook JS SDK hasn\'t loaded yet.');
-
+        this._updateHref(element, 'https://www.facebook.com/sharer/sharer.php', {
+          u: this.config.networks.facebook.url
+        });
         return FB.ui({
           method: 'feed',
           name: this.config.networks.facebook.title,
@@ -1456,7 +1599,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _normalizeFilterConfigUpdates
-     * @description
+     * @description Normalizes Facebook config
      * @private
      *
      * @param {Object} opts
@@ -1482,7 +1625,7 @@ var ShareButton = (function (_ShareUtils) {
 
 module.exports = ShareButton;
 
-},{"./shareUtils":21,"core-js/fn/array/iterator":1,"core-js/fn/symbol":2}],21:[function(_dereq_,module,exports){
+},{"./shareUtils":23,"core-js/fn/array/iterator":1,"core-js/fn/math/trunc":2,"core-js/fn/symbol":3}],23:[function(_dereq_,module,exports){
 /**
  * ShareUtils
  * @class
@@ -1668,16 +1811,17 @@ var ShareUtils = (function () {
       var encode = url.indexOf("mailto:") >= 0;
       var a = element.getElementsByTagName("a")[0];
       a.setAttribute("href", this._getUrl(url, !encode, params));
+      if (!encode && (!this.config.networks.facebook.loadSdk || element.getAttribute("class") !== "facebook")) {
+        var popup = {
+          width: 500,
+          height: 350
+        };
 
-      var popup = {
-        width: 500,
-        height: 350
-      };
+        popup.top = screen.height / 2 - popup.height / 2;
+        popup.left = screen.width / 2 - popup.width / 2;
 
-      popup.top = screen.height / 2 - popup.height / 2;
-      popup.left = screen.width / 2 - popup.width / 2;
-
-      if (!encode) window.open(a.href, "targetWindow", "\n          toolbar=no,\n          location=no,\n          status=no,\n          menubar=no,\n          scrollbars=yes,\n          resizable=yes,\n          left=" + popup.left + ",\n          top=" + popup.top + ",\n          width=" + popup.width + ",\n          height=" + popup.height + "\n        ");
+        window.open(a.href, "targetWindow", "\n          toolbar=no,\n          location=no,\n          status=no,\n          menubar=no,\n          scrollbars=yes,\n          resizable=yes,\n          left=" + popup.left + ",\n          top=" + popup.top + ",\n          width=" + popup.width + ",\n          height=" + popup.height + "\n        ");
+      }
     }
   }, {
     key: "popup",
@@ -1803,13 +1947,14 @@ var ShareUtils = (function () {
 
     /**
      * @method _isMobile
-     * @description Returns true if current device is mobile, false otherwise
+     * @description Returns true if current device is mobile (or PhantomJS for
+     * testing purposes), and false otherwise
      * @author kriskbx
      * [Original Gist] {@link https://github.com/kriskbx/whatsapp-sharing/blob/master/src/button.js}
      * @private
      */
     value: function _isMobile() {
-      if (navigator.userAgent.match(/Android|iPhone/i) && !navigator.userAgent.match(/iPod|iPad/i)) return true;
+      if (navigator.userAgent.match(/Android|iPhone|PhantomJS/i) && !navigator.userAgent.match(/iPod|iPad/i)) return true;
       return false;
     }
   }]);
@@ -1844,6 +1989,6 @@ String.prototype.capitalizeFirstLetter = function () {
 
 module.exports = ShareUtils;
 
-},{}]},{},[20])
-(20)
+},{}]},{},[22])
+(22)
 });
