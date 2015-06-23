@@ -352,7 +352,7 @@ share-button .social li[class*='paper-plane']:after {
   background-repeat: no-repeat;
 }
 share-button .social li[class*='reddit'] {
-  background: #cee3f8;
+  background: #a1caf2;
   display: block;
 }
 share-button .social li[class*='reddit']:before {
