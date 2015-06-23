@@ -77,6 +77,11 @@ class ShareButton extends ShareUtils {
           title: null,
           description: null
         },
+        whatsapp: {
+          enabled: true,
+          description: null,
+          url: null
+        },
         email: {
           enabled: true,
           title: null,      // Subject
@@ -124,7 +129,7 @@ class ShareButton extends ShareUtils {
   }
 
   /**
-   * @method setup
+   * @method _setup
    * @description Sets up Share Button
    * @private
    *
@@ -141,6 +146,11 @@ class ShareButton extends ShareUtils {
       instances = document.querySelectorAll(`share-button${element}`);
 
     this._merge(this.config, opts); // Combine configs
+
+    // If not a mobile device, disable whatsapp display
+    if(this.config.networks.whatsapp.enabled && !this._isMobile())
+      this.config.networks.whatsapp.enabled = false;
+
     this._detectNetworks(); // Set number of networks
     this._normalizeNetworkConfiguration();
 
@@ -466,6 +476,18 @@ class ShareButton extends ShareUtils {
   }
 
   /**
+   * @method _networkWhatsapp
+   * @description Open whatsapp for sending message
+   * @private
+   */
+  _networkWhatsapp() {
+    let url = 'whatsapp://send?text=';
+    url += encodeURIComponent(this.config.networks.whatsapp.description) + '%20';
+    url += encodeURIComponent(this.config.networks.whatsapp.url);
+    this.popup(url);
+  }
+
+  /**
    * @method _injectStylesheet
    * @description Inject link to stylesheet
    * @private
@@ -487,7 +509,7 @@ class ShareButton extends ShareUtils {
    * @private
    */
   _injectHtml(instance) {
-    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='gplus' data-network='googlePlus'></li><li class='reddit' data-network='reddit'></li><li class='linkedin' data-network='linkedin'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
+    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='whatsapp' data-network='whatsapp'></li><li class='gplus' data-network='googlePlus'></li><li class='reddit' data-network='reddit'></li><li class='linkedin' data-network='linkedin'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
   }
 
   /**
