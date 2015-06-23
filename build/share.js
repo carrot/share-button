@@ -98,7 +98,7 @@ ShareUtils = (function() {
 
   ShareUtils.prototype.encode = function(str) {
     if (typeof str === "undefined" || this.is_encoded(str)) {
-      return str;
+      return encodeURIComponent(str);
     } else {
       return str.to_rfc3986();
     }
@@ -209,9 +209,25 @@ Share = (function(superClass) {
     return this;
   }
 
+  Share.prototype.isNodeList = function(nodes) {
+    var stringRepr;
+    stringRepr = Object.prototype.toString.call(nodes);
+    return typeof nodes === 'object' && /^\[object (HTMLCollection|NodeList|Object)\]$/.test(stringRepr) && nodes.hasOwnProperty('length') && (nodes.length === 0 || (typeof nodes[0] === "object" && nodes[0].nodeType > 0));
+  };
+
+  Share.prototype.isNode = function(node) {
+    return node && node.nodeType && (node.nodeType === 1 || node.nodeType === 11);
+  };
+
   Share.prototype.setup = function(element, opts) {
     var i, index, instance, instances, len;
-    instances = document.querySelectorAll(element);
+    if (this.isNodeList(element)) {
+      instances = element;
+    } else if (this.isNode(element)) {
+      instances = [element];
+    } else {
+      instances = document.querySelectorAll(element);
+    }
     this.extend(this.config, opts, true);
     this.set_global_configuration();
     this.normalize_network_configuration();
@@ -232,10 +248,16 @@ Share = (function(superClass) {
 
   Share.prototype.setup_instance = function(element, index) {
     var _this, button, i, instance, label, len, network, networks, results;
-    instance = document.querySelectorAll(element)[index];
+    if (this.isNode(element)) {
+      instance = element;
+    } else {
+      instance = document.querySelectorAll(element)[index];
+    }
     this.hide(instance);
     this.add_class(instance, "sharer-" + index);
-    instance = document.querySelectorAll(element)[index];
+    if (!this.isNode(element)) {
+      instance = document.querySelectorAll(element)[index];
+    }
     if (this.config.inject_css) {
       this.inject_css(instance);
     }
@@ -361,10 +383,8 @@ Share = (function(superClass) {
   };
 
   Share.prototype.network_email = function() {
-    return this.popup('mailto:', {
-      subject: this.config.networks.email.title,
-      body: this.config.networks.email.description
-    });
+    window.location.href = 'mailto:?subject=' + this.config.networks.email.title + '&body=' + this.config.networks.email.description;
+    return false;
   };
 
   Share.prototype.network_linkedin = function() {

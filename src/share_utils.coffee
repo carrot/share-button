@@ -72,7 +72,7 @@ class ShareUtils
     decodeURIComponent(str) isnt str
 
   encode: (str) ->
-    if typeof(str) is "undefined" or @is_encoded(str) then str else str.to_rfc3986()
+    if typeof(str) is "undefined" or @is_encoded(str) then encodeURIComponent(str) else str.to_rfc3986()
 
   popup: (url, params = {}) ->
     popup =
@@ -86,4 +86,3 @@ class ShareUtils
     if qs then qs = "?#{qs}"
 
     window.open(url+qs, 'targetWindow', "toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,left=#{popup.left},top=#{popup.top},width=#{popup.width},height=#{popup.height}")
-
