@@ -122,9 +122,17 @@ class ShareButton extends ShareUtils {
    * @param {String} action
    */
   _public(action) {
-    for (let instance of document.querySelectorAll(this.element)) {
+    let instances;
+
+    if (typeof element === 'undefined')
+      instances = super._objToArray(document.getElementsByTagName('share-button'));
+    else
+      instances = document.querySelectorAll(element);
+
+    for (let instance of instances) {
       let button = instance.getElementsByClassName('social')[0];
-      this[`event${action}`](button);
+      let label = instance.querySelectorAll('label')[0];
+      this[`_event${action}`](button, label);
     }
   }
 
@@ -139,9 +147,8 @@ class ShareButton extends ShareUtils {
   _setup(element, opts) {
     let instances;
 
-    if (typeof element === 'undefined') {
-      instances = this._objToArray(document.getElementsByTagName('share-button'));
-    }
+    if (typeof element === 'undefined')
+      instances = super._objToArray(document.getElementsByTagName('share-button'));
     else
       instances = document.querySelectorAll(`share-button${element}`);
 
@@ -178,8 +185,6 @@ class ShareButton extends ShareUtils {
    */
   _setupInstance(instance, index) {
     this._hide(instance); // hide instance
-
-    this.clicked = false; // for collision detection listening
 
     // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
     this._addClass(instance, `sharer-${index}`);
@@ -271,7 +276,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _collisionDetection
-   * @description Adds listeners the first time the button is clicked to call
+   * @description Adds listeners the first time a button is clicked to call
    * this._adjustClasses during scrolls and resizes.
    * @private
    *
@@ -280,17 +285,17 @@ class ShareButton extends ShareUtils {
    */
   _collisionDetection(button, label) {
     let dimensions = {
-      labelWidth: document.getElementsByClassName("export")[0].offsetWidth,
-      labelHeight: document.getElementsByClassName("export")[0].offsetHeight,
-      buttonWidth: document.getElementsByClassName("social")[0].offsetWidth,
+      labelWidth: label.offsetWidth,
+      labelHeight: label.offsetHeight,
+      buttonWidth: button.offsetWidth,
     };
     this._adjustClasses(button, label, dimensions);
-    if(!this.clicked) {
+    if(!button.classList.contains('clicked')) {
       window.addEventListener('scroll', () =>
         this._adjustClasses(button, label, dimensions));
       window.addEventListener('resize', () =>
         this._adjustClasses(button, label, dimensions));
-      this.clicked = true;
+      button.classList.add('clicked');
     }
   }
 

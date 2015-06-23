@@ -503,16 +503,21 @@ var ShareButton = (function (_ShareUtils) {
      * @param {String} action
      */
     value: function _public(action) {
+      var instances = undefined;
+
+      if (typeof element === 'undefined') instances = _get(Object.getPrototypeOf(ShareButton.prototype), '_objToArray', this).call(this, document.getElementsByTagName('share-button'));else instances = document.querySelectorAll(element);
+
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = document.querySelectorAll(this.element)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = instances[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var instance = _step.value;
 
           var button = instance.getElementsByClassName('social')[0];
-          this['event' + action](button);
+          var label = instance.querySelectorAll('label')[0];
+          this['_event' + action](button, label);
         }
       } catch (err) {
         _didIteratorError = true;
@@ -543,9 +548,7 @@ var ShareButton = (function (_ShareUtils) {
     value: function _setup(element, opts) {
       var instances = undefined;
 
-      if (typeof element === 'undefined') {
-        instances = this._objToArray(document.getElementsByTagName('share-button'));
-      } else instances = document.querySelectorAll('share-button' + element);
+      if (typeof element === 'undefined') instances = _get(Object.getPrototypeOf(ShareButton.prototype), '_objToArray', this).call(this, document.getElementsByTagName('share-button'));else instances = document.querySelectorAll('share-button' + element);
 
       this._merge(this.config, opts); // Combine configs
 
@@ -602,8 +605,6 @@ var ShareButton = (function (_ShareUtils) {
       var _this = this;
 
       this._hide(instance); // hide instance
-
-      this.clicked = false; // for collision detection listening
 
       // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
       this._addClass(instance, 'sharer-' + index);
@@ -706,7 +707,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _collisionDetection
-     * @description Adds listeners the first time the button is clicked to call
+     * @description Adds listeners the first time a button is clicked to call
      * this._adjustClasses during scrolls and resizes.
      * @private
      *
@@ -717,19 +718,19 @@ var ShareButton = (function (_ShareUtils) {
       var _this2 = this;
 
       var dimensions = {
-        labelWidth: document.getElementsByClassName('export')[0].offsetWidth,
-        labelHeight: document.getElementsByClassName('export')[0].offsetHeight,
-        buttonWidth: document.getElementsByClassName('social')[0].offsetWidth
+        labelWidth: label.offsetWidth,
+        labelHeight: label.offsetHeight,
+        buttonWidth: button.offsetWidth
       };
       this._adjustClasses(button, label, dimensions);
-      if (!this.clicked) {
+      if (!button.classList.contains('clicked')) {
         window.addEventListener('scroll', function () {
           return _this2._adjustClasses(button, label, dimensions);
         });
         window.addEventListener('resize', function () {
           return _this2._adjustClasses(button, label, dimensions);
         });
-        this.clicked = true;
+        button.classList.add('clicked');
       }
     }
   }, {
