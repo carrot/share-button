@@ -187,30 +187,26 @@ var ShareUtils = (function () {
      * @param {String}  className
      */
     value: function _encode(str) {
-      if (typeof str === "undefined" || str === null || this._isEncoded(str)) return str;else return str.toRFC3986();
+      if (typeof str === "undefined" || str === null || this._isEncoded(str)) return encodeURIComponent(str);else return str.toRFC3986();
     }
   }, {
-    key: "popup",
+    key: "_getUrl",
 
     /**
-     * @method popup
-     * @description Create a window for specified network
+     * @method _getUrl
+     * @description Returns the correct share URL based off of the incoming
+     * URL and parameters given
+     * @private
      *
-     * @param {String}  url
-     * @param {Object}  params
+     * @param {String} url
+     * @param {boolean} encode
+     * @param {Object} params
      */
-    value: function popup(url) {
+    value: function _getUrl(url) {
       var _this = this;
 
-      var params = arguments[1] === undefined ? {} : arguments[1];
-
-      var popup = {
-        width: 500,
-        height: 350
-      };
-
-      popup.top = screen.height / 2 - popup.height / 2;
-      popup.left = screen.width / 2 - popup.width / 2;
+      var encode = arguments[1] === undefined ? false : arguments[1];
+      var params = arguments[2] === undefined ? {} : arguments[2];
 
       var qs = (function () {
         var results = [];
@@ -236,6 +232,92 @@ var ShareUtils = (function () {
           } finally {
             if (_didIteratorError) {
               throw _iteratorError;
+            }
+          }
+        }
+
+        return results.join("&");
+      })();
+
+      if (qs) qs = "?" + qs;
+
+      return url + qs;
+    }
+  }, {
+    key: "_updateHref",
+
+    /**
+     * @method _updateHref
+     * @description Makes the elements a tag have a href of the popup link and
+     * as pops up the share window for the element
+     * @private
+     *
+     * @param {DOMNode} element
+     * @param {String} url
+     * @param {Object} params
+     */
+    value: function _updateHref(element, url, params) {
+      var encode = url.indexOf("mailto:") >= 0;
+      var a = element.getElementsByTagName("a")[0];
+      a.setAttribute("href", this._getUrl(url, !encode, params));
+
+      var popup = {
+        width: 500,
+        height: 350
+      };
+
+      popup.top = screen.height / 2 - popup.height / 2;
+      popup.left = screen.width / 2 - popup.width / 2;
+
+      if (!encode) window.open(a.href, "targetWindow", "\n          toolbar=no,\n          location=no,\n          status=no,\n          menubar=no,\n          scrollbars=yes,\n          resizable=yes,\n          left=" + popup.left + ",\n          top=" + popup.top + ",\n          width=" + popup.width + ",\n          height=" + popup.height + "\n        ");
+    }
+  }, {
+    key: "popup",
+
+    /**
+     * @method popup
+     * @description Create a window for specified network
+     *
+     * @param {String}  url
+     * @param {Object}  params
+     */
+    value: function popup(url) {
+      var _this2 = this;
+
+      var params = arguments[1] === undefined ? {} : arguments[1];
+
+      var popup = {
+        width: 500,
+        height: 350
+      };
+
+      popup.top = screen.height / 2 - popup.height / 2;
+      popup.left = screen.width / 2 - popup.width / 2;
+
+      var qs = (function () {
+        var results = [];
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = Object.keys(params)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var k = _step2.value;
+
+            var v = params[k];
+            results.push("" + k + "=" + _this2._encode(v));
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
+              _iterator2["return"]();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
             }
           }
         }
@@ -641,11 +723,21 @@ var ShareButton = (function (_ShareUtils) {
       var _loop = function (k) {
         var network = networks[k];
         if (typeof network !== 'undefined') {
-          network.style.display = _this.config.networks[network.getAttribute('data-network')].display;
-          network.addEventListener('click', function () {
-            _this._eventNetwork(instance, network);
-            _this._eventClose(button);
-          });
+          (function () {
+            network.style.display = _this.config.networks[network.getAttribute('data-network')].display;
+            var name = network.getAttribute('data-network');
+            var a = network.getElementsByTagName('a')[0];
+            if (network.className !== 'paper-plane') a.setAttribute('onclick', 'return false');
+            a.addEventListener('mousedown', function () {
+              _this._hook('before', name, instance);
+            });
+            a.addEventListener('mouseup', function () {
+              _this['_network' + name.capitalizeFirstLetter()](network);
+            });
+            a.addEventListener('click', function () {
+              _this._hook('after', name, instance);
+            });
+          })();
         }
       };
 
@@ -720,24 +812,6 @@ var ShareButton = (function (_ShareUtils) {
         window.clearInterval(this.listener);
         this.listener = null;
       }
-    }
-  }, {
-    key: '_eventNetwork',
-
-    /**
-     * @method _eventNetwork
-     * @description Add 'active' class & remove 'load' class on button
-     * @private
-     *
-     * @param {DOMNode} instance
-     * @param {String}  network
-     */
-    value: function _eventNetwork(instance, network) {
-      var name = network.getAttribute('data-network');
-
-      this._hook('before', name, instance);
-      this['_network' + name.capitalizeFirstLetter()]();
-      this._hook('after', name, instance);
     }
   }, {
     key: '_collisionDetection',
@@ -874,7 +948,7 @@ var ShareButton = (function (_ShareUtils) {
      * @description Create & display window
      * @private
      */
-    value: function _networkFacebook() {
+    value: function _networkFacebook(element) {
       if (this.config.networks.facebook.loadSdk) {
         if (!window.FB) return console.error('The Facebook JS SDK hasn\'t loaded yet.');
 
@@ -886,7 +960,7 @@ var ShareButton = (function (_ShareUtils) {
           caption: this.config.networks.facebook.caption,
           description: this.config.networks.facebook.description
         });
-      } else return this.popup('https://www.facebook.com/sharer/sharer.php', {
+      } else return this._updateHref(element, 'https://www.facebook.com/sharer/sharer.php', {
         u: this.config.networks.facebook.url
       });
     }
@@ -898,8 +972,8 @@ var ShareButton = (function (_ShareUtils) {
      * @description Create & display window
      * @private
      */
-    value: function _networkTwitter() {
-      this.popup('https://twitter.com/intent/tweet', {
+    value: function _networkTwitter(element) {
+      this._updateHref(element, 'https://twitter.com/intent/tweet', {
         text: this.config.networks.twitter.description,
         url: this.config.networks.twitter.url
       });
@@ -912,8 +986,8 @@ var ShareButton = (function (_ShareUtils) {
      * @description Create & display window
      * @private
      */
-    value: function _networkGooglePlus() {
-      this.popup('https://plus.google.com/share', {
+    value: function _networkGooglePlus(element) {
+      this._updateHref(element, 'https://plus.google.com/share', {
         url: this.config.networks.googlePlus.url
       });
     }
@@ -925,8 +999,8 @@ var ShareButton = (function (_ShareUtils) {
      * @description Create & display window
      * @private
      */
-    value: function _networkPinterest() {
-      this.popup('https://www.pinterest.com/pin/create/button', {
+    value: function _networkPinterest(element) {
+      this._updateHref(element, 'https://www.pinterest.com/pin/create/button', {
         url: this.config.networks.pinterest.url,
         media: this.config.networks.pinterest.image,
         description: this.config.networks.pinterest.description
@@ -940,8 +1014,8 @@ var ShareButton = (function (_ShareUtils) {
      * @description Create & display window
      * @private
      */
-    value: function _networkLinkedin() {
-      this.popup('https://www.linkedin.com/shareArticle', {
+    value: function _networkLinkedin(element) {
+      this._updateHref(element, 'https://www.linkedin.com/shareArticle', {
         mini: 'true',
         url: this.config.networks.linkedin.url,
         title: this.config.networks.linkedin.title,
@@ -956,8 +1030,8 @@ var ShareButton = (function (_ShareUtils) {
      * @description Create & display window
      * @private
      */
-    value: function _networkEmail() {
-      this.popup('mailto:', {
+    value: function _networkEmail(element) {
+      this._updateHref(element, 'mailto:', {
         subject: this.config.networks.email.title,
         body: this.config.networks.email.description
       });
@@ -970,8 +1044,8 @@ var ShareButton = (function (_ShareUtils) {
      * @description Create & display window
      * @private
      */
-    value: function _networkReddit() {
-      this.popup('http://www.reddit.com/submit', {
+    value: function _networkReddit(element) {
+      this._updateHref(element, 'http://www.reddit.com/submit', {
         url: this.config.networks.reddit.url,
         title: this.config.networks.reddit.title
       });
@@ -984,11 +1058,10 @@ var ShareButton = (function (_ShareUtils) {
      * @description Open whatsapp for sending message
      * @private
      */
-    value: function _networkWhatsapp() {
-      var url = 'whatsapp://send?text=';
-      url += encodeURIComponent(this.config.networks.whatsapp.description) + '%20';
-      url += encodeURIComponent(this.config.networks.whatsapp.url);
-      this.popup(url);
+    value: function _networkWhatsapp(element) {
+      this._updateHref(element, 'whatsapp://send', {
+        text: this.config.networks.whatsapp.description + ' ' + this.config.networks.whatsapp.url
+      });
     }
   }, {
     key: '_injectStylesheet',
@@ -1017,7 +1090,7 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      */
     value: function _injectHtml(instance) {
-      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'></li><li class=\'twitter\' data-network=\'twitter\'></li><li class=\'facebook\' data-network=\'facebook\'></li><li class=\'whatsapp\' data-network=\'whatsapp\'></li><li class=\'gplus\' data-network=\'googlePlus\'></li><li class=\'reddit\' data-network=\'reddit\'></li><li class=\'linkedin\' data-network=\'linkedin\'></li><li class=\'paper-plane\' data-network=\'email\'></li></ul></div>';
+      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'><a></a></li><li class=\'twitter\' data-network=\'twitter\'><a></a></li><li class=\'facebook\' data-network=\'facebook\'><a></a></li><li class=\'whatsapp\' data-network=\'whatsapp\'><a></a></li><li class=\'gplus\' data-network=\'googlePlus\'><a></a></li><li class=\'reddit\' data-network=\'reddit\'><a></a></li><li class=\'linkedin\' data-network=\'linkedin\'><a></a></li><li class=\'paper-plane\' data-network=\'email\'><a></a></li></ul></div>';
     }
   }, {
     key: '_injectFacebookSdk',

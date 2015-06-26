@@ -218,9 +218,18 @@ class ShareButton extends ShareUtils {
       let network = networks[k];
       if(typeof(network) !== "undefined") {
         network.style.display = this.config.networks[network.getAttribute('data-network')].display;
-        network.addEventListener('click', () => {
-          this._eventNetwork(instance, network);
-          this._eventClose(button);
+        let name = network.getAttribute('data-network');
+        let a = network.getElementsByTagName('a')[0];
+        if(network.className !== 'paper-plane')
+          a.setAttribute('onclick', 'return false');
+        a.addEventListener('mousedown', () => {
+          this._hook('before', name, instance);
+        });
+        a.addEventListener('mouseup', () => {
+          this[`_network${name.capitalizeFirstLetter()}`](network);
+        });
+        a.addEventListener('click', () => {
+          this._hook('after', name, instance);
         });
       }
     }
@@ -286,22 +295,6 @@ class ShareButton extends ShareUtils {
       window.clearInterval(this.listener);
       this.listener = null;
     }
-  }
-
-  /**
-   * @method _eventNetwork
-   * @description Add 'active' class & remove 'load' class on button
-   * @private
-   *
-   * @param {DOMNode} instance
-   * @param {String}  network
-   */
-  _eventNetwork(instance, network) {
-    let name = network.getAttribute('data-network');
-
-    this._hook('before', name, instance);
-    this[`_network${name.capitalizeFirstLetter()}`]();
-    this._hook('after', name, instance);
   }
 
   /**
@@ -429,7 +422,7 @@ class ShareButton extends ShareUtils {
    * @description Create & display window
    * @private
    */
-  _networkFacebook() {
+  _networkFacebook(element) {
     if (this.config.networks.facebook.loadSdk) {
       if (!window.FB)
         return console.error('The Facebook JS SDK hasn\'t loaded yet.');
@@ -443,7 +436,7 @@ class ShareButton extends ShareUtils {
         description: this.config.networks.facebook.description
       });
     } else
-      return this.popup('https://www.facebook.com/sharer/sharer.php', {
+      return this._updateHref(element, 'https://www.facebook.com/sharer/sharer.php', {
         u: this.config.networks.facebook.url
       });
   }
@@ -453,8 +446,8 @@ class ShareButton extends ShareUtils {
    * @description Create & display window
    * @private
    */
-  _networkTwitter() {
-    this.popup('https://twitter.com/intent/tweet', {
+  _networkTwitter(element) {
+    this._updateHref(element, 'https://twitter.com/intent/tweet', {
       text: this.config.networks.twitter.description,
       url: this.config.networks.twitter.url
     });
@@ -465,8 +458,8 @@ class ShareButton extends ShareUtils {
    * @description Create & display window
    * @private
    */
-  _networkGooglePlus() {
-    this.popup('https://plus.google.com/share', {
+  _networkGooglePlus(element) {
+    this._updateHref(element, 'https://plus.google.com/share', {
       url: this.config.networks.googlePlus.url
     });
   }
@@ -476,8 +469,8 @@ class ShareButton extends ShareUtils {
    * @description Create & display window
    * @private
    */
-  _networkPinterest() {
-    this.popup('https://www.pinterest.com/pin/create/button', {
+  _networkPinterest(element) {
+    this._updateHref(element, 'https://www.pinterest.com/pin/create/button', {
       url: this.config.networks.pinterest.url,
       media: this.config.networks.pinterest.image,
       description: this.config.networks.pinterest.description
@@ -489,8 +482,8 @@ class ShareButton extends ShareUtils {
    * @description Create & display window
    * @private
    */
-  _networkLinkedin() {
-    this.popup('https://www.linkedin.com/shareArticle', {
+  _networkLinkedin(element) {
+    this._updateHref(element, 'https://www.linkedin.com/shareArticle', {
       mini: 'true',
       url: this.config.networks.linkedin.url,
       title: this.config.networks.linkedin.title,
@@ -503,8 +496,8 @@ class ShareButton extends ShareUtils {
    * @description Create & display window
    * @private
    */
-  _networkEmail() {
-    this.popup('mailto:', {
+  _networkEmail(element) {
+    this._updateHref(element, 'mailto:', {
       subject: this.config.networks.email.title,
       body: this.config.networks.email.description
     });
@@ -515,8 +508,8 @@ class ShareButton extends ShareUtils {
    * @description Create & display window
    * @private
    */
-  _networkReddit() {
-    this.popup('http://www.reddit.com/submit', {
+  _networkReddit(element) {
+    this._updateHref(element, 'http://www.reddit.com/submit', {
       url: this.config.networks.reddit.url,
       title: this.config.networks.reddit.title
     });
@@ -527,11 +520,10 @@ class ShareButton extends ShareUtils {
    * @description Open whatsapp for sending message
    * @private
    */
-  _networkWhatsapp() {
-    let url = 'whatsapp://send?text=';
-    url += encodeURIComponent(this.config.networks.whatsapp.description) + '%20';
-    url += encodeURIComponent(this.config.networks.whatsapp.url);
-    this.popup(url);
+  _networkWhatsapp(element) {
+    this._updateHref(element, 'whatsapp://send', {
+      text: this.config.networks.whatsapp.description + " " + this.config.networks.whatsapp.url
+    });
   }
 
   /**
@@ -556,7 +548,7 @@ class ShareButton extends ShareUtils {
    * @private
    */
   _injectHtml(instance) {
-    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'></li><li class='twitter' data-network='twitter'></li><li class='facebook' data-network='facebook'></li><li class='whatsapp' data-network='whatsapp'></li><li class='gplus' data-network='googlePlus'></li><li class='reddit' data-network='reddit'></li><li class='linkedin' data-network='linkedin'></li><li class='paper-plane' data-network='email'></li></ul></div>`;
+    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'><a></a></li><li class='twitter' data-network='twitter'><a></a></li><li class='facebook' data-network='facebook'><a></a></li><li class='whatsapp' data-network='whatsapp'><a></a></li><li class='gplus' data-network='googlePlus'><a></a></li><li class='reddit' data-network='reddit'><a></a></li><li class='linkedin' data-network='linkedin'><a></a></li><li class='paper-plane' data-network='email'><a></a></li></ul></div>`;
   }
 
   /**

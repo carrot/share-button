@@ -86,9 +86,75 @@ class ShareUtils {
    */
   _encode(str) {
     if (typeof str === 'undefined' || str === null || this._isEncoded(str))
-      return str;
+      return encodeURIComponent(str);
     else
       return str.toRFC3986();
+  }
+
+  /**
+   * @method _getUrl
+   * @description Returns the correct share URL based off of the incoming
+   * URL and parameters given
+   * @private
+   *
+   * @param {String} url
+   * @param {boolean} encode
+   * @param {Object} params
+   */
+  _getUrl(url, encode=false, params={}) {
+    let qs = (() => {
+      let results = [];
+      for (let k of Object.keys(params)) {
+        let v = params[k];
+        results.push(`${k}=${this._encode(v)}`);
+      }
+      return results.join('&');
+    })();
+
+    if (qs) qs = `?${qs}`;
+
+    return url + qs;
+  }
+
+  /**
+   * @method _updateHref
+   * @description Makes the elements a tag have a href of the popup link and
+   * as pops up the share window for the element
+   * @private
+   *
+   * @param {DOMNode} element
+   * @param {String} url
+   * @param {Object} params
+   */
+  _updateHref(element, url, params) {
+    let encode = url.indexOf('mailto:') >= 0;
+    let a = element.getElementsByTagName('a')[0];
+    a.setAttribute('href', this._getUrl(url, !encode, params));
+
+    let popup = {
+      width: 500,
+      height: 350
+    };
+
+    popup.top = (screen.height / 2) - (popup.height / 2);
+    popup.left = (screen.width / 2)  - (popup.width / 2);
+
+    if(!encode)
+      window.open(
+        a.href,
+        'targetWindow', `
+          toolbar=no,
+          location=no,
+          status=no,
+          menubar=no,
+          scrollbars=yes,
+          resizable=yes,
+          left=${popup.left},
+          top=${popup.top},
+          width=${popup.width},
+          height=${popup.height}
+        `
+      );
   }
 
   /**
