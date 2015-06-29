@@ -1,438 +1,633 @@
-
-(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory(require, exports, module);
-  } else {
-    root.ShareButton = factory();
-  }
-}(this, function(require, exports, module) {
-
-/**
- * classList shim for IE 9
- * Don't convert over to ES6
- */
-"use strict";
-
-if (!("classList" in document.documentElement) && Object.defineProperty && typeof HTMLElement !== "undefined") {
-  Object.defineProperty(HTMLElement.prototype, "classList", {
-    get: function get() {
-      var ret, self, update;
-      update = function (fn) {
-        return function (value) {
-          var classes, index;
-          classes = self.className.split(/\s+/);
-          index = classes.indexOf(value);
-          fn(classes, index, value);
-          self.className = classes.join(" ");
-        };
-      };
-      self = this;
-      ret = {
-        add: update(function (classes, index, value) {
-          ~index || classes.push(value);
-        }),
-        remove: update(function (classes, index) {
-          ~index && classes.splice(index, 1);
-        }),
-        toggle: update(function (classes, index, value) {
-          if (~index) {
-            classes.splice(index, 1);
-          } else {
-            classes.push(value);
-          }
-        }),
-        contains: function contains(value) {
-          return !! ~self.className.split(/\s+/).indexOf(value);
-        },
-        item: function item(i) {
-          return self.className.split(/\s+/)[i] || null;
-        }
-      };
-      Object.defineProperty(ret, "length", {
-        get: function get() {
-          return self.className.split(/\s+/).length;
-        }
-      });
-      return ret;
-    }
-  });
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.ShareButton=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+_dereq_('../../modules/es6.array.iterator');
+module.exports = _dereq_('../../modules/$').core.Array.values;
+},{"../../modules/$":11,"../../modules/es6.array.iterator":18}],2:[function(_dereq_,module,exports){
+_dereq_('../../modules/es6.symbol');
+module.exports = _dereq_('../../modules/$').core.Symbol;
+},{"../../modules/$":11,"../../modules/es6.symbol":19}],3:[function(_dereq_,module,exports){
+var $ = _dereq_('./$');
+function assert(condition, msg1, msg2){
+  if(!condition)throw TypeError(msg2 ? msg1 + msg2 : msg1);
 }
-
-/**
- * Symbol.iterator polyfill
- */
-if (NodeList.prototype[Symbol.iterator] === undefined) {
-  NodeList.prototype[Symbol.iterator] = function () {
-    var _this = this;
-
-    var i = 0;
-    return {
-      next: function next() {
-        return { done: i >= _this.length, value: _this.item(i++) };
-      }
-    };
+assert.def = $.assertDefined;
+assert.fn = function(it){
+  if(!$.isFunction(it))throw TypeError(it + ' is not a function!');
+  return it;
+};
+assert.obj = function(it){
+  if(!$.isObject(it))throw TypeError(it + ' is not an object!');
+  return it;
+};
+assert.inst = function(it, Constructor, name){
+  if(!(it instanceof Constructor))throw TypeError(name + ": use the 'new' operator!");
+  return it;
+};
+module.exports = assert;
+},{"./$":11}],4:[function(_dereq_,module,exports){
+var $        = _dereq_('./$')
+  , TAG      = _dereq_('./$.wks')('toStringTag')
+  , toString = {}.toString;
+function cof(it){
+  return toString.call(it).slice(8, -1);
+}
+cof.classof = function(it){
+  var O, T;
+  return it == undefined ? it === undefined ? 'Undefined' : 'Null'
+    : typeof (T = (O = Object(it))[TAG]) == 'string' ? T : cof(O);
+};
+cof.set = function(it, tag, stat){
+  if(it && !$.has(it = stat ? it : it.prototype, TAG))$.hide(it, TAG, tag);
+};
+module.exports = cof;
+},{"./$":11,"./$.wks":17}],5:[function(_dereq_,module,exports){
+var $          = _dereq_('./$')
+  , global     = $.g
+  , core       = $.core
+  , isFunction = $.isFunction
+  , $redef     = _dereq_('./$.redef');
+function ctx(fn, that){
+  return function(){
+    return fn.apply(that, arguments);
   };
 }
-/**
- * ShareUtils
- * @class
- * @classdesc A nice set of utilities.
- */
-"use strict";
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ShareUtils = (function () {
-  function ShareUtils() {
-    _classCallCheck(this, ShareUtils);
+global.core = core;
+// type bitmap
+$def.F = 1;  // forced
+$def.G = 2;  // global
+$def.S = 4;  // static
+$def.P = 8;  // proto
+$def.B = 16; // bind
+$def.W = 32; // wrap
+function $def(type, name, source){
+  var key, own, out, exp
+    , isGlobal = type & $def.G
+    , isProto  = type & $def.P
+    , target   = isGlobal ? global : type & $def.S
+        ? global[name] : (global[name] || {}).prototype
+    , exports  = isGlobal ? core : core[name] || (core[name] = {});
+  if(isGlobal)source = name;
+  for(key in source){
+    // contains in native
+    own = !(type & $def.F) && target && key in target;
+    // export native or passed
+    out = (own ? target : source)[key];
+    // bind timers to global for call from export context
+    if(type & $def.B && own)exp = ctx(out, global);
+    else exp = isProto && isFunction(out) ? ctx(Function.call, out) : out;
+    // extend global
+    if(target && !own)$redef(target, key, out);
+    // export
+    if(exports[key] != out)$.hide(exports, key, exp);
+    if(isProto)(exports.prototype || (exports.prototype = {}))[key] = out;
   }
-
-  _createClass(ShareUtils, [{
-    key: "_hide",
-
-    /**
-     * @method _hide
-     * @description Change element's display to 'none'
-     * @private
-     *
-     * @param {DOMNode} el
-     */
-    value: function _hide(el) {
-      el.style.display = "none";
-    }
-  }, {
-    key: "_show",
-
-    /**
-     * @method _show
-     * @description Change element's display to 'block'
-     * @private
-     *
-     * @param {DOMNode} el
-     */
-    value: function _show(el) {
-      el.style.display = "block";
-    }
-  }, {
-    key: "_hasClass",
-
-    /**
-     * @method _hasClass
-     * @description Wrapper to see if an element contains a class.
-     * @private
-     *
-     * @param {DOMNode} el
-     * @param {String}  className
-     * @returns {Boolean}
-     */
-    value: function _hasClass(el, className) {
-      return el.classList.contains(className);
-    }
-  }, {
-    key: "_addClass",
-
-    /**
-     * @method addClass
-     * @description Wrapper to add class to element.
-     * @private
-     *
-     * @param {DOMNode} el
-     * @param {String}  className
-     */
-    value: function _addClass(el, className) {
-      el.classList.add(className);
-    }
-  }, {
-    key: "_removeClass",
-
-    /**
-     * @method removeClass
-     * @description Wrapper to remove class from element.
-     * @private
-     *
-     * @param {DOMNode} el
-     * @param {String}  className
-     */
-    value: function _removeClass(el, className) {
-      el.classList.remove(className);
-    }
-  }, {
-    key: "_isEncoded",
-
-    /**
-     * @method _isEncoded
-     * @description Wrapper to check if the string is encoded.
-     * @private
-     *
-     * @param {String}  str
-     * @param {Boolean}
-     */
-    value: function _isEncoded(str) {
-      str = str.toRFC3986();
-      return decodeURIComponent(str) !== str;
-    }
-  }, {
-    key: "_encode",
-
-    /**
-     * @method _encode
-     * @description Wrapper to _encode a string if the string isn't already encoded.
-     * @private
-     *
-     * @param {DOMNode} el
-     * @param {String}  className
-     */
-    value: function _encode(str) {
-      if (typeof str === "undefined" || str === null || this._isEncoded(str)) return encodeURIComponent(str);else return str.toRFC3986();
-    }
-  }, {
-    key: "_getUrl",
-
-    /**
-     * @method _getUrl
-     * @description Returns the correct share URL based off of the incoming
-     * URL and parameters given
-     * @private
-     *
-     * @param {String} url
-     * @param {boolean} encode
-     * @param {Object} params
-     */
-    value: function _getUrl(url) {
-      var _this = this;
-
-      var encode = arguments[1] === undefined ? false : arguments[1];
-      var params = arguments[2] === undefined ? {} : arguments[2];
-
-      var qs = (function () {
-        var results = [];
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = Object.keys(params)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var k = _step.value;
-
-            var v = params[k];
-            results.push("" + k + "=" + _this._encode(v));
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"]) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        return results.join("&");
-      })();
-
-      if (qs) qs = "?" + qs;
-
-      return url + qs;
-    }
-  }, {
-    key: "_updateHref",
-
-    /**
-     * @method _updateHref
-     * @description Makes the elements a tag have a href of the popup link and
-     * as pops up the share window for the element
-     * @private
-     *
-     * @param {DOMNode} element
-     * @param {String} url
-     * @param {Object} params
-     */
-    value: function _updateHref(element, url, params) {
-      var encode = url.indexOf("mailto:") >= 0;
-      var a = element.getElementsByTagName("a")[0];
-      a.setAttribute("href", this._getUrl(url, !encode, params));
-
-      var popup = {
-        width: 500,
-        height: 350
-      };
-
-      popup.top = screen.height / 2 - popup.height / 2;
-      popup.left = screen.width / 2 - popup.width / 2;
-
-      if (!encode) window.open(a.href, "targetWindow", "\n          toolbar=no,\n          location=no,\n          status=no,\n          menubar=no,\n          scrollbars=yes,\n          resizable=yes,\n          left=" + popup.left + ",\n          top=" + popup.top + ",\n          width=" + popup.width + ",\n          height=" + popup.height + "\n        ");
-    }
-  }, {
-    key: "popup",
-
-    /**
-     * @method popup
-     * @description Create a window for specified network
-     *
-     * @param {String}  url
-     * @param {Object}  params
-     */
-    value: function popup(url) {
-      var _this2 = this;
-
-      var params = arguments[1] === undefined ? {} : arguments[1];
-
-      var popup = {
-        width: 500,
-        height: 350
-      };
-
-      popup.top = screen.height / 2 - popup.height / 2;
-      popup.left = screen.width / 2 - popup.width / 2;
-
-      var qs = (function () {
-        var results = [];
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (var _iterator2 = Object.keys(params)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var k = _step2.value;
-
-            var v = params[k];
-            results.push("" + k + "=" + _this2._encode(v));
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
-              _iterator2["return"]();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-
-        return results.join("&");
-      })();
-
-      if (qs) qs = "?" + qs;
-
-      // This does work even though it contains \n once converted.
-      window.open(url + qs, "targetWindow", "\n        toolbar=no,\n        location=no,\n        status=no,\n        menubar=no,\n        scrollbars=yes,\n        resizable=yes,\n        left=" + popup.left + ",\n        top=" + popup.top + ",\n        width=" + popup.width + ",\n        height=" + popup.height + "\n      ");
-    }
-  }, {
-    key: "_merge",
-
-    /**
-     * @method _merge
-     * @description Combines two (or more) objects, giving the last one precedence
-     * @author svlasov-gists
-     * [Original Gist]{@link https://gist.github.com/svlasov-gists/2383751}
-     *
-     * @param {Object}  target
-     * @param {Object}  source
-     * @return {Object} target
-     */
-    value: (function (_merge2) {
-      function _merge(_x, _x2) {
-        return _merge2.apply(this, arguments);
-      }
-
-      _merge.toString = function () {
-        return _merge2.toString();
-      };
-
-      return _merge;
-    })(function (target, source) {
-      if (typeof target !== "object") target = {};
-
-      for (var property in source) {
-        if (source.hasOwnProperty(property)) {
-          var sourceProperty = source[property];
-
-          if (typeof sourceProperty === "object") {
-            target[property] = this._merge(target[property], sourceProperty);
-            continue;
-          }
-
-          target[property] = sourceProperty;
-        }
-      }
-
-      for (var a = 2, l = arguments.length; a < l; a++) {
-        _merge(target, arguments[a]);
-      }return target;
-    })
-  }, {
-    key: "_objToArray",
-
-    /**
-     * @method _objectToArray
-     * @description Takes an Object and converts it into an array of Objects. This is used when converting a list of DOMNodes into an array.
-     *
-     * @param {Object} obj
-     * @returns {Array} arr
-     */
-    value: function _objToArray(obj) {
-      var arr = [];
-
-      for (var k in obj) {
-        if (typeof obj[k] === "object") arr.push(obj[k]);
-      }return arr;
-    }
-  }, {
-    key: "_isMobile",
-
-    /**
-     * @method _isMobile
-     * @description Returns true if current device is mobile, false otherwise
-     * @author kriskbx
-     * [Original Gist] {@link https://github.com/kriskbx/whatsapp-sharing/blob/master/src/button.js}
-     * @private
-     */
-    value: function _isMobile() {
-      if (navigator.userAgent.match(/Android|iPhone/i) && !navigator.userAgent.match(/iPod|iPad/i)) return true;
-      return false;
-    }
-  }]);
-
-  return ShareUtils;
-})();
-
-/**
- * @method toRFC3986
- * @description Encodes the string in RFC3986
- * @memberof String
- *
- * @return {String}
- */
-String.prototype.toRFC3986 = function () {
-  var tmp = encodeURIComponent(this);
-  tmp.replace(/[!'()*]/g, function (c) {
-    return "%" + c.charCodeAt(0).toString(16);
+}
+module.exports = $def;
+},{"./$":11,"./$.redef":13}],6:[function(_dereq_,module,exports){
+var $ = _dereq_('./$');
+module.exports = function(it){
+  var keys       = $.getKeys(it)
+    , getDesc    = $.getDesc
+    , getSymbols = $.getSymbols;
+  if(getSymbols)$.each.call(getSymbols(it), function(key){
+    if(getDesc(it, key).enumerable)keys.push(key);
   });
+  return keys;
+};
+},{"./$":11}],7:[function(_dereq_,module,exports){
+module.exports = function($){
+  $.FW   = true;
+  $.path = $.g;
+  return $;
+};
+},{}],8:[function(_dereq_,module,exports){
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+var $ = _dereq_('./$')
+  , toString = {}.toString
+  , getNames = $.getNames;
+
+var windowNames = typeof window == 'object' && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+function getWindowNames(it){
+  try {
+    return getNames(it);
+  } catch(e){
+    return windowNames.slice();
+  }
+}
+
+module.exports.get = function getOwnPropertyNames(it){
+  if(windowNames && toString.call(it) == '[object Window]')return getWindowNames(it);
+  return getNames($.toObject(it));
+};
+},{"./$":11}],9:[function(_dereq_,module,exports){
+var $def            = _dereq_('./$.def')
+  , $redef          = _dereq_('./$.redef')
+  , $               = _dereq_('./$')
+  , cof             = _dereq_('./$.cof')
+  , $iter           = _dereq_('./$.iter')
+  , SYMBOL_ITERATOR = _dereq_('./$.wks')('iterator')
+  , FF_ITERATOR     = '@@iterator'
+  , KEYS            = 'keys'
+  , VALUES          = 'values'
+  , Iterators       = $iter.Iterators;
+module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE){
+  $iter.create(Constructor, NAME, next);
+  function createMethod(kind){
+    function $$(that){
+      return new Constructor(that, kind);
+    }
+    switch(kind){
+      case KEYS: return function keys(){ return $$(this); };
+      case VALUES: return function values(){ return $$(this); };
+    } return function entries(){ return $$(this); };
+  }
+  var TAG      = NAME + ' Iterator'
+    , proto    = Base.prototype
+    , _native  = proto[SYMBOL_ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
+    , _default = _native || createMethod(DEFAULT)
+    , methods, key;
+  // Fix native
+  if(_native){
+    var IteratorPrototype = $.getProto(_default.call(new Base));
+    // Set @@toStringTag to native iterators
+    cof.set(IteratorPrototype, TAG, true);
+    // FF fix
+    if($.FW && $.has(proto, FF_ITERATOR))$iter.set(IteratorPrototype, $.that);
+  }
+  // Define iterator
+  if($.FW || FORCE)$iter.set(proto, _default);
+  // Plug for library
+  Iterators[NAME] = _default;
+  Iterators[TAG]  = $.that;
+  if(DEFAULT){
+    methods = {
+      keys:    IS_SET            ? _default : createMethod(KEYS),
+      values:  DEFAULT == VALUES ? _default : createMethod(VALUES),
+      entries: DEFAULT != VALUES ? _default : createMethod('entries')
+    };
+    if(FORCE)for(key in methods){
+      if(!(key in proto))$redef(proto, key, methods[key]);
+    } else $def($def.P + $def.F * $iter.BUGGY, NAME, methods);
+  }
+};
+},{"./$":11,"./$.cof":4,"./$.def":5,"./$.iter":10,"./$.redef":13,"./$.wks":17}],10:[function(_dereq_,module,exports){
+'use strict';
+var $                 = _dereq_('./$')
+  , cof               = _dereq_('./$.cof')
+  , classof           = cof.classof
+  , assert            = _dereq_('./$.assert')
+  , assertObject      = assert.obj
+  , SYMBOL_ITERATOR   = _dereq_('./$.wks')('iterator')
+  , FF_ITERATOR       = '@@iterator'
+  , Iterators         = _dereq_('./$.shared')('iterators')
+  , IteratorPrototype = {};
+// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+setIterator(IteratorPrototype, $.that);
+function setIterator(O, value){
+  $.hide(O, SYMBOL_ITERATOR, value);
+  // Add iterator for FF iterator protocol
+  if(FF_ITERATOR in [])$.hide(O, FF_ITERATOR, value);
+}
+
+module.exports = {
+  // Safari has buggy iterators w/o `next`
+  BUGGY: 'keys' in [] && !('next' in [].keys()),
+  Iterators: Iterators,
+  step: function(done, value){
+    return {value: value, done: !!done};
+  },
+  is: function(it){
+    var O      = Object(it)
+      , Symbol = $.g.Symbol;
+    return (Symbol && Symbol.iterator || FF_ITERATOR) in O
+      || SYMBOL_ITERATOR in O
+      || $.has(Iterators, classof(O));
+  },
+  get: function(it){
+    var Symbol = $.g.Symbol
+      , getIter;
+    if(it != undefined){
+      getIter = it[Symbol && Symbol.iterator || FF_ITERATOR]
+        || it[SYMBOL_ITERATOR]
+        || Iterators[classof(it)];
+    }
+    assert($.isFunction(getIter), it, ' is not iterable!');
+    return assertObject(getIter.call(it));
+  },
+  set: setIterator,
+  create: function(Constructor, NAME, next, proto){
+    Constructor.prototype = $.create(proto || IteratorPrototype, {next: $.desc(1, next)});
+    cof.set(Constructor, NAME + ' Iterator');
+  }
+};
+},{"./$":11,"./$.assert":3,"./$.cof":4,"./$.shared":14,"./$.wks":17}],11:[function(_dereq_,module,exports){
+'use strict';
+var global = typeof self != 'undefined' ? self : Function('return this')()
+  , core   = {}
+  , defineProperty = Object.defineProperty
+  , hasOwnProperty = {}.hasOwnProperty
+  , ceil  = Math.ceil
+  , floor = Math.floor
+  , max   = Math.max
+  , min   = Math.min;
+// The engine works fine with descriptors? Thank's IE8 for his funny defineProperty.
+var DESC = !!function(){
+  try {
+    return defineProperty({}, 'a', {get: function(){ return 2; }}).a == 2;
+  } catch(e){ /* empty */ }
+}();
+var hide = createDefiner(1);
+// 7.1.4 ToInteger
+function toInteger(it){
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+}
+function desc(bitmap, value){
+  return {
+    enumerable  : !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable    : !(bitmap & 4),
+    value       : value
+  };
+}
+function simpleSet(object, key, value){
+  object[key] = value;
+  return object;
+}
+function createDefiner(bitmap){
+  return DESC ? function(object, key, value){
+    return $.setDesc(object, key, desc(bitmap, value));
+  } : simpleSet;
+}
+
+function isObject(it){
+  return it !== null && (typeof it == 'object' || typeof it == 'function');
+}
+function isFunction(it){
+  return typeof it == 'function';
+}
+function assertDefined(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+}
+
+var $ = module.exports = _dereq_('./$.fw')({
+  g: global,
+  core: core,
+  html: global.document && document.documentElement,
+  // http://jsperf.com/core-js-isobject
+  isObject:   isObject,
+  isFunction: isFunction,
+  that: function(){
+    return this;
+  },
+  // 7.1.4 ToInteger
+  toInteger: toInteger,
+  // 7.1.15 ToLength
+  toLength: function(it){
+    return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+  },
+  toIndex: function(index, length){
+    index = toInteger(index);
+    return index < 0 ? max(index + length, 0) : min(index, length);
+  },
+  has: function(it, key){
+    return hasOwnProperty.call(it, key);
+  },
+  create:     Object.create,
+  getProto:   Object.getPrototypeOf,
+  DESC:       DESC,
+  desc:       desc,
+  getDesc:    Object.getOwnPropertyDescriptor,
+  setDesc:    defineProperty,
+  setDescs:   Object.defineProperties,
+  getKeys:    Object.keys,
+  getNames:   Object.getOwnPropertyNames,
+  getSymbols: Object.getOwnPropertySymbols,
+  assertDefined: assertDefined,
+  // Dummy, fix for not array-like ES3 string in es5 module
+  ES5Object: Object,
+  toObject: function(it){
+    return $.ES5Object(assertDefined(it));
+  },
+  hide: hide,
+  def: createDefiner(0),
+  set: global.Symbol ? simpleSet : hide,
+  each: [].forEach
+});
+/* eslint-disable no-undef */
+if(typeof __e != 'undefined')__e = core;
+if(typeof __g != 'undefined')__g = global;
+},{"./$.fw":7}],12:[function(_dereq_,module,exports){
+var $ = _dereq_('./$');
+module.exports = function(object, el){
+  var O      = $.toObject(object)
+    , keys   = $.getKeys(O)
+    , length = keys.length
+    , index  = 0
+    , key;
+  while(length > index)if(O[key = keys[index++]] === el)return key;
+};
+},{"./$":11}],13:[function(_dereq_,module,exports){
+var $   = _dereq_('./$')
+  , tpl = String({}.hasOwnProperty)
+  , SRC = _dereq_('./$.uid').safe('src')
+  , _toString = Function.toString;
+
+function $redef(O, key, val, safe){
+  if($.isFunction(val)){
+    var base = O[key];
+    $.hide(val, SRC, base ? String(base) : tpl.replace(/hasOwnProperty/, String(key)));
+    if(!('name' in val))val.name = key;
+  }
+  if(O === $.g){
+    O[key] = val;
+  } else {
+    if(!safe)delete O[key];
+    $.hide(O, key, val);
+  }
+}
+
+// add fake Function#toString for correct work wrapped methods / constructors
+// with methods similar to LoDash isNative
+$redef(Function.prototype, 'toString', function toString(){
+  return $.has(this, SRC) ? this[SRC] : _toString.call(this);
+});
+
+$.core.inspectSource = function(it){
+  return _toString.call(it);
 };
 
-/**
- * @method capitalizeFirstLetter
- * @description Does exactly what the method name states
- * @memberof String
- *
- * @return {String}
- */
-String.prototype.capitalizeFirstLetter = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1);
+module.exports = $redef;
+},{"./$":11,"./$.uid":15}],14:[function(_dereq_,module,exports){
+var $      = _dereq_('./$')
+  , SHARED = '__core-js_shared__'
+  , store  = $.g[SHARED] || ($.g[SHARED] = {});
+module.exports = function(key){
+  return store[key] || (store[key] = {});
 };
+},{"./$":11}],15:[function(_dereq_,module,exports){
+var sid = 0;
+function uid(key){
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++sid + Math.random()).toString(36));
+}
+uid.safe = _dereq_('./$').g.Symbol || uid;
+module.exports = uid;
+},{"./$":11}],16:[function(_dereq_,module,exports){
+// 22.1.3.31 Array.prototype[@@unscopables]
+var UNSCOPABLES = _dereq_('./$.wks')('unscopables');
+if(!(UNSCOPABLES in []))_dereq_('./$').hide(Array.prototype, UNSCOPABLES, {});
+module.exports = function(key){
+  [][UNSCOPABLES][key] = true;
+};
+},{"./$":11,"./$.wks":17}],17:[function(_dereq_,module,exports){
+var global = _dereq_('./$').g
+  , store  = _dereq_('./$.shared')('wks');
+module.exports = function(name){
+  return store[name] || (store[name] =
+    global.Symbol && global.Symbol[name] || _dereq_('./$.uid').safe('Symbol.' + name));
+};
+},{"./$":11,"./$.shared":14,"./$.uid":15}],18:[function(_dereq_,module,exports){
+var $          = _dereq_('./$')
+  , setUnscope = _dereq_('./$.unscope')
+  , ITER       = _dereq_('./$.uid').safe('iter')
+  , $iter      = _dereq_('./$.iter')
+  , step       = $iter.step
+  , Iterators  = $iter.Iterators;
+
+// 22.1.3.4 Array.prototype.entries()
+// 22.1.3.13 Array.prototype.keys()
+// 22.1.3.29 Array.prototype.values()
+// 22.1.3.30 Array.prototype[@@iterator]()
+_dereq_('./$.iter-define')(Array, 'Array', function(iterated, kind){
+  $.set(this, ITER, {o: $.toObject(iterated), i: 0, k: kind});
+// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+}, function(){
+  var iter  = this[ITER]
+    , O     = iter.o
+    , kind  = iter.k
+    , index = iter.i++;
+  if(!O || index >= O.length){
+    iter.o = undefined;
+    return step(1);
+  }
+  if(kind == 'keys'  )return step(0, index);
+  if(kind == 'values')return step(0, O[index]);
+  return step(0, [index, O[index]]);
+}, 'values');
+
+// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+Iterators.Arguments = Iterators.Array;
+
+setUnscope('keys');
+setUnscope('values');
+setUnscope('entries');
+},{"./$":11,"./$.iter":10,"./$.iter-define":9,"./$.uid":15,"./$.unscope":16}],19:[function(_dereq_,module,exports){
+'use strict';
+// ECMAScript 6 symbols shim
+var $        = _dereq_('./$')
+  , setTag   = _dereq_('./$.cof').set
+  , uid      = _dereq_('./$.uid')
+  , shared   = _dereq_('./$.shared')
+  , $def     = _dereq_('./$.def')
+  , $redef   = _dereq_('./$.redef')
+  , keyOf    = _dereq_('./$.keyof')
+  , enumKeys = _dereq_('./$.enum-keys')
+  , assertObject = _dereq_('./$.assert').obj
+  , ObjectProto = Object.prototype
+  , DESC     = $.DESC
+  , has      = $.has
+  , $create  = $.create
+  , getDesc  = $.getDesc
+  , setDesc  = $.setDesc
+  , desc     = $.desc
+  , $names   = _dereq_('./$.get-names')
+  , getNames = $names.get
+  , toObject = $.toObject
+  , $Symbol  = $.g.Symbol
+  , setter   = false
+  , TAG      = uid('tag')
+  , HIDDEN   = uid('hidden')
+  , _propertyIsEnumerable = {}.propertyIsEnumerable
+  , SymbolRegistry = shared('symbol-registry')
+  , AllSymbols = shared('symbols')
+  , useNative = $.isFunction($Symbol);
+
+var setSymbolDesc = DESC ? function(){ // fallback for old Android
+  try {
+    return $create(setDesc({}, HIDDEN, {
+      get: function(){
+        return setDesc(this, HIDDEN, {value: false})[HIDDEN];
+      }
+    }))[HIDDEN] || setDesc;
+  } catch(e){
+    return function(it, key, D){
+      var protoDesc = getDesc(ObjectProto, key);
+      if(protoDesc)delete ObjectProto[key];
+      setDesc(it, key, D);
+      if(protoDesc && it !== ObjectProto)setDesc(ObjectProto, key, protoDesc);
+    };
+  }
+}() : setDesc;
+
+function wrap(tag){
+  var sym = AllSymbols[tag] = $.set($create($Symbol.prototype), TAG, tag);
+  DESC && setter && setSymbolDesc(ObjectProto, tag, {
+    configurable: true,
+    set: function(value){
+      if(has(this, HIDDEN) && has(this[HIDDEN], tag))this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, desc(1, value));
+    }
+  });
+  return sym;
+}
+
+function defineProperty(it, key, D){
+  if(D && has(AllSymbols, key)){
+    if(!D.enumerable){
+      if(!has(it, HIDDEN))setDesc(it, HIDDEN, desc(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if(has(it, HIDDEN) && it[HIDDEN][key])it[HIDDEN][key] = false;
+      D = $create(D, {enumerable: desc(0, false)});
+    } return setSymbolDesc(it, key, D);
+  } return setDesc(it, key, D);
+}
+function defineProperties(it, P){
+  assertObject(it);
+  var keys = enumKeys(P = toObject(P))
+    , i    = 0
+    , l = keys.length
+    , key;
+  while(l > i)defineProperty(it, key = keys[i++], P[key]);
+  return it;
+}
+function create(it, P){
+  return P === undefined ? $create(it) : defineProperties($create(it), P);
+}
+function propertyIsEnumerable(key){
+  var E = _propertyIsEnumerable.call(this, key);
+  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key]
+    ? E : true;
+}
+function getOwnPropertyDescriptor(it, key){
+  var D = getDesc(it = toObject(it), key);
+  if(D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key]))D.enumerable = true;
+  return D;
+}
+function getOwnPropertyNames(it){
+  var names  = getNames(toObject(it))
+    , result = []
+    , i      = 0
+    , key;
+  while(names.length > i)if(!has(AllSymbols, key = names[i++]) && key != HIDDEN)result.push(key);
+  return result;
+}
+function getOwnPropertySymbols(it){
+  var names  = getNames(toObject(it))
+    , result = []
+    , i      = 0
+    , key;
+  while(names.length > i)if(has(AllSymbols, key = names[i++]))result.push(AllSymbols[key]);
+  return result;
+}
+
+// 19.4.1.1 Symbol([description])
+if(!useNative){
+  $Symbol = function Symbol(){
+    if(this instanceof $Symbol)throw TypeError('Symbol is not a constructor');
+    return wrap(uid(arguments[0]));
+  };
+  $redef($Symbol.prototype, 'toString', function(){
+    return this[TAG];
+  });
+
+  $.create     = create;
+  $.setDesc    = defineProperty;
+  $.getDesc    = getOwnPropertyDescriptor;
+  $.setDescs   = defineProperties;
+  $.getNames   = $names.get = getOwnPropertyNames;
+  $.getSymbols = getOwnPropertySymbols;
+
+  if($.DESC && $.FW)$redef(ObjectProto, 'propertyIsEnumerable', propertyIsEnumerable, true);
+}
+
+var symbolStatics = {
+  // 19.4.2.1 Symbol.for(key)
+  'for': function(key){
+    return has(SymbolRegistry, key += '')
+      ? SymbolRegistry[key]
+      : SymbolRegistry[key] = $Symbol(key);
+  },
+  // 19.4.2.5 Symbol.keyFor(sym)
+  keyFor: function keyFor(key){
+    return keyOf(SymbolRegistry, key);
+  },
+  useSetter: function(){ setter = true; },
+  useSimple: function(){ setter = false; }
+};
+// 19.4.2.2 Symbol.hasInstance
+// 19.4.2.3 Symbol.isConcatSpreadable
+// 19.4.2.4 Symbol.iterator
+// 19.4.2.6 Symbol.match
+// 19.4.2.8 Symbol.replace
+// 19.4.2.9 Symbol.search
+// 19.4.2.10 Symbol.species
+// 19.4.2.11 Symbol.split
+// 19.4.2.12 Symbol.toPrimitive
+// 19.4.2.13 Symbol.toStringTag
+// 19.4.2.14 Symbol.unscopables
+$.each.call((
+    'hasInstance,isConcatSpreadable,iterator,match,replace,search,' +
+    'species,split,toPrimitive,toStringTag,unscopables'
+  ).split(','), function(it){
+    var sym = _dereq_('./$.wks')(it);
+    symbolStatics[it] = useNative ? sym : wrap(sym);
+  }
+);
+
+setter = true;
+
+$def($def.G + $def.W, {Symbol: $Symbol});
+
+$def($def.S, 'Symbol', symbolStatics);
+
+$def($def.S + $def.F * !useNative, 'Object', {
+  // 19.1.2.2 Object.create(O [, Properties])
+  create: create,
+  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+  defineProperty: defineProperty,
+  // 19.1.2.3 Object.defineProperties(O, Properties)
+  defineProperties: defineProperties,
+  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+  getOwnPropertyDescriptor: getOwnPropertyDescriptor,
+  // 19.1.2.7 Object.getOwnPropertyNames(O)
+  getOwnPropertyNames: getOwnPropertyNames,
+  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+  getOwnPropertySymbols: getOwnPropertySymbols
+});
+
+// 19.4.3.5 Symbol.prototype[@@toStringTag]
+setTag($Symbol, 'Symbol');
+// 20.2.1.9 Math[@@toStringTag]
+setTag(Math, 'Math', true);
+// 24.3.3 JSON[@@toStringTag]
+setTag($.g.JSON, 'JSON', true);
+},{"./$":11,"./$.assert":3,"./$.cof":4,"./$.def":5,"./$.enum-keys":6,"./$.get-names":8,"./$.keyof":12,"./$.redef":13,"./$.shared":14,"./$.uid":15,"./$.wks":17}],20:[function(_dereq_,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+
+_dereq_('core-js/fn/symbol');
+_dereq_('core-js/fn/array/iterator');
+var ShareUtils = _dereq_('./shareUtils');
+
 /**
  * Sharebutton
  * @class
@@ -442,15 +637,6 @@ String.prototype.capitalizeFirstLetter = function () {
  * @param {String} element
  * @param {Object} options
  */
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
 var ShareButton = (function (_ShareUtils) {
   function ShareButton(element, options) {
@@ -1293,6 +1479,371 @@ var ShareButton = (function (_ShareUtils) {
 
   return ShareButton;
 })(ShareUtils);
-return ShareButton;
 
-}));
+module.exports = ShareButton;
+
+},{"./shareUtils":21,"core-js/fn/array/iterator":1,"core-js/fn/symbol":2}],21:[function(_dereq_,module,exports){
+/**
+ * ShareUtils
+ * @class
+ * @classdesc A nice set of utilities.
+ */
+"use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ShareUtils = (function () {
+  function ShareUtils() {
+    _classCallCheck(this, ShareUtils);
+  }
+
+  _createClass(ShareUtils, [{
+    key: "_hide",
+
+    /**
+     * @method _hide
+     * @description Change element's display to 'none'
+     * @private
+     *
+     * @param {DOMNode} el
+     */
+    value: function _hide(el) {
+      el.style.display = "none";
+    }
+  }, {
+    key: "_show",
+
+    /**
+     * @method _show
+     * @description Change element's display to 'block'
+     * @private
+     *
+     * @param {DOMNode} el
+     */
+    value: function _show(el) {
+      el.style.display = "block";
+    }
+  }, {
+    key: "_hasClass",
+
+    /**
+     * @method _hasClass
+     * @description Wrapper to see if an element contains a class.
+     * @private
+     *
+     * @param {DOMNode} el
+     * @param {String}  className
+     * @returns {Boolean}
+     */
+    value: function _hasClass(el, className) {
+      return el.classList.contains(className);
+    }
+  }, {
+    key: "_addClass",
+
+    /**
+     * @method addClass
+     * @description Wrapper to add class to element.
+     * @private
+     *
+     * @param {DOMNode} el
+     * @param {String}  className
+     */
+    value: function _addClass(el, className) {
+      el.classList.add(className);
+    }
+  }, {
+    key: "_removeClass",
+
+    /**
+     * @method removeClass
+     * @description Wrapper to remove class from element.
+     * @private
+     *
+     * @param {DOMNode} el
+     * @param {String}  className
+     */
+    value: function _removeClass(el, className) {
+      el.classList.remove(className);
+    }
+  }, {
+    key: "_isEncoded",
+
+    /**
+     * @method _isEncoded
+     * @description Wrapper to check if the string is encoded.
+     * @private
+     *
+     * @param {String}  str
+     * @param {Boolean}
+     */
+    value: function _isEncoded(str) {
+      str = str.toRFC3986();
+      return decodeURIComponent(str) !== str;
+    }
+  }, {
+    key: "_encode",
+
+    /**
+     * @method _encode
+     * @description Wrapper to _encode a string if the string isn't already encoded.
+     * @private
+     *
+     * @param {DOMNode} el
+     * @param {String}  className
+     */
+    value: function _encode(str) {
+      if (typeof str === "undefined" || str === null || this._isEncoded(str)) return encodeURIComponent(str);else return str.toRFC3986();
+    }
+  }, {
+    key: "_getUrl",
+
+    /**
+     * @method _getUrl
+     * @description Returns the correct share URL based off of the incoming
+     * URL and parameters given
+     * @private
+     *
+     * @param {String} url
+     * @param {boolean} encode
+     * @param {Object} params
+     */
+    value: function _getUrl(url) {
+      var _this = this;
+
+      var encode = arguments[1] === undefined ? false : arguments[1];
+      var params = arguments[2] === undefined ? {} : arguments[2];
+
+      var qs = (function () {
+        var results = [];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = Object.keys(params)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var k = _step.value;
+
+            var v = params[k];
+            results.push(k + "=" + _this._encode(v));
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"]) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        return results.join("&");
+      })();
+
+      if (qs) qs = "?" + qs;
+
+      return url + qs;
+    }
+  }, {
+    key: "_updateHref",
+
+    /**
+     * @method _updateHref
+     * @description Makes the elements a tag have a href of the popup link and
+     * as pops up the share window for the element
+     * @private
+     *
+     * @param {DOMNode} element
+     * @param {String} url
+     * @param {Object} params
+     */
+    value: function _updateHref(element, url, params) {
+      var encode = url.indexOf("mailto:") >= 0;
+      var a = element.getElementsByTagName("a")[0];
+      a.setAttribute("href", this._getUrl(url, !encode, params));
+
+      var popup = {
+        width: 500,
+        height: 350
+      };
+
+      popup.top = screen.height / 2 - popup.height / 2;
+      popup.left = screen.width / 2 - popup.width / 2;
+
+      if (!encode) window.open(a.href, "targetWindow", "\n          toolbar=no,\n          location=no,\n          status=no,\n          menubar=no,\n          scrollbars=yes,\n          resizable=yes,\n          left=" + popup.left + ",\n          top=" + popup.top + ",\n          width=" + popup.width + ",\n          height=" + popup.height + "\n        ");
+    }
+  }, {
+    key: "popup",
+
+    /**
+     * @method popup
+     * @description Create a window for specified network
+     *
+     * @param {String}  url
+     * @param {Object}  params
+     */
+    value: function popup(url) {
+      var _this2 = this;
+
+      var params = arguments[1] === undefined ? {} : arguments[1];
+
+      var popup = {
+        width: 500,
+        height: 350
+      };
+
+      popup.top = screen.height / 2 - popup.height / 2;
+      popup.left = screen.width / 2 - popup.width / 2;
+
+      var qs = (function () {
+        var results = [];
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = Object.keys(params)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var k = _step2.value;
+
+            var v = params[k];
+            results.push(k + "=" + _this2._encode(v));
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
+              _iterator2["return"]();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+
+        return results.join("&");
+      })();
+
+      if (qs) qs = "?" + qs;
+
+      // This does work even though it contains \n once converted.
+      window.open(url + qs, "targetWindow", "\n        toolbar=no,\n        location=no,\n        status=no,\n        menubar=no,\n        scrollbars=yes,\n        resizable=yes,\n        left=" + popup.left + ",\n        top=" + popup.top + ",\n        width=" + popup.width + ",\n        height=" + popup.height + "\n      ");
+    }
+  }, {
+    key: "_merge",
+
+    /**
+     * @method _merge
+     * @description Combines two (or more) objects, giving the last one precedence
+     * @author svlasov-gists
+     * [Original Gist]{@link https://gist.github.com/svlasov-gists/2383751}
+     *
+     * @param {Object}  target
+     * @param {Object}  source
+     * @return {Object} target
+     */
+    value: (function (_merge2) {
+      function _merge(_x, _x2) {
+        return _merge2.apply(this, arguments);
+      }
+
+      _merge.toString = function () {
+        return _merge2.toString();
+      };
+
+      return _merge;
+    })(function (target, source) {
+      if (typeof target !== "object") target = {};
+
+      for (var property in source) {
+        if (source.hasOwnProperty(property)) {
+          var sourceProperty = source[property];
+
+          if (typeof sourceProperty === "object") {
+            target[property] = this._merge(target[property], sourceProperty);
+            continue;
+          }
+
+          target[property] = sourceProperty;
+        }
+      }
+
+      for (var a = 2, l = arguments.length; a < l; a++) {
+        _merge(target, arguments[a]);
+      }return target;
+    })
+  }, {
+    key: "_objToArray",
+
+    /**
+     * @method _objectToArray
+     * @description Takes an Object and converts it into an array of Objects. This is used when converting a list of DOMNodes into an array.
+     *
+     * @param {Object} obj
+     * @returns {Array} arr
+     */
+    value: function _objToArray(obj) {
+      var arr = [];
+
+      for (var k in obj) {
+        if (typeof obj[k] === "object") arr.push(obj[k]);
+      }return arr;
+    }
+  }, {
+    key: "_isMobile",
+
+    /**
+     * @method _isMobile
+     * @description Returns true if current device is mobile, false otherwise
+     * @author kriskbx
+     * [Original Gist] {@link https://github.com/kriskbx/whatsapp-sharing/blob/master/src/button.js}
+     * @private
+     */
+    value: function _isMobile() {
+      if (navigator.userAgent.match(/Android|iPhone/i) && !navigator.userAgent.match(/iPod|iPad/i)) return true;
+      return false;
+    }
+  }]);
+
+  return ShareUtils;
+})();
+
+/**
+ * @method toRFC3986
+ * @description Encodes the string in RFC3986
+ * @memberof String
+ *
+ * @return {String}
+ */
+String.prototype.toRFC3986 = function () {
+  var tmp = encodeURIComponent(this);
+  tmp.replace(/[!'()*]/g, function (c) {
+    return "%" + c.charCodeAt(0).toString(16);
+  });
+};
+
+/**
+ * @method capitalizeFirstLetter
+ * @description Does exactly what the method name states
+ * @memberof String
+ *
+ * @return {String}
+ */
+String.prototype.capitalizeFirstLetter = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+module.exports = ShareUtils;
+
+},{}]},{},[20])
+(20)
+});

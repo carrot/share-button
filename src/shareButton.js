@@ -1,3 +1,7 @@
+require('core-js/fn/symbol');
+require('core-js/fn/array/iterator');
+let ShareUtils = require('./shareUtils');
+
 /**
  * Sharebutton
  * @class
@@ -706,3 +710,5 @@ class ShareButton extends ShareUtils {
     return opts;
   }
 }
+
+module.exports = ShareButton;
