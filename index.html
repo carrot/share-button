@@ -39,6 +39,14 @@
         whatsapp: {
           description: "I love carrots!",
           url: "www.carrot.is"
+        },
+        email: {
+          before: function() {
+            console.log('before click');
+          },
+          after: function() {
+            console.log('after click');
+          }
         }
       }
     });
