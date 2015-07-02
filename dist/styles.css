@@ -82,7 +82,11 @@ share-button .social.networks-1.middle.left {
   margin-left: -70px;
 }
 share-button .social.networks-1 ul {
-  width: 60px;
+  max-width: 60px;
+  width: 100%;
+}
+share-button .social.networks-1.bottom ul {
+  margin-top: 0;
 }
 share-button .social.networks-2 {
   width: 120px;
@@ -97,7 +101,11 @@ share-button .social.networks-2.middle.left {
   margin-left: -130px;
 }
 share-button .social.networks-2 ul {
-  width: 120px;
+  max-width: 120px;
+  width: 100%;
+}
+share-button .social.networks-2.bottom ul {
+  margin-top: 0;
 }
 share-button .social.networks-3 {
   width: 180px;
@@ -112,7 +120,11 @@ share-button .social.networks-3.middle.left {
   margin-left: -190px;
 }
 share-button .social.networks-3 ul {
-  width: 180px;
+  max-width: 180px;
+  width: 100%;
+}
+share-button .social.networks-3.bottom ul {
+  margin-top: 0;
 }
 share-button .social.networks-4 {
   width: 240px;
@@ -127,7 +139,11 @@ share-button .social.networks-4.middle.left {
   margin-left: -250px;
 }
 share-button .social.networks-4 ul {
-  width: 240px;
+  max-width: 240px;
+  width: 100%;
+}
+share-button .social.networks-4.bottom ul {
+  margin-top: 0;
 }
 share-button .social.networks-5 {
   width: 300px;
@@ -142,7 +158,17 @@ share-button .social.networks-5.middle.left {
   margin-left: -320px;
 }
 share-button .social.networks-5 ul {
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
+}
+@media screen and (max-width: 360px) {
+  share-button .social.networks-5 ul {
+    width: 80%;
+    margin-top: -122px;
+  }
+}
+share-button .social.networks-5.bottom ul {
+  margin-top: 0;
 }
 share-button .social.networks-6 {
   width: 360px;
@@ -157,7 +183,23 @@ share-button .social.networks-6.middle.left {
   margin-left: -380px;
 }
 share-button .social.networks-6 ul {
-  width: 360px;
+  max-width: 360px;
+  width: 100%;
+}
+@media screen and (max-width: 420px) {
+  share-button .social.networks-6 ul {
+    width: 83.33333333333333%;
+    margin-top: -122px;
+  }
+}
+@media screen and (max-width: 360px) {
+  share-button .social.networks-6 ul {
+    width: 66.66666666666666%;
+    margin-top: -122px;
+  }
+}
+share-button .social.networks-6.bottom ul {
+  margin-top: 0;
 }
 share-button .social.networks-7 {
   width: 420px;
@@ -172,7 +214,29 @@ share-button .social.networks-7.middle.left {
   margin-left: -440px;
 }
 share-button .social.networks-7 ul {
-  width: 420px;
+  max-width: 420px;
+  width: 100%;
+}
+@media screen and (max-width: 480px) {
+  share-button .social.networks-7 ul {
+    width: 85.71428571428571%;
+    margin-top: -122px;
+  }
+}
+@media screen and (max-width: 420px) {
+  share-button .social.networks-7 ul {
+    width: 71.42857142857143%;
+    margin-top: -122px;
+  }
+}
+@media screen and (max-width: 360px) {
+  share-button .social.networks-7 ul {
+    width: 57.14285714285714%;
+    margin-top: -122px;
+  }
+}
+share-button .social.networks-7.bottom ul {
+  margin-top: 0;
 }
 share-button .social.networks-8 {
   width: 480px;
@@ -187,7 +251,35 @@ share-button .social.networks-8.middle.left {
   margin-left: -500px;
 }
 share-button .social.networks-8 ul {
-  width: 480px;
+  max-width: 480px;
+  width: 100%;
+}
+@media screen and (max-width: 540px) {
+  share-button .social.networks-8 ul {
+    width: 87.5%;
+    margin-top: -122px;
+  }
+}
+@media screen and (max-width: 480px) {
+  share-button .social.networks-8 ul {
+    width: 75%;
+    margin-top: -122px;
+  }
+}
+@media screen and (max-width: 420px) {
+  share-button .social.networks-8 ul {
+    width: 62.5%;
+    margin-top: -122px;
+  }
+}
+@media screen and (max-width: 360px) {
+  share-button .social.networks-8 ul {
+    width: 50%;
+    margin-top: -122px;
+  }
+}
+share-button .social.networks-8.bottom ul {
+  margin-top: 0;
 }
 share-button .social.active {
   opacity: 1;
@@ -223,6 +315,8 @@ share-button .social ul {
   margin: auto;
   padding: 0;
   list-style: none;
+  text-align: center;
+  line-height: 0;
 }
 share-button .social ul li {
   position: relative;
