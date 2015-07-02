@@ -20,8 +20,10 @@ network($maxWidth, $center, $left, $middle-left)
 
     $networks = ($maxWidth / 60)
     for $network in (1..$networks)
-      if (((($maxWidth - ($network * 60)) + 120)px) > 300px)
-        @media screen and (max-width: (($maxWidth - ($network * 60)) + 120)px)
+      $thisWidth = (($maxWidth - ($network * 60)) + 120)
+
+      if (($thisWidth)px > 300px)
+        @media screen and (max-width: ($thisWidth)px)
           width: 100% - (((100 / ($networks * 10)) * 10) * $network)%
 
           if (100% > @width)
