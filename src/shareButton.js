@@ -1,7 +1,7 @@
 require('core-js/fn/symbol');
 require('core-js/fn/array/iterator');
 require('core-js/fn/math/trunc');
-let ShareUtils = require('./shareUtils');
+import ShareUtils from './shareUtils';
 
 /**
  * Sharebutton
@@ -221,17 +221,21 @@ class ShareButton extends ShareUtils {
     // Add listener to activate networks and close button
     for (let k in Object.keys(networks)) {
       let network = networks[k];
+
       if(typeof(network) !== "undefined") {
-        network.style.display = this.config.networks[network.getAttribute('data-network')].display;
         let name = network.getAttribute('data-network');
         let a = network.getElementsByTagName('a')[0];
+
+        this._addClass(network, this.config.networks[name].class);
+
         if(network.className !== 'paper-plane')
           a.setAttribute('onclick', 'return false');
+
         a.addEventListener('mousedown', () => {
           this._hook('before', name, instance);
         });
         a.addEventListener('mouseup', () => {
-          this[`_network${name.capitalizeFirstLetter()}`](network);
+          this[`_network${name.capFLetter()}`](network);
         });
         a.addEventListener('click', () => {
           this._hook('after', name, instance);
@@ -672,15 +676,16 @@ class ShareButton extends ShareUtils {
           this.config.networks[network][option] = this.config[option];
         }
       }
+
       // Check for enabled networks and display them
       if (this.config.networks[network].enabled) {
-        display = 'block';
+        this.class = 'enabled';
         this.config.enabledNetworks += 1;
       }
       else
-        display = 'none';
+        this.class = 'disabled';
 
-      this.config.networks[network].display = display;
+      this.config.networks[network].class = this.class;
     }
   }
 

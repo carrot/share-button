@@ -25,31 +25,7 @@
   <pre><span class="new">new</span> <span class="class">ShareButton</span>();</pre>
   <script src='dist/ShareButton.js'></script>
   <script>
-    var shareButton = new ShareButton({
-      networks: {
-        facebook: {
-          appId: "1007527835932544",
-          // appId: "602752456409826",
-          title: "Test Title",
-          url: "www.google.com"
-        },
-        googlePlus: {
-          url: "www.carrot.is"
-        },
-        whatsapp: {
-          description: "I love carrots!",
-          url: "www.carrot.is"
-        },
-        email: {
-          before: function() {
-            console.log('before click');
-          },
-          after: function() {
-            console.log('after click');
-          }
-        }
-      }
-    });
+    var shareButton = new ShareButton();
   </script>
 </body>
 </html>

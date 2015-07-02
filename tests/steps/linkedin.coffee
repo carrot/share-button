@@ -9,13 +9,13 @@ module.exports = ->
     new @Widgets
       .ShareButtonNetworks()
       .filter( (item) ->
-        item.getAttribute('style')
-          .then (style) ->
-            style.indexOf('display: block;') >= 0
-          .then (itemStyle) ->
-            item.hasClass('linkedin')
-              .then (itemClass) ->
-                return itemStyle && itemClass
+        item.hasClass('linkedin')
+          .then (class1) ->
+            return class1
+          .then (class1) ->
+            item.hasClass('enabled')
+              .then (class2) ->
+                return (class1 && class2)
       )
       .should.eventually.have.length(1)
 

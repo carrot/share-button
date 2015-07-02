@@ -281,14 +281,14 @@ String.prototype.toRFC3986 = function() {
 };
 
 /**
- * @method capitalizeFirstLetter
+ * @method capFLetter
  * @description Does exactly what the method name states
  * @memberof String
  *
  * @return {String}
  */
-String.prototype.capitalizeFirstLetter = function() {
+String.prototype.capFLetter = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-module.exports = ShareUtils;
+export default ShareUtils;

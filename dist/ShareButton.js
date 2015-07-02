@@ -749,14 +749,19 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
+var _shareUtils = _dereq_('./shareUtils');
+
+var _shareUtils2 = _interopRequireDefault(_shareUtils);
+
 _dereq_('core-js/fn/symbol');
 _dereq_('core-js/fn/array/iterator');
 _dereq_('core-js/fn/math/trunc');
-var ShareUtils = _dereq_('./shareUtils');
 
 /**
  * Sharebutton
@@ -1038,17 +1043,21 @@ var ShareButton = (function (_ShareUtils) {
 
       var _loop = function (k) {
         var network = networks[k];
+
         if (typeof network !== 'undefined') {
           (function () {
-            network.style.display = _this.config.networks[network.getAttribute('data-network')].display;
             var name = network.getAttribute('data-network');
             var a = network.getElementsByTagName('a')[0];
+
+            _this._addClass(network, _this.config.networks[name]['class']);
+
             if (network.className !== 'paper-plane') a.setAttribute('onclick', 'return false');
+
             a.addEventListener('mousedown', function () {
               _this._hook('before', name, instance);
             });
             a.addEventListener('mouseup', function () {
-              _this['_network' + name.capitalizeFirstLetter()](network);
+              _this['_network' + name.capFLetter()](network);
             });
             a.addEventListener('click', function () {
               _this._hook('after', name, instance);
@@ -1555,11 +1564,11 @@ var ShareButton = (function (_ShareUtils) {
 
           // Check for enabled networks and display them
           if (this.config.networks[network].enabled) {
-            display = 'block';
+            this['class'] = 'enabled';
             this.config.enabledNetworks += 1;
-          } else display = 'none';
+          } else this['class'] = 'disabled';
 
-          this.config.networks[network].display = display;
+          this.config.networks[network]['class'] = this['class'];
         }
       } catch (err) {
         _didIteratorError3 = true;
@@ -1621,7 +1630,7 @@ var ShareButton = (function (_ShareUtils) {
   }]);
 
   return ShareButton;
-})(ShareUtils);
+})(_shareUtils2['default']);
 
 module.exports = ShareButton;
 
@@ -1632,6 +1641,10 @@ module.exports = ShareButton;
  * @classdesc A nice set of utilities.
  */
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -1977,17 +1990,18 @@ String.prototype.toRFC3986 = function () {
 };
 
 /**
- * @method capitalizeFirstLetter
+ * @method capFLetter
  * @description Does exactly what the method name states
  * @memberof String
  *
  * @return {String}
  */
-String.prototype.capitalizeFirstLetter = function () {
+String.prototype.capFLetter = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-module.exports = ShareUtils;
+exports["default"] = ShareUtils;
+module.exports = exports["default"];
 
 },{}]},{},[22])
 (22)
