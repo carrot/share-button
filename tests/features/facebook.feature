@@ -4,7 +4,7 @@ Feature: Facebook Network
     Given I create a Facebook Share Button
 
   @facebook
-  Scenario: Display Facebook Network
+  Scenario: Facebook network should be displayed and have the correct URL
     When I click the Facebook Share Button
     Then I should see the Facebook button
     When I click the Facebook button

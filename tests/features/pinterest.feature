@@ -4,7 +4,7 @@ Feature: Pinterest Network
     Given I create a Pinterest Share Button
 
   @pinterest
-  Scenario: Display Pinterest Network
+  Scenario: Pinterest network should be displayed and have the correct URL
     When I click the Pinterest Share Button
     Then I should see the Pinterest button
     When I click the Pinterest button

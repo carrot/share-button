@@ -815,7 +815,7 @@ var ShareButton = (function (_ShareUtils) {
         twitter: {
           enabled: true,
           url: null,
-          description: null // Text
+          description: null
         },
         facebook: {
           enabled: true,
@@ -851,13 +851,13 @@ var ShareButton = (function (_ShareUtils) {
         },
         email: {
           enabled: true,
-          title: null, // Subject
-          description: null // Body
+          title: null,
+          description: null
         }
       }
     };
 
-    this.listener = null; // listener ID for toggleListen
+    this.listener = null;
 
     this._setup(this.element, options);
   }
@@ -870,7 +870,6 @@ var ShareButton = (function (_ShareUtils) {
     /**
      * @method open
      * @description Opens Share Button
-     * @public
      */
     value: function open() {
       this._public('Open');
@@ -881,7 +880,6 @@ var ShareButton = (function (_ShareUtils) {
     /**
      * @method close
      * @description Cpens Share Button
-     * @public
      */
     value: function close() {
       this._public('Close');
@@ -892,7 +890,6 @@ var ShareButton = (function (_ShareUtils) {
     /**
      * @method toggle
      * @description Toggles Share Button
-     * @public
      */
     value: function toggle() {
       this._public('Toggle');
@@ -904,7 +901,6 @@ var ShareButton = (function (_ShareUtils) {
      * @method toggleListen
      * @description Toggles the Share Button listener, good for updaing share
      * button for CSS animations.
-     * @public
      */
     value: function toggleListen() {
       this._public('Listen');
@@ -967,12 +963,13 @@ var ShareButton = (function (_ShareUtils) {
 
       if (typeof element === 'undefined') instances = _get(Object.getPrototypeOf(ShareButton.prototype), '_objToArray', this).call(this, document.getElementsByTagName('share-button'));else instances = document.querySelectorAll('share-button' + element);
 
-      this._merge(this.config, opts); // Combine configs
+      // Adding user configs to default configs
+      this._merge(this.config, opts);
 
-      // If not a mobile device, disable whatsapp display
+      // Disable whatsapp display if not a mobile device
       if (this.config.networks.whatsapp.enabled && !this._isMobile()) this.config.networks.whatsapp.enabled = false;
 
-      this._detectNetworks(); // Set number of networks
+      this._detectNetworks();
       this._normalizeNetworkConfiguration();
 
       if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
@@ -980,7 +977,7 @@ var ShareButton = (function (_ShareUtils) {
       // Inject Facebook JS SDK (if Facebook is enabled)
       if (this.config.networks.facebook.enabled && this.config.networks.facebook.loadSdk) this._injectFacebookSdk();
 
-      // initialize instances
+      // Initialize instances
       var index = 0;
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
@@ -1021,16 +1018,17 @@ var ShareButton = (function (_ShareUtils) {
     value: function _setupInstance(instance, index) {
       var _this = this;
 
-      this._hide(instance); // hide instance
+      this._hide(instance);
 
-      // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
+      // Add necessary classes to instance
+      // (Note: FF doesn't support adding multiple classes in a single call)
       this._addClass(instance, 'sharer-' + index);
 
       // Inject HTML and CSS
       this._injectHtml(instance);
-      if (this.config.ui.css) this._injectStylesheet('dist/styles.min.css'); // URL HERE
+      if (this.config.ui.css) this._injectStylesheet('dist/styles.min.css');
 
-      this._show(instance); // show instance
+      this._show(instance);
 
       var label = instance.getElementsByTagName('label')[0];
       var button = instance.getElementsByClassName('social')[0];
@@ -1177,6 +1175,7 @@ var ShareButton = (function (_ShareUtils) {
      *
      * @param {DOMNode} button
      * @param {DOMNode} label
+     * @returns {Object}
      */
     value: function _getDimensions(button, label) {
       return {
@@ -1207,7 +1206,6 @@ var ShareButton = (function (_ShareUtils) {
       var topOffset = label.getBoundingClientRect().top + dimensions.labelHeight / 2;
       var position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
 
-      // TODO: find dynamic way to get space between (not 220)
       if (position[1] === 'middle' && position[0] !== 'center' && (position[0] === 'left' && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2 || position[0] === 'right' && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)) {
         button.classList.add('top');
         button.classList.remove('middle');
@@ -1266,6 +1264,7 @@ var ShareButton = (function (_ShareUtils) {
      * @param {number} labelY
      * @param {number} windowWidth
      * @param {number} windowHeight
+     * @returns {Array}
      */
     value: function _findLocation(labelX, labelY, windowWidth, windowHeight) {
       var xPosition = ['left', 'center', 'right'];
@@ -1281,7 +1280,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkFacebook
-     * @description Create & display window
+     * @description Create & display a Facebook window
      * @private
      */
     value: function _networkFacebook(element) {
@@ -1307,7 +1306,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkTwitter
-     * @description Create & display window
+     * @description Create & display a Twitter window
      * @private
      */
     value: function _networkTwitter(element) {
@@ -1321,7 +1320,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkGooglePlus
-     * @description Create & display window
+     * @description Create & display a Google Plus window
      * @private
      */
     value: function _networkGooglePlus(element) {
@@ -1334,7 +1333,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkPinterest
-     * @description Create & display window
+     * @description Create & display a Pinterest window
      * @private
      */
     value: function _networkPinterest(element) {
@@ -1349,7 +1348,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkLinkedIn
-     * @description Create & display window
+     * @description Create & display a Linkedin window
      * @private
      */
     value: function _networkLinkedin(element) {
@@ -1365,7 +1364,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkEmail
-     * @description Create & display window
+     * @description Create & display an Email window
      * @private
      */
     value: function _networkEmail(element) {
@@ -1379,7 +1378,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkReddit
-     * @description Create & display window
+     * @description Create & display a Reddit window
      * @private
      */
     value: function _networkReddit(element) {
@@ -1393,7 +1392,7 @@ var ShareButton = (function (_ShareUtils) {
 
     /**
      * @method _networkWhatsapp
-     * @description Open whatsapp for sending message
+     * @description Create & display a Whatsapp window
      * @private
      */
     value: function _networkWhatsapp(element) {
@@ -1426,6 +1425,8 @@ var ShareButton = (function (_ShareUtils) {
      * @method _injectHtml
      * @description Inject button structure
      * @private
+     *
+     * @param {DOMNode} instance
      */
     value: function _injectHtml(instance) {
       instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'><a></a></li><li class=\'twitter\' data-network=\'twitter\'><a></a></li><li class=\'facebook\' data-network=\'facebook\'><a></a></li><li class=\'whatsapp\' data-network=\'whatsapp\'><a></a></li><li class=\'gplus\' data-network=\'googlePlus\'><a></a></li><li class=\'reddit\' data-network=\'reddit\'><a></a></li><li class=\'linkedin\' data-network=\'linkedin\'><a></a></li><li class=\'paper-plane\' data-network=\'email\'><a></a></li></ul></div>';
@@ -1470,7 +1471,6 @@ var ShareButton = (function (_ShareUtils) {
 
         if (opts !== undefined) {
           opts = this._normalizeFilterConfigUpdates(opts);
-
           this.extend(this.config.networks[network], opts, true);
           this._normalizeNetworkConfiguration();
         }
@@ -1497,6 +1497,8 @@ var ShareButton = (function (_ShareUtils) {
      * @method _defaultImage
      * @description Gets default image
      * @private
+     *
+     * @returns {String}
      */
     value: function _defaultImage() {
       var content = undefined;

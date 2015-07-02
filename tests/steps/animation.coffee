@@ -1,5 +1,5 @@
 module.exports = ->
-  @Given /^I create an Animation Share Button$/, () ->
+  @Given /^I create an Animated Share Button$/, () ->
     @driver.get(@Helpers.fixture('animation'))
 
   @Then /^The classes will be correct at middle center$/, () ->

@@ -4,7 +4,7 @@ Feature: Linkedin Network
     Given I create a Linkedin Share Button
 
   @linkedin
-  Scenario: Display Linkedin Network
+  Scenario: Linkedin network should be displayed and have the correct URL
     When I click the Linkedin Share Button
     Then I should see the Linkedin button
     When I click the Linkedin button

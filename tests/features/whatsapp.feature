@@ -4,7 +4,7 @@ Feature: Whatsapp Network
     Given I create a Whatsapp Share Button
 
   @whatsapp
-  Scenario: Display Whatsapp Network
+  Scenario: Whatsapp network should be displayed and have the correct URL
     When I click the Whatsapp Share Button
     Then I should see the Whatsapp button
     When I click the Whatsapp button

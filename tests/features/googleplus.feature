@@ -4,7 +4,7 @@ Feature: Google Plus Network
     Given I create a Google Plus Share Button
 
   @googleplus
-  Scenario: Display Google Plus Network
+  Scenario: Google Plus network should be displayed and have the correct URL
     When I click the Google Plus Share Button
     Then I should see the Google Plus button
     When I click the Google Plus button

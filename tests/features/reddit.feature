@@ -4,7 +4,7 @@ Feature: Reddit Network
     Given I create a Reddit Share Button
 
   @reddit
-  Scenario: Display Reddit Network
+  Scenario: Reddit network should be displayed and have the correct URL
     When I click the Reddit Share Button
     Then I should see the Reddit button
     When I click the Reddit button

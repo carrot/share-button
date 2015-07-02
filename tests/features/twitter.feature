@@ -4,7 +4,7 @@ Feature: Twitter Network
     Given I create a Twitter Share Button
 
   @twitter
-  Scenario: Display Twitter Network
+  Scenario: Twitter network should be displayed and have the correct URL
     When I click the Twitter Share Button
     Then I should see the Twitter button
     When I click the Twitter button

@@ -1,9 +1,9 @@
 Feature: Basic Button
 
   Background:
-    Given I create a Share Button
+    Given I create a basic Share Button
 
   @basic
-  Scenario: Display Networks
+  Scenario: All social networks should be displayed
     When I click the Share Button
     Then I should see all Social Networks

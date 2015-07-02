@@ -1,10 +1,10 @@
 Feature: Collision Detection
 
   Background:
-    Given I create an Animation Share Button
+    Given I create an Animated Share Button
 
   @animation
-  Scenario: Display Network
+  Scenario: Classes will be porperly adjusted according to Share Button position
     Then The classes will be correct at middle center
     Then The classes will be correct at bottom left
     Then The classes will be correct at middle left

@@ -53,7 +53,7 @@ class ShareButton extends ShareUtils {
         twitter: {
           enabled: true,
           url: null,
-          description: null // Text
+          description: null
         },
         facebook: {
           enabled: true,
@@ -89,13 +89,13 @@ class ShareButton extends ShareUtils {
         },
         email: {
           enabled: true,
-          title: null,      // Subject
-          description: null // Body
+          title: null,
+          description: null
         }
       }
     };
 
-    this.listener = null; // listener ID for toggleListen
+    this.listener = null;
 
     this._setup(this.element, options);
   }
@@ -103,21 +103,18 @@ class ShareButton extends ShareUtils {
   /**
    * @method open
    * @description Opens Share Button
-   * @public
    */
   open() { this._public('Open'); }
 
   /**
    * @method close
    * @description Cpens Share Button
-   * @public
    */
   close() { this._public('Close'); }
 
   /**
    * @method toggle
    * @description Toggles Share Button
-   * @public
    */
   toggle() { this._public('Toggle'); }
 
@@ -125,7 +122,6 @@ class ShareButton extends ShareUtils {
    * @method toggleListen
    * @description Toggles the Share Button listener, good for updaing share
    * button for CSS animations.
-   * @public
    */
   toggleListen() { this._public('Listen'); }
 
@@ -163,17 +159,19 @@ class ShareButton extends ShareUtils {
     let instances;
 
     if (typeof element === 'undefined')
-      instances = super._objToArray(document.getElementsByTagName('share-button'));
+      instances =
+        super._objToArray(document.getElementsByTagName('share-button'));
     else
       instances = document.querySelectorAll(`share-button${element}`);
 
-    this._merge(this.config, opts); // Combine configs
+    // Adding user configs to default configs
+    this._merge(this.config, opts);
 
-    // If not a mobile device, disable whatsapp display
+    // Disable whatsapp display if not a mobile device
     if(this.config.networks.whatsapp.enabled && !this._isMobile())
       this.config.networks.whatsapp.enabled = false;
 
-    this._detectNetworks(); // Set number of networks
+    this._detectNetworks();
     this._normalizeNetworkConfiguration();
 
     if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
@@ -183,7 +181,7 @@ class ShareButton extends ShareUtils {
        this.config.networks.facebook.loadSdk)
        this._injectFacebookSdk();
 
-    // initialize instances
+    // Initialize instances
     let index = 0;
     for (let instance of instances) {
       this._setupInstance(instance, index++);
@@ -199,17 +197,18 @@ class ShareButton extends ShareUtils {
    * @param {Integer} index
    */
   _setupInstance(instance, index) {
-    this._hide(instance); // hide instance
+    this._hide(instance);
 
-    // Add necessary classes to instance (Note: FF doesn't support adding multiple classes in a single call)
+    // Add necessary classes to instance
+    // (Note: FF doesn't support adding multiple classes in a single call)
     this._addClass(instance, `sharer-${index}`);
 
     // Inject HTML and CSS
     this._injectHtml(instance);
     if (this.config.ui.css)
-      this._injectStylesheet('dist/styles.min.css'); // URL HERE
+      this._injectStylesheet('dist/styles.min.css');
 
-    this._show(instance); // show instance
+    this._show(instance);
 
     let label = instance.getElementsByTagName('label')[0];
     let button = instance.getElementsByClassName('social')[0];
@@ -336,6 +335,7 @@ class ShareButton extends ShareUtils {
    *
    * @param {DOMNode} button
    * @param {DOMNode} label
+   * @returns {Object}
    */
   _getDimensions(button, label) {
     return {
@@ -358,16 +358,23 @@ class ShareButton extends ShareUtils {
   _adjustClasses(button, label, dimensions) {
     let windowWidth = window.innerWidth;
     let windowHeight = window.innerHeight;
-    let leftOffset = label.getBoundingClientRect().left + dimensions.labelWidth / 2;
+    let leftOffset = label.getBoundingClientRect().left +
+      dimensions.labelWidth / 2;
     let rightOffset = windowWidth - leftOffset;
-    let buttonOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
-    let topOffset = label.getBoundingClientRect().top + dimensions.labelHeight / 2;
-    let position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
+    let buttonOffset = button.getBoundingClientRect().left +
+      dimensions.buttonWidth / 2;
+    let topOffset = label.getBoundingClientRect().top +
+      dimensions.labelHeight / 2;
+    let position =
+      this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
 
-    // TODO: find dynamic way to get space between (not 220)
-    if(position[1] === "middle" && position[0] !== "center" && (
-      (position[0] === "left" && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2) ||
-      (position[0] === "right" && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2))) {
+    if(position[1] === "middle" && position[0] !== "center" &&
+        ((position[0] === "left" &&
+          windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2) ||
+        (position[0] === "right" &&
+          windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)
+        )
+      ) {
         button.classList.add("top");
         button.classList.remove("middle");
         button.classList.remove("bottom");
@@ -426,12 +433,15 @@ class ShareButton extends ShareUtils {
    * @param {number} labelY
    * @param {number} windowWidth
    * @param {number} windowHeight
+   * @returns {Array}
    */
   _findLocation(labelX, labelY, windowWidth, windowHeight) {
     let xPosition = ["left", "center", "right"];
     let yPosition = ["top", "middle", "bottom"];
-    let xLocation = Math.trunc(3 * (1 - ((windowWidth - labelX) / windowWidth)));
-    let yLocation = Math.trunc(3 * (1 - ((windowHeight - labelY) / windowHeight)));
+    let xLocation =
+      Math.trunc(3 * (1 - ((windowWidth - labelX) / windowWidth)));
+    let yLocation =
+      Math.trunc(3 * (1 - ((windowHeight - labelY) / windowHeight)));
     if (xLocation >= 3) xLocation = 2;
     else if (xLocation <= -1) xLocation = 0;
     if (yLocation >= 3) yLocation = 2;
@@ -441,7 +451,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _networkFacebook
-   * @description Create & display window
+   * @description Create & display a Facebook window
    * @private
    */
   _networkFacebook(element) {
@@ -460,14 +470,17 @@ class ShareButton extends ShareUtils {
         description: this.config.networks.facebook.description
       });
     } else
-      return this._updateHref(element, 'https://www.facebook.com/sharer/sharer.php', {
-        u: this.config.networks.facebook.url
-      });
+      return this._updateHref(
+        element,
+        'https://www.facebook.com/sharer/sharer.php', {
+          u: this.config.networks.facebook.url
+        }
+      );
   }
 
   /**
    * @method _networkTwitter
-   * @description Create & display window
+   * @description Create & display a Twitter window
    * @private
    */
   _networkTwitter(element) {
@@ -479,7 +492,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _networkGooglePlus
-   * @description Create & display window
+   * @description Create & display a Google Plus window
    * @private
    */
   _networkGooglePlus(element) {
@@ -490,7 +503,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _networkPinterest
-   * @description Create & display window
+   * @description Create & display a Pinterest window
    * @private
    */
   _networkPinterest(element) {
@@ -503,7 +516,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _networkLinkedIn
-   * @description Create & display window
+   * @description Create & display a Linkedin window
    * @private
    */
   _networkLinkedin(element) {
@@ -517,7 +530,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _networkEmail
-   * @description Create & display window
+   * @description Create & display an Email window
    * @private
    */
   _networkEmail(element) {
@@ -529,7 +542,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _networkReddit
-   * @description Create & display window
+   * @description Create & display a Reddit window
    * @private
    */
   _networkReddit(element) {
@@ -541,12 +554,13 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _networkWhatsapp
-   * @description Open whatsapp for sending message
+   * @description Create & display a Whatsapp window
    * @private
    */
   _networkWhatsapp(element) {
     this._updateHref(element, 'whatsapp://send', {
-      text: this.config.networks.whatsapp.description + " " + this.config.networks.whatsapp.url
+      text: this.config.networks.whatsapp.description + " " +
+        this.config.networks.whatsapp.url
     });
   }
 
@@ -570,6 +584,8 @@ class ShareButton extends ShareUtils {
    * @method _injectHtml
    * @description Inject button structure
    * @private
+   *
+   * @param {DOMNode} instance
    */
   _injectHtml(instance) {
     instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'><a></a></li><li class='twitter' data-network='twitter'><a></a></li><li class='facebook' data-network='facebook'><a></a></li><li class='whatsapp' data-network='whatsapp'><a></a></li><li class='gplus' data-network='googlePlus'><a></a></li><li class='reddit' data-network='reddit'><a></a></li><li class='linkedin' data-network='linkedin'><a></a></li><li class='paper-plane' data-network='email'><a></a></li></ul></div>`;
@@ -581,7 +597,8 @@ class ShareButton extends ShareUtils {
    * @private
    */
   _injectFacebookSdk() {
-    if (!window.FB && this.config.networks.facebook.appId && !this.el.body.querySelector('#fb-root')) {
+    if (!window.FB && this.config.networks.facebook.appId &&
+        !this.el.body.querySelector('#fb-root')) {
       let script = document.createElement('script');
       script.text = `window.fbAsyncInit=function(){FB.init({appId:'${this.config.networks.facebook.appId}',status:true,xfbml:true})};(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n)){return}r=e.createElement(t);r.id=n;r.src='//connect.facebook.net/en_US/all.js';i.parentNode.insertBefore(r,i)})(document,'script','facebook-jssdk');`;
 
@@ -610,7 +627,6 @@ class ShareButton extends ShareUtils {
 
       if (opts !== undefined) {
         opts = this._normalizeFilterConfigUpdates(opts);
-
         this.extend(this.config.networks[network], opts, true);
         this._normalizeNetworkConfiguration();
       }
@@ -637,6 +653,8 @@ class ShareButton extends ShareUtils {
    * @method _defaultImage
    * @description Gets default image
    * @private
+   *
+   * @returns {String}
    */
   _defaultImage() {
     let content;
@@ -702,11 +720,13 @@ class ShareButton extends ShareUtils {
     // Encode Twitter description for URL
     if (!!this.config.networks.twitter.description)
       if (!this._isEncoded(this.config.networks.twitter.description))
-        this.config.networks.twitter.description = encodeURIComponent(this.config.networks.twitter.description);
+        this.config.networks.twitter.description =
+          encodeURIComponent(this.config.networks.twitter.description);
 
     // Typecast Facebook appId to a String
     if (typeof this.config.networks.facebook.appId === 'number')
-      this.config.networks.facebook.appId = this.config.networks.facebook.appId.toString();
+      this.config.networks.facebook.appId =
+        this.config.networks.facebook.appId.toString();
   }
 
   /**

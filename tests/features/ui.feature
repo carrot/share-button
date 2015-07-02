@@ -4,6 +4,6 @@ Feature: UI Options
     Given I create a UI Share Button
 
   @ui
-  Scenario: Test UI Options
+  Scenario: User UI options should be implemented
     Then The Share Button should have the correct text
     Then The buttons should have the correct class

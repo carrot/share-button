@@ -10,7 +10,7 @@ networks = [
 ]
 
 module.exports = ->
-  @Given /^I create a Share Button$/, ->
+  @Given /^I create a basic Share Button$/, ->
     @driver.get(@Helpers.fixture('basic'))
 
   @When /^I click the Share Button$/, ->

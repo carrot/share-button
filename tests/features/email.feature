@@ -4,7 +4,7 @@ Feature: Email Network
     Given I create an Email Share Button
 
   @email
-  Scenario: Display Email Network
+  Scenario: Email network should be displayed and have the correct URL
     When I click the Email Share Button
     Then I should see the Email button
     When I click the Email button
