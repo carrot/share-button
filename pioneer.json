@@ -1,0 +1,14 @@
+{
+  "feature": "tests/features",
+  "require": [
+    "tests/steps",
+    "tests/widgets",
+    "tests/helpers"
+  ],
+  "format": "pioneerformat.js",
+  "driver": "phantomjs",
+  "error_formatter": "errorformat.js",
+  "preventReload": false,
+  "coffee": true,
+  "verbose": true
+}

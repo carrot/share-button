@@ -1,5 +1,6 @@
 require('core-js/fn/symbol');
 require('core-js/fn/array/iterator');
+require('core-js/fn/math/trunc');
 let ShareUtils = require('./shareUtils');
 
 /**
@@ -265,8 +266,9 @@ class ShareButton extends ShareUtils {
   _eventOpen(button, label) {
     if(this._hasClass(button, 'load'))
       this._removeClass(button, 'load');
-
-    this._collisionDetection(button, label);
+    if(this.collision){
+      this._collisionDetection(button, label);
+    }
     this._addClass(button, 'active');
   }
 
@@ -355,7 +357,6 @@ class ShareButton extends ShareUtils {
     let leftOffset = label.getBoundingClientRect().left + dimensions.labelWidth / 2;
     let rightOffset = windowWidth - leftOffset;
     let buttonOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
-    // let spaceBetween = Math.abs(leftOffset - buttonOffset) // too dynamic
     let topOffset = label.getBoundingClientRect().top + dimensions.labelHeight / 2;
     let position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
 
@@ -364,35 +365,48 @@ class ShareButton extends ShareUtils {
       (position[0] === "left" && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2) ||
       (position[0] === "right" && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2))) {
         button.classList.add("top");
-        button.classList.remove("middle", "bottom");
+        button.classList.remove("middle");
+        button.classList.remove("bottom");
     }
     else {
       switch(position[1]) {
         case "top":
           button.classList.add("bottom");
-          button.classList.remove("middle", "top");
+          button.classList.remove("middle");
+          if(position[0] !== "center")
+            button.classList.remove("top");
           break;
         case "middle":
-          button.classList.add("middle");
-          button.classList.remove("top", "bottom");
+          if(position[0] !== "center") {
+            button.classList.add("middle");
+            button.classList.remove("top");
+          }
+          button.classList.remove("bottom");
           break;
         case "bottom":
           button.classList.add("top");
-          button.classList.remove("middle", "bottom");
+          button.classList.remove("middle");
+          button.classList.remove("bottom");
           break;
       }
       switch(position[0]) {
         case "left":
           button.classList.add("right");
-          button.classList.remove("center", "left");
+          button.classList.remove("center");
+          button.classList.remove("left");
           break;
         case "center":
-          button.classList.add("center", "top");
-          button.classList.remove("left", "right", "middle");
+          if(position[1] !== "top")
+            button.classList.add("top");
+          button.classList.add("center");
+          button.classList.remove("left");
+          button.classList.remove("right");
+          button.classList.remove("middle");
           break;
         case "right":
           button.classList.add("left");
-          button.classList.remove("center", "right");
+          button.classList.remove("center");
+          button.classList.remove("right");
           break;
       }
     }
@@ -430,7 +444,9 @@ class ShareButton extends ShareUtils {
     if (this.config.networks.facebook.loadSdk) {
       if (!window.FB)
         return console.error('The Facebook JS SDK hasn\'t loaded yet.');
-
+      this._updateHref(element, 'https://www.facebook.com/sharer/sharer.php', {
+        u: this.config.networks.facebook.url
+      });
       return FB.ui({
         method:'feed',
         name: this.config.networks.facebook.title,
@@ -690,7 +706,7 @@ class ShareButton extends ShareUtils {
 
   /**
    * @method _normalizeFilterConfigUpdates
-   * @description
+   * @description Normalizes Facebook config
    * @private
    *
    * @param {Object} opts
