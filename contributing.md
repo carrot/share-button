@@ -20,7 +20,7 @@ If you are opening an issue to suggest a feature, that's totally fine, although 
 ## Testing
 This project is constantly evolving, and to ensure that things are secure and working for everyone, we need to have tests. If you are adding a new feature, please make sure to add a test for it. That being said, tests for this library are tough - at very least make sure to visually confirm that it's working using index.html in the root.
 
-To run the test suite, make sure you have installed [mocha](http://visionmedia.github.io/mocha/) (`npm install mocha -g`), then you can use the `npm test` command to run them.
+To run the test suite, make sure you have installed [PhantomJS](//phantomjs.org/download.html), then you can use the `npm test` command to run them.
 
 ## Commit Cleanliness
 It's ok if you start out with a bunch of experimentation and your commit log isn't totally clean, but before any pull requests are accepted, we like to have a nice clean commit log. That means [well-written and clear commit messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) and commits that each do something significant, rather than being typo or bug fixes.
