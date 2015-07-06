@@ -39,6 +39,7 @@ class ShareButton extends ShareUtils {
       ui: {
         flyout: 'top center',
         buttonText: 'Share',
+        networkOrder: [],
         buttonFont: true,
         iconFont: true,
         css: true,
@@ -171,6 +172,16 @@ class ShareButton extends ShareUtils {
     if(this.config.networks.whatsapp.enabled && !this._isMobile())
       this.config.networks.whatsapp.enabled = false;
 
+    if(this.config.ui.networkOrder.length === 0)
+      this.config.ui.networkOrder = ['pinterest', 'twitter', 'facebook', 'whatsapp',  'googlePlus', 'reddit', 'linkedin', 'email'];
+
+    for (let network of Object.keys(this.config.networks)) {
+      if (this.config.ui.networkOrder.indexOf(network.toString()) < 0) {
+        this.config.networks[network].enabled = false;
+        this.config.ui.networkOrder.push(network);
+      }
+    }
+
     this._detectNetworks();
     this._normalizeNetworkConfiguration();
 
@@ -227,7 +238,7 @@ class ShareButton extends ShareUtils {
 
         this._addClass(network, this.config.networks[name].class);
 
-        if(network.className !== 'paper-plane')
+        if(network.className !== 'email')
           a.setAttribute('onclick', 'return false');
 
         a.addEventListener('mousedown', () => {
@@ -588,7 +599,12 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} instance
    */
   _injectHtml(instance) {
-    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul><li class='pinterest' data-network='pinterest'><a></a></li><li class='twitter' data-network='twitter'><a></a></li><li class='facebook' data-network='facebook'><a></a></li><li class='whatsapp' data-network='whatsapp'><a></a></li><li class='gplus' data-network='googlePlus'><a></a></li><li class='reddit' data-network='reddit'><a></a></li><li class='linkedin' data-network='linkedin'><a></a></li><li class='paper-plane' data-network='email'><a></a></li></ul></div>`;
+    let networks = this.config.ui.networkOrder;
+    let networkList = '';
+    for (let network of networks) {
+      networkList += `<li class='${network}' data-network='${network}'><a></a></li>`;
+    }
+    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul>` + networkList + `</ul></div>`;
   }
 
   /**
