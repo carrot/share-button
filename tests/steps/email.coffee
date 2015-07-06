@@ -9,7 +9,7 @@ module.exports = ->
     new @Widgets
       .ShareButtonNetworks()
       .filter( (item) ->
-        item.hasClass('paper-plane')
+        item.hasClass('email')
           .then (class1) ->
             return class1
           .then (class1) ->
@@ -23,7 +23,7 @@ module.exports = ->
     new @Widgets
       .ShareButtonNetworks()
       .filter( (item) ->
-        item.hasClass('paper-plane')
+        item.hasClass('email')
       )
       .then (list) ->
         list[0].click('a')
@@ -32,7 +32,7 @@ module.exports = ->
     new @Widgets
       .ShareButtonNetworks()
       .filter( (item) ->
-        item.hasClass('paper-plane')
+        item.hasClass('email')
       )
       .then (list) ->
         list[0].getAttribute(

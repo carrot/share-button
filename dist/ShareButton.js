@@ -801,6 +801,7 @@ var ShareButton = (function (_ShareUtils) {
       ui: {
         flyout: 'top center',
         buttonText: 'Share',
+        networkOrder: [],
         buttonFont: true,
         iconFont: true,
         css: true,
@@ -969,25 +970,20 @@ var ShareButton = (function (_ShareUtils) {
       // Disable whatsapp display if not a mobile device
       if (this.config.networks.whatsapp.enabled && !this._isMobile()) this.config.networks.whatsapp.enabled = false;
 
-      this._detectNetworks();
-      this._normalizeNetworkConfiguration();
+      if (this.config.ui.networkOrder.length === 0) this.config.ui.networkOrder = ['pinterest', 'twitter', 'facebook', 'whatsapp', 'googlePlus', 'reddit', 'linkedin', 'email'];
 
-      if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
-
-      // Inject Facebook JS SDK (if Facebook is enabled)
-      if (this.config.networks.facebook.enabled && this.config.networks.facebook.loadSdk) this._injectFacebookSdk();
-
-      // Initialize instances
-      var index = 0;
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;
 
       try {
-        for (var _iterator2 = instances[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var instance = _step2.value;
+        for (var _iterator2 = Object.keys(this.config.networks)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var network = _step2.value;
 
-          this._setupInstance(instance, index++);
+          if (this.config.ui.networkOrder.indexOf(network.toString()) < 0) {
+            this.config.networks[network].enabled = false;
+            this.config.ui.networkOrder.push(network);
+          }
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -1000,6 +996,41 @@ var ShareButton = (function (_ShareUtils) {
         } finally {
           if (_didIteratorError2) {
             throw _iteratorError2;
+          }
+        }
+      }
+
+      this._detectNetworks();
+      this._normalizeNetworkConfiguration();
+
+      if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
+
+      // Inject Facebook JS SDK (if Facebook is enabled)
+      if (this.config.networks.facebook.enabled && this.config.networks.facebook.loadSdk) this._injectFacebookSdk();
+
+      // Initialize instances
+      var index = 0;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = instances[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var instance = _step3.value;
+
+          this._setupInstance(instance, index++);
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+            _iterator3['return']();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
           }
         }
       }
@@ -1049,7 +1080,7 @@ var ShareButton = (function (_ShareUtils) {
 
             _this._addClass(network, _this.config.networks[name]['class']);
 
-            if (network.className !== 'paper-plane') a.setAttribute('onclick', 'return false');
+            if (network.className !== 'email') a.setAttribute('onclick', 'return false');
 
             a.addEventListener('mousedown', function () {
               _this._hook('before', name, instance);
@@ -1429,7 +1460,34 @@ var ShareButton = (function (_ShareUtils) {
      * @param {DOMNode} instance
      */
     value: function _injectHtml(instance) {
-      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul><li class=\'pinterest\' data-network=\'pinterest\'><a></a></li><li class=\'twitter\' data-network=\'twitter\'><a></a></li><li class=\'facebook\' data-network=\'facebook\'><a></a></li><li class=\'whatsapp\' data-network=\'whatsapp\'><a></a></li><li class=\'gplus\' data-network=\'googlePlus\'><a></a></li><li class=\'reddit\' data-network=\'reddit\'><a></a></li><li class=\'linkedin\' data-network=\'linkedin\'><a></a></li><li class=\'paper-plane\' data-network=\'email\'><a></a></li></ul></div>';
+      var networks = this.config.ui.networkOrder;
+      var networkList = '';
+      var _iteratorNormalCompletion4 = true;
+      var _didIteratorError4 = false;
+      var _iteratorError4 = undefined;
+
+      try {
+        for (var _iterator4 = networks[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          var network = _step4.value;
+
+          networkList += '<li class=\'' + network + '\' data-network=\'' + network + '\'><a></a></li>';
+        }
+      } catch (err) {
+        _didIteratorError4 = true;
+        _iteratorError4 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion4 && _iterator4['return']) {
+            _iterator4['return']();
+          }
+        } finally {
+          if (_didIteratorError4) {
+            throw _iteratorError4;
+          }
+        }
+      }
+
+      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'social load ' + this.config.ui.flyout + '\'><ul>' + networkList + '</ul></div>';
     }
   }, {
     key: '_injectFacebookSdk',
@@ -1528,38 +1586,38 @@ var ShareButton = (function (_ShareUtils) {
      */
     value: function _detectNetworks() {
       // Update network-specific configuration with global configurations
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
 
       try {
-        for (var _iterator3 = Object.keys(this.config.networks)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var network = _step3.value;
+        for (var _iterator5 = Object.keys(this.config.networks)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var network = _step5.value;
 
           var display = undefined;
-          var _iteratorNormalCompletion4 = true;
-          var _didIteratorError4 = false;
-          var _iteratorError4 = undefined;
+          var _iteratorNormalCompletion6 = true;
+          var _didIteratorError6 = false;
+          var _iteratorError6 = undefined;
 
           try {
-            for (var _iterator4 = Object.keys(this.config.networks[network])[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-              var option = _step4.value;
+            for (var _iterator6 = Object.keys(this.config.networks[network])[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+              var option = _step6.value;
 
               if (this.config.networks[network][option] === null) {
                 this.config.networks[network][option] = this.config[option];
               }
             }
           } catch (err) {
-            _didIteratorError4 = true;
-            _iteratorError4 = err;
+            _didIteratorError6 = true;
+            _iteratorError6 = err;
           } finally {
             try {
-              if (!_iteratorNormalCompletion4 && _iterator4['return']) {
-                _iterator4['return']();
+              if (!_iteratorNormalCompletion6 && _iterator6['return']) {
+                _iterator6['return']();
               }
             } finally {
-              if (_didIteratorError4) {
-                throw _iteratorError4;
+              if (_didIteratorError6) {
+                throw _iteratorError6;
               }
             }
           }
@@ -1573,16 +1631,16 @@ var ShareButton = (function (_ShareUtils) {
           this.config.networks[network]['class'] = this['class'];
         }
       } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-            _iterator3['return']();
+          if (!_iteratorNormalCompletion5 && _iterator5['return']) {
+            _iterator5['return']();
           }
         } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
+          if (_didIteratorError5) {
+            throw _iteratorError5;
           }
         }
       }
