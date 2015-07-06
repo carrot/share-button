@@ -4,14 +4,14 @@ network($maxWidth, $center, $left, $middle-left)
   $width = 100%
   width: $maxWidth
 
-  &.center
+  &.sb-center
     margin-left: $center
 
-  &.left
+  &.sb-left
     margin-left: $left
 
-  &.middle
-    &.left
+  &.sb-middle
+    &.sb-left
       margin-left: $middle-left
 
   ul
@@ -33,7 +33,7 @@ network($maxWidth, $center, $left, $middle-left)
 
           margin-top: $space
 
-  &.bottom ul
+  &.sb-bottom ul
     margin-top: 0
 
 email = #42C5B0
@@ -84,25 +84,25 @@ share-button
           background-repeat: no-repeat
           transform: scale(1.1)
 
-  .social
+  .sb-social
     margin-left: -15px
     opacity: 0
     visibility: hidden
     transition: all .4s ease
 
-    &.top
+    &.sb-top
       margin-top: -80px
 
-    &.bottom
+    &.sb-bottom
       margin-top: 5px
 
-    &.middle
+    &.sb-middle
       margin-top: -34px
 
-      &.right
+      &.sb-right
         margin-left: 105px
 
-    &.right
+    &.sb-right
       margin-left: 14px
 
     &.load
@@ -130,17 +130,17 @@ share-button
       transition: all .4s ease
       visibility: visible
 
-      &.top
+      &.sb-top
         transform: translateY(-10px)
 
-      &.bottom
+      &.sb-bottom
         transform: translateY(15px)
 
-      &.middle
-        &.right
+      &.sb-middle
+        &.sb-right
           transform: translateX(10px)
 
-        &.left
+        &.sb-left
           transform: translateX(-10px)
 
     ul

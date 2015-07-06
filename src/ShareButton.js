@@ -37,8 +37,9 @@ class ShareButton extends ShareUtils {
       description: this._defaultDescription(),
 
       ui: {
-        flyout: 'top center',
+        flyout: 'sb-top sb-center',
         buttonText: 'Share',
+        namespace: 'sb-',
         networkOrder: [],
         buttonFont: true,
         iconFont: true,
@@ -142,7 +143,7 @@ class ShareButton extends ShareUtils {
       instances = document.querySelectorAll(element);
 
     for (let instance of instances) {
-      let button = instance.getElementsByClassName('social')[0];
+      let button = instance.getElementsByClassName(`${this.config.ui.namespace}social`)[0];
       let label = instance.querySelectorAll('label')[0];
       this[`_event${action}`](button, label);
     }
@@ -172,6 +173,7 @@ class ShareButton extends ShareUtils {
     if(this.config.networks.whatsapp.enabled && !this._isMobile())
       this.config.networks.whatsapp.enabled = false;
 
+    // Default order of networks if no network order entered
     if(this.config.ui.networkOrder.length === 0)
       this.config.ui.networkOrder = ['pinterest', 'twitter', 'facebook', 'whatsapp',  'googlePlus', 'reddit', 'linkedin', 'email'];
 
@@ -181,6 +183,8 @@ class ShareButton extends ShareUtils {
         this.config.ui.networkOrder.push(network);
       }
     }
+
+    this._fixFlyout();
 
     this._detectNetworks();
     this._normalizeNetworkConfiguration();
@@ -222,7 +226,8 @@ class ShareButton extends ShareUtils {
     this._show(instance);
 
     let label = instance.getElementsByTagName('label')[0];
-    let button = instance.getElementsByClassName('social')[0];
+    let button =
+      instance.getElementsByClassName(`${this.config.ui.namespace}social`)[0];
     let networks = instance.getElementsByTagName('li');
 
     this._addClass(button, `networks-${this.config.enabledNetworks}`);
@@ -318,6 +323,23 @@ class ShareButton extends ShareUtils {
   }
 
   /**
+   * @method _fixFlyout
+   * @description Fixes the flyout entered by the user to match their provided
+   * namespace
+   *@private
+   */
+  _fixFlyout() {
+    let flyouts = this.config.ui.flyout.split(' ');
+    if(flyouts[0].substring(0,this.config.ui.namespace.length) !==
+       this.config.ui.namespace)
+      flyouts[0] = `${this.config.ui.namespace}${flyouts[0]}`;
+    if(flyouts[1].substring(0,this.config.ui.namespace.length) !==
+       this.config.ui.namespace)
+      flyouts[1] = `${this.config.ui.namespace}${flyouts[1]}`;
+    this.config.ui.flyout = flyouts.join(' ');
+  }
+
+  /**
    * @method _collisionDetection
    * @description Adds listeners the first time a button is clicked to call
    * this._adjustClasses during scrolls and resizes.
@@ -386,49 +408,49 @@ class ShareButton extends ShareUtils {
           windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)
         )
       ) {
-        button.classList.add("top");
-        button.classList.remove("middle");
-        button.classList.remove("bottom");
+        button.classList.add(`${this.config.ui.namespace}top`);
+        button.classList.remove(`${this.config.ui.namespace}middle`);
+        button.classList.remove(`${this.config.ui.namespace}bottom`);
     }
     else {
       switch(position[1]) {
         case "top":
-          button.classList.add("bottom");
-          button.classList.remove("middle");
+          button.classList.add(`${this.config.ui.namespace}bottom`);
+          button.classList.remove(`${this.config.ui.namespace}middle`);
           if(position[0] !== "center")
-            button.classList.remove("top");
+            button.classList.remove(`${this.config.ui.namespace}top`);
           break;
         case "middle":
           if(position[0] !== "center") {
-            button.classList.add("middle");
-            button.classList.remove("top");
+            button.classList.add(`${this.config.ui.namespace}middle`);
+            button.classList.remove(`${this.config.ui.namespace}top`);
           }
-          button.classList.remove("bottom");
+          button.classList.remove(`${this.config.ui.namespace}bottom`);
           break;
         case "bottom":
-          button.classList.add("top");
-          button.classList.remove("middle");
-          button.classList.remove("bottom");
+          button.classList.add(`${this.config.ui.namespace}top`);
+          button.classList.remove(`${this.config.ui.namespace}middle`);
+          button.classList.remove(`${this.config.ui.namespace}bottom`);
           break;
       }
       switch(position[0]) {
         case "left":
-          button.classList.add("right");
-          button.classList.remove("center");
-          button.classList.remove("left");
+          button.classList.add(`${this.config.ui.namespace}right`);
+          button.classList.remove(`${this.config.ui.namespace}center`);
+          button.classList.remove(`${this.config.ui.namespace}left`);
           break;
         case "center":
           if(position[1] !== "top")
-            button.classList.add("top");
-          button.classList.add("center");
-          button.classList.remove("left");
-          button.classList.remove("right");
-          button.classList.remove("middle");
+            button.classList.add(`${this.config.ui.namespace}top`);
+          button.classList.add(`${this.config.ui.namespace}center`);
+          button.classList.remove(`${this.config.ui.namespace}left`);
+          button.classList.remove(`${this.config.ui.namespace}right`);
+          button.classList.remove(`${this.config.ui.namespace}middle`);
           break;
         case "right":
-          button.classList.add("left");
-          button.classList.remove("center");
-          button.classList.remove("right");
+          button.classList.add(`${this.config.ui.namespace}left`);
+          button.classList.remove(`${this.config.ui.namespace}center`);
+          button.classList.remove(`${this.config.ui.namespace}right`);
           break;
       }
     }
@@ -604,7 +626,7 @@ class ShareButton extends ShareUtils {
     for (let network of networks) {
       networkList += `<li class='${network}' data-network='${network}'><a></a></li>`;
     }
-    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='social load ${this.config.ui.flyout}'><ul>` + networkList + `</ul></div>`;
+    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='${this.config.ui.namespace}social load ${this.config.ui.flyout}'><ul>` + networkList + `</ul></div>`;
   }
 
   /**

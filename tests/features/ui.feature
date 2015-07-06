@@ -6,4 +6,4 @@ Feature: UI Options
   @ui
   Scenario: User UI options should be implemented
     Then The Share Button should have the correct text
-    Then The buttons should have the correct class
+    And The buttons should have the correct classes

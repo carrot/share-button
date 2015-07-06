@@ -22,7 +22,10 @@ module.exports = ->
     root: 'div'
 
   @Widgets.ShareButtonSocial = @Widget.extend
-    root: '.social'
+    root: '.sb-social'
+
+  @Widgets.ShareButtonTestSocial = @Widget.extend
+    root: '.test-social'
 
   @Widgets.ShareButtonNetworks = @Widget.List.extend
     root: 'share-button'
