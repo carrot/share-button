@@ -28,7 +28,7 @@ gulp.task('style', ['clean'], function() {
 
 gulp.task('script', ['clean'], function() {
     var umdShareButton = gulp
-        .src(['src/shareButton.js'], { read: false })
+        .src(['src/ShareButton.js'], { read: false })
         .pipe(browserify({
           transform: ['babelify'],
           standalone: 'ShareButton'

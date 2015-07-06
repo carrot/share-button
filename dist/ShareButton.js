@@ -755,9 +755,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
 
-var _shareUtils = _dereq_('./shareUtils');
+var _ShareUtils2 = _dereq_('./ShareUtils');
 
-var _shareUtils2 = _interopRequireDefault(_shareUtils);
+var _ShareUtils3 = _interopRequireDefault(_ShareUtils2);
 
 _dereq_('core-js/fn/symbol');
 _dereq_('core-js/fn/array/iterator');
@@ -1690,11 +1690,11 @@ var ShareButton = (function (_ShareUtils) {
   }]);
 
   return ShareButton;
-})(_shareUtils2['default']);
+})(_ShareUtils3['default']);
 
 module.exports = ShareButton;
 
-},{"./shareUtils":23,"core-js/fn/array/iterator":1,"core-js/fn/math/trunc":2,"core-js/fn/symbol":3}],23:[function(_dereq_,module,exports){
+},{"./ShareUtils":23,"core-js/fn/array/iterator":1,"core-js/fn/math/trunc":2,"core-js/fn/symbol":3}],23:[function(_dereq_,module,exports){
 /**
  * ShareUtils
  * @class
