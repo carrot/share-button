@@ -12,19 +12,21 @@ hrefs = [
 module.exports = ->
   @Given /^I create and click a meta tag Share Button$/, () ->
     @driver.get(@Helpers.fixture('meta'))
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @When /^I click all the network buttons$/, () ->
     new @Widgets
       .ShareButtonNetworks()
       .each (item, index) ->
-        item.click('a')
+        unless (item.hasClass('whatsapp').then (tf) -> return tf)
+          item.click('a')
 
   @Then /^All buttons should have valid URLs$/, () ->
     new @Widgets
       .ShareButtonNetworks()
       .each (item, index) ->
-        item.getAttribute(
-          selector: 'a',
-          attribute: 'href'
-        ).should.eventually.eq(hrefs[index])
+        unless (item.hasClass('whatsapp').then (tf) -> return tf)
+          item.getAttribute(
+            selector: 'a',
+            attribute: 'href'
+          ).should.eventually.eq(hrefs[index])

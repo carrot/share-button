@@ -1,285 +1,121 @@
 @import url("//fonts.googleapis.com/css?family=Lato");
 share-button {
-  width: 92px;
-  height: 20px;
+  position: relative;
   font-size: 16px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-share-button label {
-  color: label;
+  color: #333;
   background: #a29baa;
-  margin: 0;
-  padding: 5px 10px;
-  cursor: pointer;
+  padding: 5px 10px 5px 1.75em;
   border-radius: 5px;
-  -webkit-transition: all .3s ease;
-  transition: all .3s ease;
-}
-share-button label:hover {
-  opacity: 0.8;
-}
-share-button label.export span {
-  text-transform: uppercase;
-  font-size: 0.9em;
   font-family: Lato, sans-serif;
   font-weight: 800;
   -webkit-font-smoothing: antialiased;
-  padding-left: 1.5em;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  text-transform: uppercase;
 }
-share-button label.export span:before {
-  content: ' ';
+share-button:hover {
+  opacity: 0.8;
+}
+share-button:before {
   position: absolute;
-  top: 0.15em;
-  left: 0.75em;
+  top: 0.45em;
+  left: 0.6em;
   width: 1em;
   height: 1em;
-  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#333" d="M15 15H2V6h2.595s.69-.896 2.17-2H1c-.553 0-1 .45-1 1v11c0 .553.447 1 1 1h15c.553 0 1-.447 1-1v-3.746L15 13.9V15zm-1.64-6.95v3.55L20 6.4l-6.64-5v3.132C5.3 4.532 5.3 12.5 5.3 12.5c2.282-3.748 3.686-4.45 8.06-4.45z"/></svg>");
-  background-repeat: no-repeat;
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
+  content: ' ';
+  background: url("data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#333" d="M15 15H2V6h2.595s.69-.896 2.17-2H1c-.553 0-1 .45-1 1v11c0 .553.447 1 1 1h15c.553 0 1-.447 1-1v-3.746L15 13.9V15zm-1.64-6.95v3.55L20 6.4l-6.64-5v3.132C5.3 4.532 5.3 12.5 5.3 12.5c2.282-3.748 3.686-4.45 8.06-4.45z"/></svg>") no-repeat;
 }
 share-button .sb-social {
-  margin-left: -15px;
+  position: absolute;
   opacity: 0;
   visibility: hidden;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
 }
-share-button .sb-social.sb-top {
-  margin-top: -80px;
+share-button .sb-social.sb-center {
+  left: 50%;
 }
-share-button .sb-social.sb-bottom {
-  margin-top: 5px;
+share-button .sb-social.sb-center.sb-top {
+  top: 0;
+  -webkit-transform: translate(-50%, -100%);
+  -ms-transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%);
 }
-share-button .sb-social.sb-middle {
-  margin-top: -34px;
+share-button .sb-social.sb-center.sb-bottom {
+  bottom: 0;
+  -webkit-transform: translate(-50%, 100%);
+  -ms-transform: translate(-50%, 100%);
+  transform: translate(-50%, 100%);
 }
-share-button .sb-social.sb-middle.sb-right {
-  margin-left: 105px;
+share-button .sb-social.sb-center.active.sb-top {
+  top: -1em;
+}
+share-button .sb-social.sb-center.active.sb-bottom {
+  bottom: -1em;
+}
+share-button .sb-social.sb-left {
+  left: -1em;
+}
+share-button .sb-social.sb-left.sb-top {
+  top: 0;
+  -webkit-transform: translate(-100%, -100%);
+  -ms-transform: translate(-100%, -100%);
+  transform: translate(-100%, -100%);
+}
+share-button .sb-social.sb-left.sb-middle {
+  top: 50%;
+  left: 0;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+share-button .sb-social.sb-left.sb-bottom {
+  bottom: 0;
+  -webkit-transform: translate(-100%, 100%);
+  -ms-transform: translate(-100%, 100%);
+  transform: translate(-100%, 100%);
+}
+share-button .sb-social.sb-left.active.sb-top {
+  top: -1em;
+}
+share-button .sb-social.sb-left.active.sb-middle {
+  left: -1em;
+}
+share-button .sb-social.sb-left.active.sb-bottom {
+  bottom: -1em;
 }
 share-button .sb-social.sb-right {
-  margin-left: 14px;
+  right: -1em;
 }
-share-button .sb-social.load {
-  -webkit-transition: none !important;
-  transition: none !important;
+share-button .sb-social.sb-right.sb-top {
+  top: 0;
+  -webkit-transform: translate(100%, -100%);
+  -ms-transform: translate(100%, -100%);
+  transform: translate(100%, -100%);
 }
-share-button .sb-social.networks-1 {
-  width: 60px;
+share-button .sb-social.sb-right.sb-middle {
+  top: 50%;
+  right: 0;
+  -webkit-transform: translate(100%, -50%);
+  -ms-transform: translate(100%, -50%);
+  transform: translate(100%, -50%);
 }
-share-button .sb-social.networks-1.sb-center {
-  margin-left: 14px;
+share-button .sb-social.sb-right.sb-bottom {
+  bottom: 0;
+  -webkit-transform: translate(100%, 100%);
+  -ms-transform: translate(100%, 100%);
+  transform: translate(100%, 100%);
 }
-share-button .sb-social.networks-1.sb-left {
-  margin-left: 14px;
+share-button .sb-social.sb-right.active.sb-top {
+  top: -1em;
 }
-share-button .sb-social.networks-1.sb-middle.sb-left {
-  margin-left: -70px;
+share-button .sb-social.sb-right.active.sb-middle {
+  right: -1em;
 }
-share-button .sb-social.networks-1 ul {
-  max-width: 60px;
-  width: 100%;
-}
-share-button .sb-social.networks-1.sb-bottom ul {
-  margin-top: 0;
-}
-share-button .sb-social.networks-2 {
-  width: 120px;
-}
-share-button .sb-social.networks-2.sb-center {
-  margin-left: -13px;
-}
-share-button .sb-social.networks-2.sb-left {
-  margin-left: -44px;
-}
-share-button .sb-social.networks-2.sb-middle.sb-left {
-  margin-left: -130px;
-}
-share-button .sb-social.networks-2 ul {
-  max-width: 120px;
-  width: 100%;
-}
-share-button .sb-social.networks-2.sb-bottom ul {
-  margin-top: 0;
-}
-share-button .sb-social.networks-3 {
-  width: 180px;
-}
-share-button .sb-social.networks-3.sb-center {
-  margin-left: -45px;
-}
-share-button .sb-social.networks-3.sb-left {
-  margin-left: -102px;
-}
-share-button .sb-social.networks-3.sb-middle.sb-left {
-  margin-left: -190px;
-}
-share-button .sb-social.networks-3 ul {
-  max-width: 180px;
-  width: 100%;
-}
-share-button .sb-social.networks-3.sb-bottom ul {
-  margin-top: 0;
-}
-share-button .sb-social.networks-4 {
-  width: 240px;
-}
-share-button .sb-social.networks-4.sb-center {
-  margin-left: -75px;
-}
-share-button .sb-social.networks-4.sb-left {
-  margin-left: 162px;
-}
-share-button .sb-social.networks-4.sb-middle.sb-left {
-  margin-left: -250px;
-}
-share-button .sb-social.networks-4 ul {
-  max-width: 240px;
-  width: 100%;
-}
-share-button .sb-social.networks-4.sb-bottom ul {
-  margin-top: 0;
-}
-share-button .sb-social.networks-5 {
-  width: 300px;
-}
-share-button .sb-social.networks-5.sb-center {
-  margin-left: -105px;
-}
-share-button .sb-social.networks-5.sb-left {
-  margin-left: -225px;
-}
-share-button .sb-social.networks-5.sb-middle.sb-left {
-  margin-left: -320px;
-}
-share-button .sb-social.networks-5 ul {
-  max-width: 300px;
-  width: 100%;
-}
-@media screen and (max-width: 360px) {
-  share-button .sb-social.networks-5 ul {
-    width: 80%;
-    margin-top: -122px;
-  }
-}
-share-button .sb-social.networks-5.sb-bottom ul {
-  margin-top: 0;
-}
-share-button .sb-social.networks-6 {
-  width: 360px;
-}
-share-button .sb-social.networks-6.sb-center {
-  margin-left: -135px;
-}
-share-button .sb-social.networks-6.sb-left {
-  margin-left: -265px;
-}
-share-button .sb-social.networks-6.sb-middle.sb-left {
-  margin-left: -380px;
-}
-share-button .sb-social.networks-6 ul {
-  max-width: 360px;
-  width: 100%;
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-6 ul {
-    width: 83.33333333333333%;
-    margin-top: -122px;
-  }
-}
-@media screen and (max-width: 360px) {
-  share-button .sb-social.networks-6 ul {
-    width: 66.66666666666666%;
-    margin-top: -122px;
-  }
-}
-share-button .sb-social.networks-6.sb-bottom ul {
-  margin-top: 0;
-}
-share-button .sb-social.networks-7 {
-  width: 420px;
-}
-share-button .sb-social.networks-7.sb-center {
-  margin-left: -165px;
-}
-share-button .sb-social.networks-7.sb-left {
-  margin-left: -305px;
-}
-share-button .sb-social.networks-7.sb-middle.sb-left {
-  margin-left: -440px;
-}
-share-button .sb-social.networks-7 ul {
-  max-width: 420px;
-  width: 100%;
-}
-@media screen and (max-width: 480px) {
-  share-button .sb-social.networks-7 ul {
-    width: 85.71428571428571%;
-    margin-top: -122px;
-  }
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-7 ul {
-    width: 71.42857142857143%;
-    margin-top: -122px;
-  }
-}
-@media screen and (max-width: 360px) {
-  share-button .sb-social.networks-7 ul {
-    width: 57.14285714285714%;
-    margin-top: -122px;
-  }
-}
-share-button .sb-social.networks-7.sb-bottom ul {
-  margin-top: 0;
-}
-share-button .sb-social.networks-8 {
-  width: 480px;
-}
-share-button .sb-social.networks-8.sb-center {
-  margin-left: -195px;
-}
-share-button .sb-social.networks-8.sb-left {
-  margin-left: -345px;
-}
-share-button .sb-social.networks-8.sb-middle.sb-left {
-  margin-left: -500px;
-}
-share-button .sb-social.networks-8 ul {
-  max-width: 480px;
-  width: 100%;
-}
-@media screen and (max-width: 540px) {
-  share-button .sb-social.networks-8 ul {
-    width: 87.5%;
-    margin-top: -122px;
-  }
-}
-@media screen and (max-width: 480px) {
-  share-button .sb-social.networks-8 ul {
-    width: 75%;
-    margin-top: -122px;
-  }
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-8 ul {
-    width: 62.5%;
-    margin-top: -122px;
-  }
-}
-@media screen and (max-width: 360px) {
-  share-button .sb-social.networks-8 ul {
-    width: 50%;
-    margin-top: -122px;
-  }
-}
-share-button .sb-social.networks-8.sb-bottom ul {
-  margin-top: 0;
+share-button .sb-social.sb-right.active.sb-bottom {
+  bottom: -1em;
 }
 share-button .sb-social.active {
   opacity: 1;
@@ -287,36 +123,142 @@ share-button .sb-social.active {
   transition: all 0.4s ease;
   visibility: visible;
 }
-share-button .sb-social.active.sb-top {
-  -webkit-transform: translateY(-10px);
-  -ms-transform: translateY(-10px);
-  transform: translateY(-10px);
+share-button .sb-social.load {
+  -webkit-transition: none !important;
+  transition: none !important;
 }
-share-button .sb-social.active.sb-bottom {
-  -webkit-transform: translateY(15px);
-  -ms-transform: translateY(15px);
-  transform: translateY(15px);
+share-button .sb-social.networks-1.sb-center.sb-top ul,
+share-button .sb-social.networks-1.sb-center.sb-bottom ul {
+  width: 60px;
 }
-share-button .sb-social.active.sb-middle.sb-right {
-  -webkit-transform: translateX(10px);
-  -ms-transform: translateX(10px);
-  transform: translateX(10px);
+share-button .sb-social.networks-2.sb-center.sb-top ul,
+share-button .sb-social.networks-2.sb-center.sb-bottom ul {
+  width: 120px;
 }
-share-button .sb-social.active.sb-middle.sb-left {
-  -webkit-transform: translateX(-10px);
-  -ms-transform: translateX(-10px);
-  transform: translateX(-10px);
+share-button .sb-social.networks-3.sb-center.sb-top ul,
+share-button .sb-social.networks-3.sb-center.sb-bottom ul {
+  width: 180px;
+}
+share-button .sb-social.networks-4.sb-center.sb-top ul,
+share-button .sb-social.networks-4.sb-center.sb-bottom ul {
+  width: 240px;
+}
+share-button .sb-social.networks-5.sb-center.sb-top ul,
+share-button .sb-social.networks-5.sb-center.sb-bottom ul {
+  width: 300px;
+}
+share-button .sb-social.networks-6.sb-center.sb-top ul,
+share-button .sb-social.networks-6.sb-center.sb-bottom ul {
+  width: 360px;
+}
+@media screen and (max-width: 420px) {
+  share-button .sb-social.networks-6.sb-center.sb-top {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-6.sb-center.sb-top ul {
+    width: 83.33333333333333%;
+  }
+}
+@media screen and (max-width: 420px) {
+  share-button .sb-social.networks-6.sb-center.sb-bottom {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-6.sb-center.sb-bottom ul {
+    width: 83.33333333333333%;
+  }
+}
+share-button .sb-social.networks-7.sb-center.sb-top ul,
+share-button .sb-social.networks-7.sb-center.sb-bottom ul {
+  width: 420px;
+}
+@media screen and (max-width: 480px) {
+  share-button .sb-social.networks-7.sb-center.sb-top {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-7.sb-center.sb-top ul {
+    width: 85.71428571428571%;
+  }
+}
+@media screen and (max-width: 420px) {
+  share-button .sb-social.networks-7.sb-center.sb-top {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-7.sb-center.sb-top ul {
+    width: 71.42857142857143%;
+  }
+}
+@media screen and (max-width: 480px) {
+  share-button .sb-social.networks-7.sb-center.sb-bottom {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-7.sb-center.sb-bottom ul {
+    width: 85.71428571428571%;
+  }
+}
+@media screen and (max-width: 420px) {
+  share-button .sb-social.networks-7.sb-center.sb-bottom {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-7.sb-center.sb-bottom ul {
+    width: 71.42857142857143%;
+  }
+}
+share-button .sb-social.networks-8.sb-center.sb-top ul,
+share-button .sb-social.networks-8.sb-center.sb-bottom ul {
+  width: 480px;
+}
+@media screen and (max-width: 540px) {
+  share-button .sb-social.networks-8.sb-center.sb-top {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-8.sb-center.sb-top ul {
+    width: 87.5%;
+  }
+}
+@media screen and (max-width: 480px) {
+  share-button .sb-social.networks-8.sb-center.sb-top {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-8.sb-center.sb-top ul {
+    width: 75%;
+  }
+}
+@media screen and (max-width: 420px) {
+  share-button .sb-social.networks-8.sb-center.sb-top {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-8.sb-center.sb-top ul {
+    width: 62.5%;
+  }
+}
+@media screen and (max-width: 540px) {
+  share-button .sb-social.networks-8.sb-center.sb-bottom {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-8.sb-center.sb-bottom ul {
+    width: 87.5%;
+  }
+}
+@media screen and (max-width: 480px) {
+  share-button .sb-social.networks-8.sb-center.sb-bottom {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-8.sb-center.sb-bottom ul {
+    width: 75%;
+  }
+}
+@media screen and (max-width: 420px) {
+  share-button .sb-social.networks-8.sb-center.sb-bottom {
+    white-space: initial;
+  }
+  share-button .sb-social.networks-8.sb-center.sb-bottom ul {
+    width: 62.5%;
+  }
 }
 share-button .sb-social ul {
-  position: relative;
-  left: 0;
-  right: 0;
-  height: 46px;
-  margin: auto;
+  margin: 0;
   padding: 0;
   list-style: none;
-  text-align: center;
-  line-height: 0;
 }
 share-button .sb-social ul li {
   position: relative;

@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('googleplus'))
 
   @When /^I click the Google Plus Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the Google Plus button$/, () ->
     new @Widgets

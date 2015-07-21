@@ -14,10 +14,11 @@ module.exports = ->
     @driver.get(@Helpers.fixture('basic'))
 
   @When /^I click the Share Button$/, ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see all Social Networks$/, ->
     new @Widgets
       .ShareButtonNetworks()
-      .each (item, index) ->
-        item.isVisible().should.eventually.be.true
+      .each (item, i) ->
+        unless (item.hasClass('whatsapp').then (tf) -> tf)
+          item.isVisible().should.eventually.eql(true)

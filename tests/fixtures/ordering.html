@@ -11,10 +11,9 @@
       overflow: hidden;
     }
     share-button {
-      margin: auto;
-      position: absolute;
+      position: relative;
       top: 0;
-      left: 0;
+      left: 50%;
       bottom: 0;
       right: 0;
       z-index: 100;
@@ -30,7 +29,8 @@
   <script>
     var shareButton = new ShareButton({
       ui: {
-        networkOrder: ['facebook', 'googlePlus', 'twitter']
+        networkOrder: ['facebook', 'googlePlus', 'twitter'],
+        flyout: 'center bottom'
       }
     });
   </script>

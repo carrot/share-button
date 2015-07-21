@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('whatsapp'))
 
   @When /^I click the Whatsapp Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the Whatsapp button$/, () ->
     new @Widgets

@@ -774,6 +774,8 @@ _dereq_('core-js/fn/math/trunc');
  */
 
 var ShareButton = (function (_ShareUtils) {
+  _inherits(ShareButton, _ShareUtils);
+
   function ShareButton(element, options) {
     _classCallCheck(this, ShareButton);
 
@@ -803,10 +805,8 @@ var ShareButton = (function (_ShareUtils) {
         buttonText: 'Share',
         namespace: 'sb-',
         networkOrder: [],
-        buttonFont: true,
-        iconFont: true,
-        css: true,
-        collision: false
+        collision: false,
+        updateShareButtonSize: true
       },
 
       networks: {
@@ -860,11 +860,8 @@ var ShareButton = (function (_ShareUtils) {
     };
 
     this.listener = null;
-
     this._setup(this.element, options);
   }
-
-  _inherits(ShareButton, _ShareUtils);
 
   _createClass(ShareButton, [{
     key: 'open',
@@ -1003,11 +1000,8 @@ var ShareButton = (function (_ShareUtils) {
       }
 
       this._fixFlyout();
-
       this._detectNetworks();
       this._normalizeNetworkConfiguration();
-
-      if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
 
       // Inject Facebook JS SDK (if Facebook is enabled)
       if (this.config.networks.facebook.enabled && this.config.networks.facebook.loadSdk) this._injectFacebookSdk();
@@ -1065,13 +1059,12 @@ var ShareButton = (function (_ShareUtils) {
 
       this._show(instance);
 
-      var label = instance.getElementsByTagName('label')[0];
       var button = instance.getElementsByClassName(this.config.ui.namespace + 'social')[0];
       var networks = instance.getElementsByTagName('li');
 
       this._addClass(button, 'networks-' + this.config.enabledNetworks);
-      label.addEventListener('click', function () {
-        return _this._eventToggle(button, label);
+      instance.addEventListener('click', function () {
+        return _this._eventToggle(button, instance);
       });
 
       var _loop = function (k) {
@@ -1131,9 +1124,8 @@ var ShareButton = (function (_ShareUtils) {
      */
     value: function _eventOpen(button, label) {
       if (this._hasClass(button, 'load')) this._removeClass(button, 'load');
-      if (this.collision) {
-        this._collisionDetection(button, label);
-      }
+      if (this.collision) this._collisionDetection(button);
+
       this._addClass(button, 'active');
     }
   }, {
@@ -1161,13 +1153,13 @@ var ShareButton = (function (_ShareUtils) {
      * @param {DOMNode} button
      * @param {DOMNode} label
      */
-    value: function _eventListen(button, label) {
+    value: function _eventListen(button) {
       var _this2 = this;
 
-      var dimensions = this._getDimensions(button, label);
+      var dimensions = this._getDimensions(button);
       if (this.listener === null) this.listener = window.setInterval(function () {
-        return _this2._adjustClasses(button, label, dimensions);
-      }, 100);else {
+        return _this2._adjustClasses(button, dimensions);
+      }, 450);else {
         window.clearInterval(this.listener);
         this.listener = null;
       }
@@ -1203,13 +1195,14 @@ var ShareButton = (function (_ShareUtils) {
       var _this3 = this;
 
       var dimensions = this._getDimensions(button, label);
-      this._adjustClasses(button, label, dimensions);
+      this._adjustClasses(button, dimensions);
+
       if (!button.classList.contains('clicked')) {
         window.addEventListener('scroll', function () {
-          return _this3._adjustClasses(button, label, dimensions);
+          return _this3._adjustClasses(button, dimensions);
         });
         window.addEventListener('resize', function () {
-          return _this3._adjustClasses(button, label, dimensions);
+          return _this3._adjustClasses(button, dimensions);
         });
         button.classList.add('clicked');
       }
@@ -1227,10 +1220,9 @@ var ShareButton = (function (_ShareUtils) {
      * @param {DOMNode} label
      * @returns {Object}
      */
-    value: function _getDimensions(button, label) {
+    value: function _getDimensions(button) {
       return {
-        labelWidth: label.offsetWidth,
-        labelHeight: label.offsetHeight,
+        buttonHeight: button.offsetHeight,
         buttonWidth: button.offsetWidth
       };
     }
@@ -1247,13 +1239,13 @@ var ShareButton = (function (_ShareUtils) {
      * @param {DOMNode} label
      * @param {Object} dimensions
      */
-    value: function _adjustClasses(button, label, dimensions) {
+    value: function _adjustClasses(button, dimensions) {
       var windowWidth = window.innerWidth;
       var windowHeight = window.innerHeight;
-      var leftOffset = label.getBoundingClientRect().left + dimensions.labelWidth / 2;
+      var leftOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
       var rightOffset = windowWidth - leftOffset;
       var buttonOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
-      var topOffset = label.getBoundingClientRect().top + dimensions.labelHeight / 2;
+      var topOffset = button.getBoundingClientRect().top + dimensions.buttonHeight / 2;
       var position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
 
       if (position[1] === 'middle' && position[0] !== 'center' && (position[0] === 'left' && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2 || position[0] === 'right' && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)) {
@@ -1261,25 +1253,6 @@ var ShareButton = (function (_ShareUtils) {
         button.classList.remove(this.config.ui.namespace + 'middle');
         button.classList.remove(this.config.ui.namespace + 'bottom');
       } else {
-        switch (position[1]) {
-          case 'top':
-            button.classList.add(this.config.ui.namespace + 'bottom');
-            button.classList.remove(this.config.ui.namespace + 'middle');
-            if (position[0] !== 'center') button.classList.remove(this.config.ui.namespace + 'top');
-            break;
-          case 'middle':
-            if (position[0] !== 'center') {
-              button.classList.add(this.config.ui.namespace + 'middle');
-              button.classList.remove(this.config.ui.namespace + 'top');
-            }
-            button.classList.remove(this.config.ui.namespace + 'bottom');
-            break;
-          case 'bottom':
-            button.classList.add(this.config.ui.namespace + 'top');
-            button.classList.remove(this.config.ui.namespace + 'middle');
-            button.classList.remove(this.config.ui.namespace + 'bottom');
-            break;
-        }
         switch (position[0]) {
           case 'left':
             button.classList.add(this.config.ui.namespace + 'right');
@@ -1297,6 +1270,25 @@ var ShareButton = (function (_ShareUtils) {
             button.classList.add(this.config.ui.namespace + 'left');
             button.classList.remove(this.config.ui.namespace + 'center');
             button.classList.remove(this.config.ui.namespace + 'right');
+            break;
+        }
+        switch (position[1]) {
+          case 'top':
+            button.classList.add(this.config.ui.namespace + 'bottom');
+            button.classList.remove(this.config.ui.namespace + 'middle');
+            if (position[0] !== 'center') button.classList.remove(this.config.ui.namespace + 'top');
+            break;
+          case 'middle':
+            if (position[0] !== 'center') {
+              button.classList.add(this.config.ui.namespace + 'middle');
+              button.classList.remove(this.config.ui.namespace + 'top');
+            }
+            button.classList.remove(this.config.ui.namespace + 'bottom');
+            break;
+          case 'bottom':
+            button.classList.add(this.config.ui.namespace + 'top');
+            button.classList.remove(this.config.ui.namespace + 'middle');
+            button.classList.remove(this.config.ui.namespace + 'bottom');
             break;
         }
       }
@@ -1323,6 +1315,7 @@ var ShareButton = (function (_ShareUtils) {
       var yLocation = Math.trunc(3 * (1 - (windowHeight - labelY) / windowHeight));
       if (xLocation >= 3) xLocation = 2;else if (xLocation <= -1) xLocation = 0;
       if (yLocation >= 3) yLocation = 2;else if (yLocation <= -1) yLocation = 0;
+      console.log([xPosition[xLocation], yPosition[yLocation]]);
       return [xPosition[xLocation], yPosition[yLocation]];
     }
   }, {
@@ -1481,6 +1474,7 @@ var ShareButton = (function (_ShareUtils) {
     value: function _injectHtml(instance) {
       var networks = this.config.ui.networkOrder;
       var networkList = '';
+
       var _iteratorNormalCompletion4 = true;
       var _didIteratorError4 = false;
       var _iteratorError4 = undefined;
@@ -1506,7 +1500,7 @@ var ShareButton = (function (_ShareUtils) {
         }
       }
 
-      instance.innerHTML = '<label class=\'export\'><span>' + this.config.ui.buttonText + '</span></label><div class=\'' + this.config.ui.namespace + 'social load ' + this.config.ui.flyout + '\'><ul>' + networkList + '</ul></div>';
+      instance.innerHTML = this.config.ui.buttonText + '<div class=\'' + this.config.ui.namespace + 'social load ' + this.config.ui.flyout + '\'><ul>' + networkList + '</ul></div>';
     }
   }, {
     key: '_injectFacebookSdk',
@@ -1519,7 +1513,7 @@ var ShareButton = (function (_ShareUtils) {
     value: function _injectFacebookSdk() {
       if (!window.FB && this.config.networks.facebook.appId && !this.el.body.querySelector('#fb-root')) {
         var script = document.createElement('script');
-        script.text = 'window.fbAsyncInit=function(){FB.init({appId:\'' + this.config.networks.facebook.appId + '\',status:true,xfbml:true})};(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n)){return}r=e.createElement(t);r.id=n;r.src=\'//connect.facebook.net/en_US/all.js\';i.parentNode.insertBefore(r,i)})(document,\'script\',\'facebook-jssdk\');';
+        script.text = 'window.fbAsyncInit=function(){FB.init({appId:\'' + this.config.networks.facebook.appId + '\',status:true,xfbml:true})};(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if (e.getElementById(n)){return}r=e.createElement(t);r.id=n;r.src=\'//connect.facebook.net/en_US/all.js\';i.parentNode.insertBefore(r,i)})(document,\'script\',\'facebook-jssdk\');';
 
         var fbRoot = document.createElement('div');
         fbRoot.id = 'fb-root';
@@ -1735,6 +1729,22 @@ var ShareUtils = (function () {
   }
 
   _createClass(ShareUtils, [{
+    key: "_getStyle",
+    value: function _getStyle(ele, css) {
+      var strValue = "";
+
+      if (document.defaultView && document.defaultView.getComputedStyle) {
+        strValue = document.defaultView.getComputedStyle(ele, "").getPropertyValue(css);
+      } else if (ele.currentStyle) {
+        css = css.replace(/\-(\w)/g, function (strMatch, p1) {
+          return p1.toUpperCase();
+        });
+        strValue = ele.currentStyle[css];
+      }
+
+      return strValue;
+    }
+  }, {
     key: "_hide",
 
     /**
@@ -1758,7 +1768,7 @@ var ShareUtils = (function () {
      * @param {DOMNode} el
      */
     value: function _show(el) {
-      el.style.display = "block";
+      el.style.display = "initial";
     }
   }, {
     key: "_hasClass",
@@ -1848,8 +1858,8 @@ var ShareUtils = (function () {
     value: function _getUrl(url) {
       var _this = this;
 
-      var encode = arguments[1] === undefined ? false : arguments[1];
-      var params = arguments[2] === undefined ? {} : arguments[2];
+      var encode = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+      var params = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
       var qs = (function () {
         var results = [];
@@ -1928,7 +1938,7 @@ var ShareUtils = (function () {
     value: function popup(url) {
       var _this2 = this;
 
-      var params = arguments[1] === undefined ? {} : arguments[1];
+      var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
       var popup = {
         width: 500,

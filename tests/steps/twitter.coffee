@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('twitter'))
 
   @When /^I click the Twitter Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the Twitter button$/, () ->
     new @Widgets

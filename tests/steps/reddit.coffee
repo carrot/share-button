@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('reddit'))
 
   @When /^I click the Reddit Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the Reddit button$/, () ->
     new @Widgets

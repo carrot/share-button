@@ -41,10 +41,8 @@ class ShareButton extends ShareUtils {
         buttonText: 'Share',
         namespace: 'sb-',
         networkOrder: [],
-        buttonFont: true,
-        iconFont: true,
-        css: true,
-        collision: false
+        collision: false,
+        updateShareButtonSize: true
       },
 
       networks: {
@@ -98,7 +96,6 @@ class ShareButton extends ShareUtils {
     };
 
     this.listener = null;
-
     this._setup(this.element, options);
   }
 
@@ -138,12 +135,14 @@ class ShareButton extends ShareUtils {
     let instances;
 
     if (typeof element === 'undefined')
-      instances = super._objToArray(document.getElementsByTagName('share-button'));
+      instances =
+        super._objToArray(document.getElementsByTagName('share-button'));
     else
       instances = document.querySelectorAll(element);
 
     for (let instance of instances) {
-      let button = instance.getElementsByClassName(`${this.config.ui.namespace}social`)[0];
+      let button =
+        instance.getElementsByClassName(`${this.config.ui.namespace}social`)[0];
       let label = instance.querySelectorAll('label')[0];
       this[`_event${action}`](button, label);
     }
@@ -170,11 +169,11 @@ class ShareButton extends ShareUtils {
     this._merge(this.config, opts);
 
     // Disable whatsapp display if not a mobile device
-    if(this.config.networks.whatsapp.enabled && !this._isMobile())
+    if (this.config.networks.whatsapp.enabled && !this._isMobile())
       this.config.networks.whatsapp.enabled = false;
 
     // Default order of networks if no network order entered
-    if(this.config.ui.networkOrder.length === 0)
+    if (this.config.ui.networkOrder.length === 0)
       this.config.ui.networkOrder = ['pinterest', 'twitter', 'facebook', 'whatsapp',  'googlePlus', 'reddit', 'linkedin', 'email'];
 
     for (let network of Object.keys(this.config.networks)) {
@@ -185,11 +184,8 @@ class ShareButton extends ShareUtils {
     }
 
     this._fixFlyout();
-
     this._detectNetworks();
     this._normalizeNetworkConfiguration();
-
-    if (this.config.ui.defaultStyles) this._injectStylesheet('dist/styles.min.css');
 
     // Inject Facebook JS SDK (if Facebook is enabled)
     if (this.config.networks.facebook.enabled &&
@@ -225,25 +221,26 @@ class ShareButton extends ShareUtils {
 
     this._show(instance);
 
-    let label = instance.getElementsByTagName('label')[0];
     let button =
       instance.getElementsByClassName(`${this.config.ui.namespace}social`)[0];
     let networks = instance.getElementsByTagName('li');
 
     this._addClass(button, `networks-${this.config.enabledNetworks}`);
-    label.addEventListener('click', () => this._eventToggle(button, label));
+    instance.addEventListener('click', () =>
+      this._eventToggle(button, instance)
+    );
 
     // Add listener to activate networks and close button
     for (let k in Object.keys(networks)) {
       let network = networks[k];
 
-      if(typeof(network) !== "undefined") {
+      if (typeof(network) !== "undefined") {
         let name = network.getAttribute('data-network');
         let a = network.getElementsByTagName('a')[0];
 
         this._addClass(network, this.config.networks[name].class);
 
-        if(network.className !== 'email')
+        if (network.className !== 'email')
           a.setAttribute('onclick', 'return false');
 
         a.addEventListener('mousedown', () => {
@@ -268,7 +265,7 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} label
    */
   _eventToggle(button, label) {
-    if(this._hasClass(button, 'active'))
+    if (this._hasClass(button, 'active'))
       this._eventClose(button);
     else
       this._eventOpen(button, label);
@@ -283,11 +280,11 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} label
    */
   _eventOpen(button, label) {
-    if(this._hasClass(button, 'load'))
+    if (this._hasClass(button, 'load'))
       this._removeClass(button, 'load');
-    if(this.collision){
-      this._collisionDetection(button, label);
-    }
+    if (this.collision)
+      this._collisionDetection(button);
+
     this._addClass(button, 'active');
   }
 
@@ -311,11 +308,12 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} button
    * @param {DOMNode} label
    */
-  _eventListen(button, label) {
-    let dimensions = this._getDimensions(button, label);
-    if(this.listener === null)
+  _eventListen(button) {
+    let dimensions = this._getDimensions(button);
+    if (this.listener === null)
       this.listener = window.setInterval(() =>
-        this._adjustClasses(button, label, dimensions), 100);
+        this._adjustClasses(button, dimensions), 100
+      );
     else {
       window.clearInterval(this.listener);
       this.listener = null;
@@ -330,10 +328,10 @@ class ShareButton extends ShareUtils {
    */
   _fixFlyout() {
     let flyouts = this.config.ui.flyout.split(' ');
-    if(flyouts[0].substring(0,this.config.ui.namespace.length) !==
+    if (flyouts[0].substring(0,this.config.ui.namespace.length) !==
        this.config.ui.namespace)
       flyouts[0] = `${this.config.ui.namespace}${flyouts[0]}`;
-    if(flyouts[1].substring(0,this.config.ui.namespace.length) !==
+    if (flyouts[1].substring(0,this.config.ui.namespace.length) !==
        this.config.ui.namespace)
       flyouts[1] = `${this.config.ui.namespace}${flyouts[1]}`;
     this.config.ui.flyout = flyouts.join(' ');
@@ -350,12 +348,13 @@ class ShareButton extends ShareUtils {
    */
   _collisionDetection(button, label) {
     let dimensions = this._getDimensions(button, label);
-    this._adjustClasses(button, label, dimensions);
-    if(!button.classList.contains('clicked')) {
+    this._adjustClasses(button, dimensions);
+
+    if (!button.classList.contains('clicked')) {
       window.addEventListener('scroll', () =>
-        this._adjustClasses(button, label, dimensions));
+        this._adjustClasses(button, dimensions));
       window.addEventListener('resize', () =>
-        this._adjustClasses(button, label, dimensions));
+        this._adjustClasses(button, dimensions));
       button.classList.add('clicked');
     }
   }
@@ -370,10 +369,9 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} label
    * @returns {Object}
    */
-  _getDimensions(button, label) {
+  _getDimensions(button) {
     return {
-      labelWidth: label.offsetWidth,
-      labelHeight: label.offsetHeight,
+      buttonHeight: button.offsetHeight,
       buttonWidth: button.offsetWidth
     };
   }
@@ -388,20 +386,20 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} label
    * @param {Object} dimensions
    */
-  _adjustClasses(button, label, dimensions) {
+  _adjustClasses(button, dimensions) {
     let windowWidth = window.innerWidth;
     let windowHeight = window.innerHeight;
-    let leftOffset = label.getBoundingClientRect().left +
-      dimensions.labelWidth / 2;
+    let leftOffset = button.getBoundingClientRect().left +
+      dimensions.buttonWidth / 2;
     let rightOffset = windowWidth - leftOffset;
     let buttonOffset = button.getBoundingClientRect().left +
       dimensions.buttonWidth / 2;
-    let topOffset = label.getBoundingClientRect().top +
-      dimensions.labelHeight / 2;
+    let topOffset = button.getBoundingClientRect().top +
+      dimensions.buttonHeight / 2;
     let position =
       this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
 
-    if(position[1] === "middle" && position[0] !== "center" &&
+    if (position[1] === "middle" && position[0] !== "center" &&
         ((position[0] === "left" &&
           windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2) ||
         (position[0] === "right" &&
@@ -413,26 +411,6 @@ class ShareButton extends ShareUtils {
         button.classList.remove(`${this.config.ui.namespace}bottom`);
     }
     else {
-      switch(position[1]) {
-        case "top":
-          button.classList.add(`${this.config.ui.namespace}bottom`);
-          button.classList.remove(`${this.config.ui.namespace}middle`);
-          if(position[0] !== "center")
-            button.classList.remove(`${this.config.ui.namespace}top`);
-          break;
-        case "middle":
-          if(position[0] !== "center") {
-            button.classList.add(`${this.config.ui.namespace}middle`);
-            button.classList.remove(`${this.config.ui.namespace}top`);
-          }
-          button.classList.remove(`${this.config.ui.namespace}bottom`);
-          break;
-        case "bottom":
-          button.classList.add(`${this.config.ui.namespace}top`);
-          button.classList.remove(`${this.config.ui.namespace}middle`);
-          button.classList.remove(`${this.config.ui.namespace}bottom`);
-          break;
-      }
       switch(position[0]) {
         case "left":
           button.classList.add(`${this.config.ui.namespace}right`);
@@ -440,7 +418,7 @@ class ShareButton extends ShareUtils {
           button.classList.remove(`${this.config.ui.namespace}left`);
           break;
         case "center":
-          if(position[1] !== "top")
+          if (position[1] !== "top")
             button.classList.add(`${this.config.ui.namespace}top`);
           button.classList.add(`${this.config.ui.namespace}center`);
           button.classList.remove(`${this.config.ui.namespace}left`);
@@ -451,6 +429,26 @@ class ShareButton extends ShareUtils {
           button.classList.add(`${this.config.ui.namespace}left`);
           button.classList.remove(`${this.config.ui.namespace}center`);
           button.classList.remove(`${this.config.ui.namespace}right`);
+          break;
+      }
+      switch(position[1]) {
+        case "top":
+          button.classList.add(`${this.config.ui.namespace}bottom`);
+          button.classList.remove(`${this.config.ui.namespace}middle`);
+          if (position[0] !== "center")
+            button.classList.remove(`${this.config.ui.namespace}top`);
+          break;
+        case "middle":
+          if (position[0] !== "center") {
+            button.classList.add(`${this.config.ui.namespace}middle`);
+            button.classList.remove(`${this.config.ui.namespace}top`);
+          }
+          button.classList.remove(`${this.config.ui.namespace}bottom`);
+          break;
+        case "bottom":
+          button.classList.add(`${this.config.ui.namespace}top`);
+          button.classList.remove(`${this.config.ui.namespace}middle`);
+          button.classList.remove(`${this.config.ui.namespace}bottom`);
           break;
       }
     }
@@ -479,6 +477,7 @@ class ShareButton extends ShareUtils {
     else if (xLocation <= -1) xLocation = 0;
     if (yLocation >= 3) yLocation = 2;
     else if (yLocation <= -1) yLocation = 0;
+    console.log([xPosition[xLocation], yPosition[yLocation]]);
     return [xPosition[xLocation], yPosition[yLocation]];
   }
 
@@ -623,10 +622,11 @@ class ShareButton extends ShareUtils {
   _injectHtml(instance) {
     let networks = this.config.ui.networkOrder;
     let networkList = '';
+
     for (let network of networks) {
       networkList += `<li class='${network}' data-network='${network}'><a></a></li>`;
     }
-    instance.innerHTML = `<label class='export'><span>${this.config.ui.buttonText}</span></label><div class='${this.config.ui.namespace}social load ${this.config.ui.flyout}'><ul>` + networkList + `</ul></div>`;
+    instance.innerHTML = `${this.config.ui.buttonText}<div class='${this.config.ui.namespace}social load ${this.config.ui.flyout}'><ul>` + networkList + `</ul></div>`;
   }
 
   /**
@@ -638,7 +638,7 @@ class ShareButton extends ShareUtils {
     if (!window.FB && this.config.networks.facebook.appId &&
         !this.el.body.querySelector('#fb-root')) {
       let script = document.createElement('script');
-      script.text = `window.fbAsyncInit=function(){FB.init({appId:'${this.config.networks.facebook.appId}',status:true,xfbml:true})};(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if(e.getElementById(n)){return}r=e.createElement(t);r.id=n;r.src='//connect.facebook.net/en_US/all.js';i.parentNode.insertBefore(r,i)})(document,'script','facebook-jssdk');`;
+      script.text = `window.fbAsyncInit=function(){FB.init({appId:'${this.config.networks.facebook.appId}',status:true,xfbml:true})};(function(e,t,n){var r,i=e.getElementsByTagName(t)[0];if (e.getElementById(n)){return}r=e.createElement(t);r.id=n;r.src='//connect.facebook.net/en_US/all.js';i.parentNode.insertBefore(r,i)})(document,'script','facebook-jssdk');`;
 
       let fbRoot = document.createElement('div');
       fbRoot.id = 'fb-root';
@@ -710,7 +710,7 @@ class ShareButton extends ShareUtils {
    */
   _defaultDescription() {
     let content;
-    if((content = (document.querySelector('meta[property="og:description"]') ||
+    if ((content = (document.querySelector('meta[property="og:description"]') ||
                   document.querySelector('meta[name="twitter:description"]') ||
                   document.querySelector('meta[name="description"]'))))
       return content.getAttribute('content');
@@ -728,7 +728,7 @@ class ShareButton extends ShareUtils {
     for (let network of Object.keys(this.config.networks)) {
       let display;
       for (let option of Object.keys(this.config.networks[network])) {
-        if(this.config.networks[network][option] === null) {
+        if (this.config.networks[network][option] === null) {
           this.config.networks[network][option] = this.config[option];
         }
       }
