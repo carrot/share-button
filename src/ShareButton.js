@@ -479,7 +479,6 @@ class ShareButton extends ShareUtils {
     else if (xLocation <= -1) xLocation = 0;
     if (yLocation >= 3) yLocation = 2;
     else if (yLocation <= -1) yLocation = 0;
-    console.log([xPosition[xLocation], yPosition[yLocation]]);
     return [xPosition[xLocation], yPosition[yLocation]];
   }
 
