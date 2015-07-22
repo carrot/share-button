@@ -127,6 +127,174 @@ share-button .sb-social.load {
   -webkit-transition: none !important;
   transition: none !important;
 }
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-1.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-1.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-1.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-2.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-2.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-2.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-3.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-3.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-3.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-4.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-4.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-4.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-5.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-5.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-5.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-6.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-6.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-6.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-7.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-7.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-7.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
+@media screen and (max-width: 520px) {
+  share-button .sb-social.networks-8.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 420px;
+  }
+}
+@media screen and (max-width: 460px) {
+  share-button .sb-social.networks-8.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 360px;
+  }
+}
+@media screen and (max-width: 400px) {
+  share-button .sb-social.networks-8.sb-center {
+    white-space: initial;
+    text-align: center;
+    width: 300px;
+  }
+}
 share-button .sb-social ul {
   margin: 0;
   padding: 0;

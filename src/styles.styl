@@ -1,28 +1,24 @@
 @import url('//fonts.googleapis.com/css?family=Lato');
 
-mediaNetwork($width, $maxWidth, $boolean=false)
-  $networks = ($maxWidth / 60)
-  for $network in (1..$networks)
-    $thisWidth = (($maxWidth - ($network * 60)) + 120)
-
-    if (($thisWidth)px > 360px)
-      @media screen and (max-width: ($thisWidth)px)
-        white-space: initial
-        ul
-          width:
-
 network($amt)
   $width = ($amt * 60)px
   &.sb-center
-    &.sb-top, &.sb-bottom
-      ul
-        width: $width
+    if ($width >= 480px)
+      @media screen and (max-width: 520px)
+        white-space: initial
+        text-align: center
+        width: 420px
 
-    &.sb-top
-      mediaNetwork($width, $maxWidth, true)
-
-    &.sb-bottom
-      mediaNetwork($width, $maxWidth)
+    if ($width >= 380px)
+      @media screen and (max-width: 460px)
+        white-space: initial
+        text-align: center
+        width: 360px
+    if ($width >= 320px)
+      @media screen and (max-width: 400px)
+        white-space: initial
+        text-align: center
+        width: 300px
 
 email = #42C5B0
 facebook = #3B5998
