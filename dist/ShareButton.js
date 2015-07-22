@@ -927,9 +927,8 @@ var ShareButton = (function (_ShareUtils) {
         for (var _iterator = instances[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var instance = _step.value;
 
-          var button = instance.getElementsByClassName(this.config.ui.namespace + 'social')[0];
-          var label = instance.querySelectorAll('label')[0];
-          this['_event' + action](button, label);
+          var networks = instance.getElementsByClassName(this.config.ui.namespace + 'social')[0];
+          this['_event' + action](instance, networks);
         }
       } catch (err) {
         _didIteratorError = true;
@@ -1052,19 +1051,15 @@ var ShareButton = (function (_ShareUtils) {
       // Add necessary classes to instance
       // (Note: FF doesn't support adding multiple classes in a single call)
       this._addClass(instance, 'sharer-' + index);
-
-      // Inject HTML and CSS
       this._injectHtml(instance);
-      if (this.config.ui.css) this._injectStylesheet('dist/styles.min.css');
-
       this._show(instance);
 
-      var button = instance.getElementsByClassName(this.config.ui.namespace + 'social')[0];
+      var networksCon = instance.getElementsByClassName(this.config.ui.namespace + 'social')[0];
       var networks = instance.getElementsByTagName('li');
 
-      this._addClass(button, 'networks-' + this.config.enabledNetworks);
+      this._addClass(networksCon, 'networks-' + this.config.enabledNetworks);
       instance.addEventListener('click', function () {
-        return _this._eventToggle(button, instance);
+        return _this._eventToggle(instance, networksCon);
       });
 
       var _loop = function (k) {
@@ -1106,10 +1101,10 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      *
      * @param {DOMNode} button
-     * @param {DOMNode} label
+     * @param {DOMNode} networks
      */
-    value: function _eventToggle(button, label) {
-      if (this._hasClass(button, 'active')) this._eventClose(button);else this._eventOpen(button, label);
+    value: function _eventToggle(button, networks) {
+      if (this._hasClass(networks, 'active')) this._eventClose(networks);else this._eventOpen(button, networks);
     }
   }, {
     key: '_eventOpen',
@@ -1120,13 +1115,13 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      *
      * @param {DOMNode} button
-     * @param {DOMNode} label
+     * @param {DOMNode} networks
      */
-    value: function _eventOpen(button, label) {
-      if (this._hasClass(button, 'load')) this._removeClass(button, 'load');
-      if (this.collision) this._collisionDetection(button);
+    value: function _eventOpen(button, networks) {
+      if (this._hasClass(networks, 'load')) this._removeClass(networks, 'load');
+      if (this.collision) this._collisionDetection(button, networks);
 
-      this._addClass(button, 'active');
+      this._addClass(networks, 'active');
     }
   }, {
     key: '_eventClose',
@@ -1151,15 +1146,15 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      *
      * @param {DOMNode} button
-     * @param {DOMNode} label
+     * @param {DOMNode} networks
      */
-    value: function _eventListen(button) {
+    value: function _eventListen(button, networks) {
       var _this2 = this;
 
-      var dimensions = this._getDimensions(button);
+      var dimensions = this._getDimensions(button, networks);
       if (this.listener === null) this.listener = window.setInterval(function () {
-        return _this2._adjustClasses(button, dimensions);
-      }, 450);else {
+        return _this2._adjustClasses(button, networks, dimensions);
+      }, 100);else {
         window.clearInterval(this.listener);
         this.listener = null;
       }
@@ -1188,14 +1183,14 @@ var ShareButton = (function (_ShareUtils) {
      * this._adjustClasses during scrolls and resizes.
      * @private
      *
-     * @param {DOMNode} button - list of social networks
-     * @param {DOMNode} label - share button
+     * @param {DOMNode} button - share button
+     * @param {DOMNode} networks - list of social networks
      */
-    value: function _collisionDetection(button, label) {
+    value: function _collisionDetection(button, networks) {
       var _this3 = this;
 
-      var dimensions = this._getDimensions(button, label);
-      this._adjustClasses(button, dimensions);
+      var dimensions = this._getDimensions(button, networks);
+      this._adjustClasses(button, networks, dimensions);
 
       if (!button.classList.contains('clicked')) {
         window.addEventListener('scroll', function () {
@@ -1217,11 +1212,12 @@ var ShareButton = (function (_ShareUtils) {
      * @private
      *
      * @param {DOMNode} button
-     * @param {DOMNode} label
+     * @param {DOMNode} networks
      * @returns {Object}
      */
-    value: function _getDimensions(button) {
+    value: function _getDimensions(button, networks) {
       return {
+        networksWidth: networks.offsetWidth,
         buttonHeight: button.offsetHeight,
         buttonWidth: button.offsetWidth
       };
@@ -1239,56 +1235,55 @@ var ShareButton = (function (_ShareUtils) {
      * @param {DOMNode} label
      * @param {Object} dimensions
      */
-    value: function _adjustClasses(button, dimensions) {
+    value: function _adjustClasses(button, networks, dimensions) {
       var windowWidth = window.innerWidth;
       var windowHeight = window.innerHeight;
       var leftOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
       var rightOffset = windowWidth - leftOffset;
-      var buttonOffset = button.getBoundingClientRect().left + dimensions.buttonWidth / 2;
       var topOffset = button.getBoundingClientRect().top + dimensions.buttonHeight / 2;
       var position = this._findLocation(leftOffset, topOffset, windowWidth, windowHeight);
 
       if (position[1] === 'middle' && position[0] !== 'center' && (position[0] === 'left' && windowWidth <= leftOffset + 220 + dimensions.buttonWidth / 2 || position[0] === 'right' && windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)) {
-        button.classList.add(this.config.ui.namespace + 'top');
-        button.classList.remove(this.config.ui.namespace + 'middle');
-        button.classList.remove(this.config.ui.namespace + 'bottom');
+        networks.classList.add(this.config.ui.namespace + 'top');
+        networks.classList.remove(this.config.ui.namespace + 'middle');
+        networks.classList.remove(this.config.ui.namespace + 'bottom');
       } else {
         switch (position[0]) {
           case 'left':
-            button.classList.add(this.config.ui.namespace + 'right');
-            button.classList.remove(this.config.ui.namespace + 'center');
-            button.classList.remove(this.config.ui.namespace + 'left');
+            networks.classList.add(this.config.ui.namespace + 'right');
+            networks.classList.remove(this.config.ui.namespace + 'center');
+            networks.classList.remove(this.config.ui.namespace + 'left');
             break;
           case 'center':
-            if (position[1] !== 'top') button.classList.add(this.config.ui.namespace + 'top');
-            button.classList.add(this.config.ui.namespace + 'center');
-            button.classList.remove(this.config.ui.namespace + 'left');
-            button.classList.remove(this.config.ui.namespace + 'right');
-            button.classList.remove(this.config.ui.namespace + 'middle');
+            if (position[1] !== 'top') networks.classList.add(this.config.ui.namespace + 'top');
+            networks.classList.add(this.config.ui.namespace + 'center');
+            networks.classList.remove(this.config.ui.namespace + 'left');
+            networks.classList.remove(this.config.ui.namespace + 'right');
+            networks.classList.remove(this.config.ui.namespace + 'middle');
             break;
           case 'right':
-            button.classList.add(this.config.ui.namespace + 'left');
-            button.classList.remove(this.config.ui.namespace + 'center');
-            button.classList.remove(this.config.ui.namespace + 'right');
+            networks.classList.add(this.config.ui.namespace + 'left');
+            networks.classList.remove(this.config.ui.namespace + 'center');
+            networks.classList.remove(this.config.ui.namespace + 'right');
             break;
         }
         switch (position[1]) {
           case 'top':
-            button.classList.add(this.config.ui.namespace + 'bottom');
-            button.classList.remove(this.config.ui.namespace + 'middle');
-            if (position[0] !== 'center') button.classList.remove(this.config.ui.namespace + 'top');
+            networks.classList.add(this.config.ui.namespace + 'bottom');
+            networks.classList.remove(this.config.ui.namespace + 'middle');
+            if (position[0] !== 'center') networks.classList.remove(this.config.ui.namespace + 'top');
             break;
           case 'middle':
             if (position[0] !== 'center') {
-              button.classList.add(this.config.ui.namespace + 'middle');
-              button.classList.remove(this.config.ui.namespace + 'top');
+              networks.classList.add(this.config.ui.namespace + 'middle');
+              networks.classList.remove(this.config.ui.namespace + 'top');
             }
-            button.classList.remove(this.config.ui.namespace + 'bottom');
+            networks.classList.remove(this.config.ui.namespace + 'bottom');
             break;
           case 'bottom':
-            button.classList.add(this.config.ui.namespace + 'top');
-            button.classList.remove(this.config.ui.namespace + 'middle');
-            button.classList.remove(this.config.ui.namespace + 'bottom');
+            networks.classList.add(this.config.ui.namespace + 'top');
+            networks.classList.remove(this.config.ui.namespace + 'middle');
+            networks.classList.remove(this.config.ui.namespace + 'bottom');
             break;
         }
       }

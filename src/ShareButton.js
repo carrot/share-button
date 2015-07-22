@@ -141,10 +141,9 @@ class ShareButton extends ShareUtils {
       instances = document.querySelectorAll(element);
 
     for (let instance of instances) {
-      let button =
+      let networks =
         instance.getElementsByClassName(`${this.config.ui.namespace}social`)[0];
-      let label = instance.querySelectorAll('label')[0];
-      this[`_event${action}`](button, label);
+      this[`_event${action}`](instance, networks);
     }
   }
 
@@ -213,21 +212,16 @@ class ShareButton extends ShareUtils {
     // Add necessary classes to instance
     // (Note: FF doesn't support adding multiple classes in a single call)
     this._addClass(instance, `sharer-${index}`);
-
-    // Inject HTML and CSS
     this._injectHtml(instance);
-    if (this.config.ui.css)
-      this._injectStylesheet('dist/styles.min.css');
-
     this._show(instance);
 
-    let button =
+    let networksCon =
       instance.getElementsByClassName(`${this.config.ui.namespace}social`)[0];
     let networks = instance.getElementsByTagName('li');
 
-    this._addClass(button, `networks-${this.config.enabledNetworks}`);
+    this._addClass(networksCon, `networks-${this.config.enabledNetworks}`);
     instance.addEventListener('click', () =>
-      this._eventToggle(button, instance)
+      this._eventToggle(instance, networksCon)
     );
 
     // Add listener to activate networks and close button
@@ -262,13 +256,13 @@ class ShareButton extends ShareUtils {
    * @private
    *
    * @param {DOMNode} button
-   * @param {DOMNode} label
+   * @param {DOMNode} networks
    */
-  _eventToggle(button, label) {
-    if (this._hasClass(button, 'active'))
-      this._eventClose(button);
+  _eventToggle(button, networks) {
+    if (this._hasClass(networks, 'active'))
+      this._eventClose(networks);
     else
-      this._eventOpen(button, label);
+      this._eventOpen(button, networks);
   }
 
   /**
@@ -277,15 +271,15 @@ class ShareButton extends ShareUtils {
    * @private
    *
    * @param {DOMNode} button
-   * @param {DOMNode} label
+   * @param {DOMNode} networks
    */
-  _eventOpen(button, label) {
-    if (this._hasClass(button, 'load'))
-      this._removeClass(button, 'load');
+  _eventOpen(button, networks) {
+    if (this._hasClass(networks, 'load'))
+      this._removeClass(networks, 'load');
     if (this.collision)
-      this._collisionDetection(button);
+      this._collisionDetection(button, networks);
 
-    this._addClass(button, 'active');
+    this._addClass(networks, 'active');
   }
 
   /**
@@ -306,13 +300,13 @@ class ShareButton extends ShareUtils {
    * @private
    *
    * @param {DOMNode} button
-   * @param {DOMNode} label
+   * @param {DOMNode} networks
    */
-  _eventListen(button) {
-    let dimensions = this._getDimensions(button);
+  _eventListen(button, networks) {
+    let dimensions = this._getDimensions(button, networks);
     if (this.listener === null)
       this.listener = window.setInterval(() =>
-        this._adjustClasses(button, dimensions), 100
+        this._adjustClasses(button, networks, dimensions), 100
       );
     else {
       window.clearInterval(this.listener);
@@ -343,12 +337,12 @@ class ShareButton extends ShareUtils {
    * this._adjustClasses during scrolls and resizes.
    * @private
    *
-   * @param {DOMNode} button - list of social networks
-   * @param {DOMNode} label - share button
+   * @param {DOMNode} button - share button
+   * @param {DOMNode} networks - list of social networks
    */
-  _collisionDetection(button, label) {
-    let dimensions = this._getDimensions(button, label);
-    this._adjustClasses(button, dimensions);
+  _collisionDetection(button, networks) {
+    let dimensions = this._getDimensions(button, networks);
+    this._adjustClasses(button, networks, dimensions);
 
     if (!button.classList.contains('clicked')) {
       window.addEventListener('scroll', () =>
@@ -366,11 +360,12 @@ class ShareButton extends ShareUtils {
    * @private
    *
    * @param {DOMNode} button
-   * @param {DOMNode} label
+   * @param {DOMNode} networks
    * @returns {Object}
    */
-  _getDimensions(button) {
+  _getDimensions(button, networks) {
     return {
+      networksWidth: networks.offsetWidth,
       buttonHeight: button.offsetHeight,
       buttonWidth: button.offsetWidth
     };
@@ -386,14 +381,12 @@ class ShareButton extends ShareUtils {
    * @param {DOMNode} label
    * @param {Object} dimensions
    */
-  _adjustClasses(button, dimensions) {
+  _adjustClasses(button, networks, dimensions) {
     let windowWidth = window.innerWidth;
     let windowHeight = window.innerHeight;
     let leftOffset = button.getBoundingClientRect().left +
       dimensions.buttonWidth / 2;
     let rightOffset = windowWidth - leftOffset;
-    let buttonOffset = button.getBoundingClientRect().left +
-      dimensions.buttonWidth / 2;
     let topOffset = button.getBoundingClientRect().top +
       dimensions.buttonHeight / 2;
     let position =
@@ -406,49 +399,49 @@ class ShareButton extends ShareUtils {
           windowWidth <= rightOffset + 220 + dimensions.buttonWidth / 2)
         )
       ) {
-        button.classList.add(`${this.config.ui.namespace}top`);
-        button.classList.remove(`${this.config.ui.namespace}middle`);
-        button.classList.remove(`${this.config.ui.namespace}bottom`);
+        networks.classList.add(`${this.config.ui.namespace}top`);
+        networks.classList.remove(`${this.config.ui.namespace}middle`);
+        networks.classList.remove(`${this.config.ui.namespace}bottom`);
     }
     else {
       switch(position[0]) {
         case "left":
-          button.classList.add(`${this.config.ui.namespace}right`);
-          button.classList.remove(`${this.config.ui.namespace}center`);
-          button.classList.remove(`${this.config.ui.namespace}left`);
+          networks.classList.add(`${this.config.ui.namespace}right`);
+          networks.classList.remove(`${this.config.ui.namespace}center`);
+          networks.classList.remove(`${this.config.ui.namespace}left`);
           break;
         case "center":
           if (position[1] !== "top")
-            button.classList.add(`${this.config.ui.namespace}top`);
-          button.classList.add(`${this.config.ui.namespace}center`);
-          button.classList.remove(`${this.config.ui.namespace}left`);
-          button.classList.remove(`${this.config.ui.namespace}right`);
-          button.classList.remove(`${this.config.ui.namespace}middle`);
+            networks.classList.add(`${this.config.ui.namespace}top`);
+          networks.classList.add(`${this.config.ui.namespace}center`);
+          networks.classList.remove(`${this.config.ui.namespace}left`);
+          networks.classList.remove(`${this.config.ui.namespace}right`);
+          networks.classList.remove(`${this.config.ui.namespace}middle`);
           break;
         case "right":
-          button.classList.add(`${this.config.ui.namespace}left`);
-          button.classList.remove(`${this.config.ui.namespace}center`);
-          button.classList.remove(`${this.config.ui.namespace}right`);
+          networks.classList.add(`${this.config.ui.namespace}left`);
+          networks.classList.remove(`${this.config.ui.namespace}center`);
+          networks.classList.remove(`${this.config.ui.namespace}right`);
           break;
       }
       switch(position[1]) {
         case "top":
-          button.classList.add(`${this.config.ui.namespace}bottom`);
-          button.classList.remove(`${this.config.ui.namespace}middle`);
+          networks.classList.add(`${this.config.ui.namespace}bottom`);
+          networks.classList.remove(`${this.config.ui.namespace}middle`);
           if (position[0] !== "center")
-            button.classList.remove(`${this.config.ui.namespace}top`);
+            networks.classList.remove(`${this.config.ui.namespace}top`);
           break;
         case "middle":
           if (position[0] !== "center") {
-            button.classList.add(`${this.config.ui.namespace}middle`);
-            button.classList.remove(`${this.config.ui.namespace}top`);
+            networks.classList.add(`${this.config.ui.namespace}middle`);
+            networks.classList.remove(`${this.config.ui.namespace}top`);
           }
-          button.classList.remove(`${this.config.ui.namespace}bottom`);
+          networks.classList.remove(`${this.config.ui.namespace}bottom`);
           break;
         case "bottom":
-          button.classList.add(`${this.config.ui.namespace}top`);
-          button.classList.remove(`${this.config.ui.namespace}middle`);
-          button.classList.remove(`${this.config.ui.namespace}bottom`);
+          networks.classList.add(`${this.config.ui.namespace}top`);
+          networks.classList.remove(`${this.config.ui.namespace}middle`);
+          networks.classList.remove(`${this.config.ui.namespace}bottom`);
           break;
       }
     }

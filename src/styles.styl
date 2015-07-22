@@ -9,15 +9,14 @@ mediaNetwork($width, $maxWidth, $boolean=false)
       @media screen and (max-width: ($thisWidth)px)
         white-space: initial
         ul
-          width: 100% - (((100 / ($networks * 10)) * 10) * $network)%
+          width:
 
-network($maxWidth)
-  $width = 100%
-
+network($amt)
+  $width = ($amt * 60)px
   &.sb-center
     &.sb-top, &.sb-bottom
       ul
-        width: $maxWidth
+        width: $width
 
     &.sb-top
       mediaNetwork($width, $maxWidth, true)
@@ -88,11 +87,11 @@ share-button
           bottom: -1em
 
     &.sb-left
-      left: -1em
+      left: 50%
 
       &.sb-top
         top: 0
-        transform: translate(-100%, -100%)
+        transform: translate(calc(-100% + 30px), -100%)
 
       &.sb-middle
         top: 50%
@@ -101,7 +100,7 @@ share-button
 
       &.sb-bottom
         bottom: 0
-        transform: translate(-100%, 100%)
+        transform: translate(calc(-100% + 30px), 100%)
 
       &.active
         &.sb-top
@@ -114,27 +113,27 @@ share-button
           bottom: -1em
 
     &.sb-right
-      right: -1em
+      left: 50%
 
       &.sb-top
         top: 0
-        transform: translate(100%, -100%)
+        transform: translate(-30px, -100%)
 
       &.sb-middle
         top: 50%
-        right: 0
-        transform: translate(100%, -50%)
+        left: 100%
+        transform: translate(0, -50%)
 
       &.sb-bottom
         bottom: 0
-        transform: translate(100%, 100%)
+        transform: translate(-30px, 100%)
 
       &.active
         &.sb-top
           top: -1em
 
         &.sb-middle
-          right: -1em
+          left: calc(100% + 1em)
 
         &.sb-bottom
           bottom: -1em
@@ -155,6 +154,7 @@ share-button
       margin: 0
       padding: 0
       list-style: none
+      line-height: 0
 
       li
         position: relative

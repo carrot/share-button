@@ -56,13 +56,13 @@ share-button .sb-social.sb-center.active.sb-bottom {
   bottom: -1em;
 }
 share-button .sb-social.sb-left {
-  left: -1em;
+  left: 50%;
 }
 share-button .sb-social.sb-left.sb-top {
   top: 0;
-  -webkit-transform: translate(-100%, -100%);
-  -ms-transform: translate(-100%, -100%);
-  transform: translate(-100%, -100%);
+  -webkit-transform: translate(calc(-100% + 30px), -100%);
+  -ms-transform: translate(calc(-100% + 30px), -100%);
+  transform: translate(calc(-100% + 30px), -100%);
 }
 share-button .sb-social.sb-left.sb-middle {
   top: 50%;
@@ -73,9 +73,9 @@ share-button .sb-social.sb-left.sb-middle {
 }
 share-button .sb-social.sb-left.sb-bottom {
   bottom: 0;
-  -webkit-transform: translate(-100%, 100%);
-  -ms-transform: translate(-100%, 100%);
-  transform: translate(-100%, 100%);
+  -webkit-transform: translate(calc(-100% + 30px), 100%);
+  -ms-transform: translate(calc(-100% + 30px), 100%);
+  transform: translate(calc(-100% + 30px), 100%);
 }
 share-button .sb-social.sb-left.active.sb-top {
   top: -1em;
@@ -87,32 +87,32 @@ share-button .sb-social.sb-left.active.sb-bottom {
   bottom: -1em;
 }
 share-button .sb-social.sb-right {
-  right: -1em;
+  left: 50%;
 }
 share-button .sb-social.sb-right.sb-top {
   top: 0;
-  -webkit-transform: translate(100%, -100%);
-  -ms-transform: translate(100%, -100%);
-  transform: translate(100%, -100%);
+  -webkit-transform: translate(-30px, -100%);
+  -ms-transform: translate(-30px, -100%);
+  transform: translate(-30px, -100%);
 }
 share-button .sb-social.sb-right.sb-middle {
   top: 50%;
-  right: 0;
-  -webkit-transform: translate(100%, -50%);
-  -ms-transform: translate(100%, -50%);
-  transform: translate(100%, -50%);
+  left: 100%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 share-button .sb-social.sb-right.sb-bottom {
   bottom: 0;
-  -webkit-transform: translate(100%, 100%);
-  -ms-transform: translate(100%, 100%);
-  transform: translate(100%, 100%);
+  -webkit-transform: translate(-30px, 100%);
+  -ms-transform: translate(-30px, 100%);
+  transform: translate(-30px, 100%);
 }
 share-button .sb-social.sb-right.active.sb-top {
   top: -1em;
 }
 share-button .sb-social.sb-right.active.sb-middle {
-  right: -1em;
+  left: calc(100% + 1em);
 }
 share-button .sb-social.sb-right.active.sb-bottom {
   bottom: -1em;
@@ -127,138 +127,11 @@ share-button .sb-social.load {
   -webkit-transition: none !important;
   transition: none !important;
 }
-share-button .sb-social.networks-1.sb-center.sb-top ul,
-share-button .sb-social.networks-1.sb-center.sb-bottom ul {
-  width: 60px;
-}
-share-button .sb-social.networks-2.sb-center.sb-top ul,
-share-button .sb-social.networks-2.sb-center.sb-bottom ul {
-  width: 120px;
-}
-share-button .sb-social.networks-3.sb-center.sb-top ul,
-share-button .sb-social.networks-3.sb-center.sb-bottom ul {
-  width: 180px;
-}
-share-button .sb-social.networks-4.sb-center.sb-top ul,
-share-button .sb-social.networks-4.sb-center.sb-bottom ul {
-  width: 240px;
-}
-share-button .sb-social.networks-5.sb-center.sb-top ul,
-share-button .sb-social.networks-5.sb-center.sb-bottom ul {
-  width: 300px;
-}
-share-button .sb-social.networks-6.sb-center.sb-top ul,
-share-button .sb-social.networks-6.sb-center.sb-bottom ul {
-  width: 360px;
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-6.sb-center.sb-top {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-6.sb-center.sb-top ul {
-    width: 83.33333333333333%;
-  }
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-6.sb-center.sb-bottom {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-6.sb-center.sb-bottom ul {
-    width: 83.33333333333333%;
-  }
-}
-share-button .sb-social.networks-7.sb-center.sb-top ul,
-share-button .sb-social.networks-7.sb-center.sb-bottom ul {
-  width: 420px;
-}
-@media screen and (max-width: 480px) {
-  share-button .sb-social.networks-7.sb-center.sb-top {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-7.sb-center.sb-top ul {
-    width: 85.71428571428571%;
-  }
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-7.sb-center.sb-top {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-7.sb-center.sb-top ul {
-    width: 71.42857142857143%;
-  }
-}
-@media screen and (max-width: 480px) {
-  share-button .sb-social.networks-7.sb-center.sb-bottom {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-7.sb-center.sb-bottom ul {
-    width: 85.71428571428571%;
-  }
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-7.sb-center.sb-bottom {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-7.sb-center.sb-bottom ul {
-    width: 71.42857142857143%;
-  }
-}
-share-button .sb-social.networks-8.sb-center.sb-top ul,
-share-button .sb-social.networks-8.sb-center.sb-bottom ul {
-  width: 480px;
-}
-@media screen and (max-width: 540px) {
-  share-button .sb-social.networks-8.sb-center.sb-top {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-8.sb-center.sb-top ul {
-    width: 87.5%;
-  }
-}
-@media screen and (max-width: 480px) {
-  share-button .sb-social.networks-8.sb-center.sb-top {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-8.sb-center.sb-top ul {
-    width: 75%;
-  }
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-8.sb-center.sb-top {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-8.sb-center.sb-top ul {
-    width: 62.5%;
-  }
-}
-@media screen and (max-width: 540px) {
-  share-button .sb-social.networks-8.sb-center.sb-bottom {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-8.sb-center.sb-bottom ul {
-    width: 87.5%;
-  }
-}
-@media screen and (max-width: 480px) {
-  share-button .sb-social.networks-8.sb-center.sb-bottom {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-8.sb-center.sb-bottom ul {
-    width: 75%;
-  }
-}
-@media screen and (max-width: 420px) {
-  share-button .sb-social.networks-8.sb-center.sb-bottom {
-    white-space: initial;
-  }
-  share-button .sb-social.networks-8.sb-center.sb-bottom ul {
-    width: 62.5%;
-  }
-}
 share-button .sb-social ul {
   margin: 0;
   padding: 0;
   list-style: none;
+  line-height: 0;
 }
 share-button .sb-social ul li {
   position: relative;
