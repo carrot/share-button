@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('facebook'))
 
   @When /^I click the Facebook Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the Facebook button$/, () ->
     new @Widgets

@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('email'))
 
   @When /^I click the Email Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the Email button$/, () ->
     new @Widgets

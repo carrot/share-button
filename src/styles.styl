@@ -1,40 +1,26 @@
 @import url('//fonts.googleapis.com/css?family=Lato');
 
-network($maxWidth, $center, $left, $middle-left)
-  $width = 100%
-  width: $maxWidth
+network($amt)
+  $width = ($amt * 60)px
 
   &.sb-center
-    margin-left: $center
+    if ($width >= 480px)
+      @media screen and (max-width: 520px)
+        white-space: initial
+        text-align: center
+        width: 420px
 
-  &.sb-left
-    margin-left: $left
+    if ($width >= 380px)
+      @media screen and (max-width: 460px)
+        white-space: initial
+        text-align: center
+        width: 360px
 
-  &.sb-middle
-    &.sb-left
-      margin-left: $middle-left
-
-  ul
-    max-width: $maxWidth
-    width: $width
-
-    $networks = ($maxWidth / 60)
-    for $network in (1..$networks)
-      $thisWidth = (($maxWidth - ($network * 60)) + 120)
-
-      if (($thisWidth)px > 300px)
-        @media screen and (max-width: ($thisWidth)px)
-          width: 100% - (((100 / ($networks * 10)) * 10) * $network)%
-
-          if (100% > @width)
-            $space = -122px
-          else
-            $space = 0
-
-          margin-top: $space
-
-  &.sb-bottom ul
-    margin-top: 0
+    if ($width >= 320px)
+      @media screen and (max-width: 400px)
+        white-space: initial
+        text-align: center
+        width: 300px
 
 email = #42C5B0
 facebook = #3B5998
@@ -48,108 +34,124 @@ label-bg = #a29baa
 label-color = #333333
 
 share-button
-  size: 92px 20px
+  position: relative
   font-size: 16px
-  no-select()
+  color: label-color
+  background: label-bg
+  padding: 5px 10px 5px 1.75em
+  border-radius: 5px
+  font-family: Lato, sans-serif
+  font-weight: 800
+  -webkit-font-smoothing: antialiased
+  cursor: pointer
+  white-space: nowrap
+  transition()
+  upcase()
 
-  label
-    color: label
-    background: label-bg
-    margin: 0
-    padding: 5px 10px
-    cursor: pointer
-    border-radius: 5px
-    transition()
+  &:hover
+    opacity: 0.8
 
-    &:hover
-      opacity: .8
-
-    &.export
-      span
-        upcase()
-        font-size: 0.9em
-        font-family: Lato, sans-serif
-        font-weight: 800
-        -webkit-font-smoothing: antialiased
-        padding-left: 1.5em
-
-        &:before
-          content: ' '
-          position: absolute
-          top: 0.15em
-          left: 0.75em
-          width: 1em
-          height: 1em
-          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#333" d="M15 15H2V6h2.595s.69-.896 2.17-2H1c-.553 0-1 .45-1 1v11c0 .553.447 1 1 1h15c.553 0 1-.447 1-1v-3.746L15 13.9V15zm-1.64-6.95v3.55L20 6.4l-6.64-5v3.132C5.3 4.532 5.3 12.5 5.3 12.5c2.282-3.748 3.686-4.45 8.06-4.45z"/></svg>')
-          background-repeat: no-repeat
-          transform: scale(1.1)
+  &:before
+    position: absolute
+    top: 0.45em
+    left: 0.6em
+    width: 1em
+    height: 1em
+    content: ' '
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#333" d="M15 15H2V6h2.595s.69-.896 2.17-2H1c-.553 0-1 .45-1 1v11c0 .553.447 1 1 1h15c.553 0 1-.447 1-1v-3.746L15 13.9V15zm-1.64-6.95v3.55L20 6.4l-6.64-5v3.132C5.3 4.532 5.3 12.5 5.3 12.5c2.282-3.748 3.686-4.45 8.06-4.45z"/></svg>') no-repeat
 
   .sb-social
-    margin-left: -15px
+    position: absolute
     opacity: 0
     visibility: hidden
-    transition: all .4s ease
+    transition: all 0.4s ease
 
-    &.sb-top
-      margin-top: -80px
+    &.sb-center
+      left: 50%
 
-    &.sb-bottom
-      margin-top: 5px
+      &.sb-top
+        top: 0
+        transform: translate(-50%, -100%)
 
-    &.sb-middle
-      margin-top: -34px
+      &.sb-bottom
+        bottom: 0
+        transform: translate(-50%, 100%)
 
-      &.sb-right
-        margin-left: 105px
+      &.active
+        &.sb-top
+          top: -1em
+
+        &.sb-bottom
+          bottom: -1em
+
+    &.sb-left
+      left: 50%
+
+      &.sb-top
+        top: 0
+        transform: translate(calc(-100% + 30px), -100%)
+
+      &.sb-middle
+        top: 50%
+        left: 0
+        transform: translate(-100%, -50%)
+
+      &.sb-bottom
+        bottom: 0
+        transform: translate(calc(-100% + 30px), 100%)
+
+      &.active
+        &.sb-top
+          top: -1em
+
+        &.sb-middle
+          left: -1em
+
+        &.sb-bottom
+          bottom: -1em
 
     &.sb-right
-      margin-left: 14px
+      left: 50%
 
-    &.load
-      transition: none !important
+      &.sb-top
+        top: 0
+        transform: translate(-30px, -100%)
 
-    &.networks-1
-      network(60px, 14px, 14px, -70px)
-    &.networks-2
-      network(120px, -13px, -44px, -130px)
-    &.networks-3
-      network(180px, -45px, -102px, -190px)
-    &.networks-4
-      network(240px, -75px, 162px, -250px)
-    &.networks-5
-      network(300px, -105px, -225px, -320px)
-    &.networks-6
-      network(360px, -135px, -265px, -380px)
-    &.networks-7
-      network(420px, -165px, -305px, -440px)
-    &.networks-8
-      network(480px, -195px, -345px, -500px)
+      &.sb-middle
+        top: 50%
+        left: 100%
+        transform: translate(0, -50%)
+
+      &.sb-bottom
+        bottom: 0
+        transform: translate(-30px, 100%)
+
+      &.active
+        &.sb-top
+          top: -1em
+
+        &.sb-middle
+          left: calc(100% + 1em)
+
+        &.sb-bottom
+          bottom: -1em
 
     &.active
       opacity: 1
       transition: all .4s ease
       visibility: visible
 
-      &.sb-top
-        transform: translateY(-10px)
+    &.load
+      transition: none !important
 
-      &.sb-bottom
-        transform: translateY(15px)
-
-      &.sb-middle
-        &.sb-right
-          transform: translateX(10px)
-
-        &.sb-left
-          transform: translateX(-10px)
+    for num in (1..8)
+      &.networks-{num}
+        network(num)
 
     ul
-      relative: left 0 right 0
-      height: 46px
-      margin: auto
+      margin: 0
       padding: 0
       list-style: none
-      text-align: center
       line-height: 0
 
       li

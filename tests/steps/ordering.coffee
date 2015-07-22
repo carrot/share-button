@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('ordering'))
 
   @When /^I click the network ordering Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the correct number of networks$/, () ->
     new @Widgets

@@ -4,6 +4,22 @@
  * @classdesc A nice set of utilities.
  */
 class ShareUtils {
+  _getStyle(ele, css) {
+    var strValue = "";
+
+    if (document.defaultView && document.defaultView.getComputedStyle) {
+      strValue = document.defaultView.getComputedStyle(ele, "")
+        .getPropertyValue(css);
+    } else if (ele.currentStyle) {
+      css = css.replace(/\-(\w)/g, function (strMatch, p1) {
+        return p1.toUpperCase();
+      });
+      strValue = ele.currentStyle[css];
+    }
+
+    return strValue;
+}
+
   /**
    * @method _hide
    * @description Change element's display to 'none'
@@ -23,7 +39,7 @@ class ShareUtils {
    * @param {DOMNode} el
    */
   _show(el) {
-    el.style.display = "block";
+    el.style.display = "initial";
   }
 
   /**

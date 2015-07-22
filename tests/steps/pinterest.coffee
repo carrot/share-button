@@ -3,7 +3,7 @@ module.exports = ->
     @driver.get(@Helpers.fixture('pinterest'))
 
   @When /^I click the Pinterest Share Button$/, () ->
-    new @Widgets.ShareButton().clickButton()
+    new @Widgets.ShareButton().click()
 
   @Then /^I should see the Pinterest button$/, () ->
     new @Widgets
