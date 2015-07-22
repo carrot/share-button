@@ -173,7 +173,16 @@ class ShareButton extends ShareUtils {
 
     // Default order of networks if no network order entered
     if (this.config.ui.networkOrder.length === 0)
-      this.config.ui.networkOrder = ['pinterest', 'twitter', 'facebook', 'whatsapp',  'googlePlus', 'reddit', 'linkedin', 'email'];
+      this.config.ui.networkOrder = [
+        'pinterest',
+        'twitter',
+        'facebook',
+        'whatsapp',
+        'googlePlus',
+        'reddit',
+        'linkedin',
+        'email'
+      ];
 
     for (let network of Object.keys(this.config.networks)) {
       if (this.config.ui.networkOrder.indexOf(network.toString()) < 0) {

@@ -2,6 +2,7 @@
 
 network($amt)
   $width = ($amt * 60)px
+
   &.sb-center
     if ($width >= 480px)
       @media screen and (max-width: 520px)
@@ -14,6 +15,7 @@ network($amt)
         white-space: initial
         text-align: center
         width: 360px
+
     if ($width >= 320px)
       @media screen and (max-width: 400px)
         white-space: initial
@@ -144,7 +146,7 @@ share-button
 
     for num in (1..8)
       &.networks-{num}
-        network((num * 60)px)
+        network(num)
 
     ul
       margin: 0
