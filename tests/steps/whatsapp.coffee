@@ -1,6 +1,6 @@
 module.exports = ->
   @Given /^I create a Whatsapp Share Button$/, () ->
-    @driver.get(@Helpers.fixture('whatsapp'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/whatsapp.html")
 
   @When /^I click the Whatsapp Share Button$/, () ->
     new @Widgets.ShareButton().click()

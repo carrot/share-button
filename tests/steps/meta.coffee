@@ -11,7 +11,7 @@ hrefs = [
 
 module.exports = ->
   @Given /^I create and click a meta tag Share Button$/, () ->
-    @driver.get(@Helpers.fixture('meta'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/meta.html")
     new @Widgets.ShareButton().click()
 
   @When /^I click all the network buttons$/, () ->

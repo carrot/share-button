@@ -1,6 +1,6 @@
 module.exports = ->
   @Given /^I create a network ordering Share Button$/, () ->
-    @driver.get(@Helpers.fixture('ordering'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/ordering.html")
 
   @When /^I click the network ordering Share Button$/, () ->
     new @Widgets.ShareButton().click()

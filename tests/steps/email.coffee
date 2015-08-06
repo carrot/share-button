@@ -1,6 +1,6 @@
 module.exports = ->
   @Given /^I create an Email Share Button$/, () ->
-    @driver.get(@Helpers.fixture('email'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/email.html")
 
   @When /^I click the Email Share Button$/, () ->
     new @Widgets.ShareButton().click()

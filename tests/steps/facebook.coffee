@@ -1,6 +1,6 @@
 module.exports = ->
   @Given /^I create a Facebook Share Button$/, () ->
-    @driver.get(@Helpers.fixture('facebook'))
+    @driver.visit("http://localhost:8000/tests/fixtures/facebook.html")
 
   @When /^I click the Facebook Share Button$/, () ->
     new @Widgets.ShareButton().click()

@@ -1,6 +1,6 @@
 module.exports = ->
   @Given /^I create a Twitter Share Button$/, () ->
-    @driver.get(@Helpers.fixture('twitter'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/twitter.html")
 
   @When /^I click the Twitter Share Button$/, () ->
     new @Widgets.ShareButton().click()

@@ -1,6 +1,6 @@
 module.exports = ->
   @Given /^I create a UI Share Button$/, () ->
-    @driver.get(@Helpers.fixture('ui'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/ui.html")
 
   @Then /^The Share Button should have the correct text$/, () ->
     new @Widgets

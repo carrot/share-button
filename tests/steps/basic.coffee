@@ -11,7 +11,7 @@ networks = [
 
 module.exports = ->
   @Given /^I create a basic Share Button$/, ->
-    @driver.get(@Helpers.fixture('basic'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/basic.html")
 
   @When /^I click the Share Button$/, ->
     new @Widgets.ShareButton().click()

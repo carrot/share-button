@@ -1,6 +1,6 @@
 module.exports = ->
   @Given /^I create an Animated Share Button$/, () ->
-    @driver.get(@Helpers.fixture('animation'))
+    @driver.visit("file:///#{process.cwd()}/tests/fixtures/animation.html")
 
   @Then /^The classes will be correct at middle center$/, () ->
     shareButton = new @Widgets.ShareButton()
