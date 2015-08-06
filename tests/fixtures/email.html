@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Share Button Test: Email</title>
+  <!-- temporary link tag -->
+  <link rel="stylesheet" type="text/css" href="../../dist/styles.min.css">
+  <style>
+    html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    share-button {
+      position: relative;
+      top: 0;
+      left: 50%;
+      bottom: 0;
+      right: 0;
+      z-index: 100;
+    }
+  </style>
+  <meta name='description' content='A simple, light, flexible, and good-looking share button'>
+  <meta property='og:image' content='http://carrot.is/img/fb-share.jpg'>
+</head>
+
+<body>
+  <share-button></share-button>
+  <script src='../../dist/ShareButton.min.js'></script>
+  <script>
+    var shareButton = new ShareButton({
+      networks: {
+        pinterest: { enabled: false },
+        twitter: { enabled: false },
+        facebook: { enabled: false },
+        whatsapp: { enabled: false },
+        googlePlus: { enabled: false },
+        reddit: { enabled: false },
+        linkedin: { enabled: false },
+        email: {
+          title: 'email title',
+          description: 'email description'
+        },
+      },
+      ui: {
+        flyout: 'center bottom'
+      }
+    });
+  </script>
+</body>
+
+</html>

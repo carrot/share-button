@@ -1,3 +1,4 @@
 .DS_Store
 node_modules
 .com.apple.timemachine.supported
+phantomjsdriver.log
