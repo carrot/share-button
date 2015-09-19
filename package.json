@@ -27,7 +27,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "pioneer": "1.11.5"
+    "pioneer": "^0.11.6"
   },
   "devDependencies": {
     "autoprefixer-stylus": "latest",
