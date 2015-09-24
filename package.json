@@ -41,6 +41,7 @@
     "gulp-minify-css": "latest",
     "gulp-rename": "latest",
     "gulp-uglify": "latest",
+    "postcss-svg": "^1.0.1",
     "stylus": "latest"
   },
   "scripts": {
