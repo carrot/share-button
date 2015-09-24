@@ -22,9 +22,21 @@ network($amt)
         text-align: center
         width: 300px
 
+socialIcon($name)
+  li[class*={"'" + $name + "'"}]
+    background: convert($name)
+ 
+    &:before
+      background-image: svg($name, '[fill]: #fff')
+
+    &:after
+      background-image: svg($name, '[fill]: #000') 
+
+networks = 'email' 'facebook' 'googlePlus' 'linkedin' 'pinterest' 'reddit' 'twitter' 'whatsapp'
+
 email = #42C5B0
 facebook = #3B5998
-googleplus = #E34429
+googlePlus = #E34429
 linkedin = #4875B4
 pinterest = #C5282F
 reddit = #a1caf2
@@ -59,7 +71,7 @@ share-button
     width: 1em
     height: 1em
     content: ' '
-    background:("export", "[fill]: #000") no-repeat
+    background: svg("export", "[fill]: #000") no-repeat
 
   .sb-social
     position: absolute
@@ -204,76 +216,6 @@ share-button
           height: 100%
           z-index: 3
 
-    li[class*='facebook']
-      background: facebook
-
-      &:before
-        background:('facebook', '[fill]: #fff')
-
-      &:after
-        background: url('facebook', '[fill]: #000')
-
-
-    li[class*='twitter']
-      background: twitter
-
-      &:before
-        background: url('twitter', '[fill]: #fff')
-
-      &:after
-        background: url('twitter', '[fill]: #000')
-
-    li[class*='googlePlus']
-      background: googleplus
-
-      &:before
-        background: url('googleplus', '[fill]: #fff')
-
-      &:after
-        background: url('googleplus', '[fill]: #000')
-
-    li[class*='pinterest']
-      background: pinterest
-
-      &:before
-        background: url('pinterest', '[fill]: #fff')
-
-      &:after
-        background: url('pinterest', '[fill]: #000')
-
-    li[class*='linkedin']
-      background: linkedin
-
-      &:before
-        background: url('linkedin', '[fill]: #fff')
-
-      &:after
-        background: url('linkedin', '[fill]: #000')
-
-    li[class*='email']
-      background: email
-
-      &:before
-        background: url('email', '[fill]: #fff')
-
-      &:after
-        background: url('email', '[fill]: #000')
-
-    li[class*='reddit']
-      background: reddit
-
-      &:before
-        background: url('reddit', '[fill]: #fff')
-
-      &:after
-        background: url('reddit', '[fill]: #000')
-
-    li[class*='whatsapp']
-      background: whatsapp
-
-      &:before
-        background: url('whatsapp', '[fill]: #fff')
-
-      &:after
-        background: url('whatsapp', '[fill]: #000')
+    for name in networks
+      socialIcon(name)
 
