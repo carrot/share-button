@@ -4,7 +4,7 @@
   <img src="https://i.cloudup.com/RTIOZex9-i.gif"/>
 <p align="center">
   <a title='Build Status' href="https://travis-ci.org/carrot/share-button">
-    <img src='http://img.shields.io/travis/carrot/share-button.svg?style=flat-square' />
+    <img src='https://travis-ci.org/carrot/share-button.svg?branch=master'/>
   </a>
 </p>
 
