@@ -1,5 +1,4 @@
 # Configuration Options
-
 You can pass an options object when you call `ShareButton` on an element to make things a little more flexible.
 
 Passing configuration options:
@@ -17,6 +16,7 @@ var share = new ShareButton('.share-button', config);
 ```
 
 All options:
+
 ```js
 config = {
   protocol:     // the protocol you'd prefer to use. [Default: your current protocol]
@@ -84,20 +84,17 @@ config = {
 ```
 
 ## Defaults
-
 The follow logic is used to populate default values for some of the config keys above:
+- _title_ - The first defined, non-null value out of (in order):
+  - meta tag name='og:title' content attribute value
+  - meta tag name='twitter:title' content attribute value
+  - document's title tag value
 
-* *title* - The first defined, non-null value out of (in order):
-  * meta tag name='og:title' content attribute value
-  * meta tag name='twitter:title' content attribute value
-  * document's title tag value
+- _image_ - the first defined, non-null value out of (in order): 
+  - meta tag name='og:image' content attribute value
+  - meta tag name='twitter:image' content attribute value
 
-* *image* - the first defined, non-null value out of (in order): 
-  * meta tag name='og:image' content attribute value
-  * meta tag name='twitter:image' content attribute value
-
-* *description* - the first defined, non-null value out of (in order): 
-  * meta tag name='og:description' content attribute value
-  * meta tag name='twitter:description' content attribute value
-  * meta tag name='description' content attribute value
-
+- _description_ - the first defined, non-null value out of (in order): 
+  - meta tag name='og:description' content attribute value
+  - meta tag name='twitter:description' content attribute value
+  - meta tag name='description' content attribute value

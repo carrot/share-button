@@ -16,4 +16,3 @@ a - the link tag that is a network
 If you'd like to control the width of each network based on the amount of networks, you can use `.networks-{num}`. If you're using all the networks, don't forget about `whats-app` for mobile, there will be 8.
 
 Happy developing! :D
-

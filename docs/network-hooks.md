@@ -1,5 +1,4 @@
 # Network Hooks
-
 You are able to set `before` and `after` hooks when a user clicks a network. The context passed to the hook is the current network's configuration. To change any of the network's configuration before or after instantiating the share, you must alter the value and return `this` as shown in the examples below.
 
 ```js
@@ -17,8 +16,6 @@ config = {
   }
 }
 ```
-
-
 
 **Example:**
 
@@ -57,4 +54,3 @@ new Share(".share-button", {
   }
 });
 ```
-
