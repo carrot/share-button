@@ -26,3 +26,11 @@ To run the test suite, make sure you have installed [PhantomJS](//phantomjs.org/
 It's ok if you start out with a bunch of experimentation and your commit log isn't totally clean, but before any pull requests are accepted, we like to have a nice clean commit log. That means [well-written and clear commit messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) and commits that each do something significant, rather than being typo or bug fixes.
 
 If you submit a pull request that doesn't have a clean commit log, we will ask you to clean it up before we accept. This means being familiar with rebasing - if you are not, [this guide](https://help.github.com/articles/interactive-rebase) by github should help you to get started, and feel free to ask us anything, we are happy to help.
+
+## Deployment
+When deploying new changes you'll run create a new git tag, push to github, run `gulp build`, publish to npm. Then you'll want to package all the files in the `dist` folder up into (a zip & tarball), and these will be added to your release on github. 
+
+Happy Developing!
+
+![cute dog](http://hellogiggles.hellogiggles.netdna-cdn.com/wp-content/uploads/2015/03/17/53451-Cute-Dog.jpg)
+
