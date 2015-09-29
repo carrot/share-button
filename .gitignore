@@ -2,3 +2,4 @@
 node_modules
 .com.apple.timemachine.supported
 phantomjsdriver.log
+dist
