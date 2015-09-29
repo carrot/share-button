@@ -16,7 +16,7 @@ gulp.task('clean', function() {
 
 gulp.task('style', ['clean'], function() {
   var styleShareButton = gulp
-    .src('src/styles.styl')
+    .src('src/share-button.styl')
     .pipe(accord('stylus', {
       use: [
         autoprefixer(),
@@ -34,12 +34,11 @@ gulp.task('style', ['clean'], function() {
 
 gulp.task('script', ['clean'], function() {
     var umdShareButton = gulp
-        .src(['src/ShareButton.js'], { read: false })
+        .src(['src/share-button.js'], { read: false })
         .pipe(browserify({
           transform: ['babelify'],
           standalone: 'ShareButton'
         }))
-        .pipe(rename('ShareButton.js'))
         .pipe(gulp.dest('dist/'))
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))

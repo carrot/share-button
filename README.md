@@ -4,7 +4,7 @@
   <img src="https://i.cloudup.com/RTIOZex9-i.gif"/>
 <p align="center">
   <a title='Build Status' href="https://travis-ci.org/carrot/share-button">
-    <img src='https://travis-ci.org/carrot/share-button.svg?branch=master'/>
+    <img src='http://img.shields.io/travis/carrot/share-button.svg?style=flat-square'/>
   </a>
 </p>
 
@@ -48,6 +48,7 @@ new ShareButton({
 
 # Customization
 ## Configuration Options
+<<<<<<< HEAD:readme.md
 The share button is extremely flexible. As such we provide the ability to pass a wide array of options for additional configuration. All configuration options are available here: [Configuration Options](https://github.com/carrot/share-button/wiki/Configuration-Options)
 
 ## Styles
@@ -55,6 +56,15 @@ Additionally, you're able to customize the look and feel of the button and anima
 
 ## Hooks
 You are able to set `before` and `after` hooks when a user clicks a network. This allows you to dynamically change attributes for that button. For more information: [click here](https://github.com/carrot/share-button/wiki/Network-Hooks)
+=======
+The share button is extremely flexible. As such we provide the ability to pass a wide array of options for additional configuration. All configuration options are available here: [Configuration Options](https://github.com/carrot/share-button/blob/master/docs/configuration-options.md)
+
+## Styles
+Additionally, you're able to customize the look and feel of the button and animations though CSS. All CSS styles and how to modify them are available here: [CSS Styles](https://github.com/carrot/share-button/blob/master/docs/styles.md)
+
+## Hooks
+You are able to set `before` and `after` hooks when a user clicks a network. This allows you to dynamically change attributes for that button. For more information: [click here](https://github.com/carrot/share-button/blob/master/docs/network-hooks.md)
+>>>>>>> 74b0e8f... update filenames & references and reorganize:README.md
 
 # Public API
 The share button also returns a simple API that can be used to control it should you need to. Example shown below:
@@ -75,5 +85,5 @@ As of version 1.0.0 we completely removed the `Entypo` font set!
 This project was inspired by [this dribbble shot](http://dribbble.com/shots/1072278) and [this cssdeck experiment](http://cssdeck.com/labs/css-social-share-button) - huge props to these two guys for some incredible ideas and work.
 
 # Contributing and License
-- Contributing Guidelines can be found [here](contributing.md)
-- Licenced under MIT - [details here](license.md)
+- Contributing Guidelines can be found [here](https://github.com/carrot/share-button/blob/master/CONTRIBUTING.md)
+- Licensed under MIT - [details here](https://github.com/carrot/share-button/blob/master/LICENSE)

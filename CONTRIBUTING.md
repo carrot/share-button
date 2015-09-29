@@ -10,7 +10,7 @@ If you are opening an issue to suggest a feature, that's totally fine, although 
 
 ## Getting Set Up
 - Clone the project down
-- Install [nodejs](http://nodejs.org) (version 0.10.x or higher)
+- Install [nodejs](http://nodejs.org) (version 4.0.0 or higher)
 - _Windows users only:_ Install [Python](https://wiki.python.org/moin/BeginnersGuide/Download) (version 2.x.x) and set up [environment path](http://stackoverflow.com/a/6318188/1308734).
 - Run `npm install`
 - Make changes to the files in the `src` folder
@@ -18,7 +18,7 @@ If you are opening an issue to suggest a feature, that's totally fine, although 
 - Open `index.html` locally to see your changes.
 
 ## Testing
-This project is constantly evolving, and to ensure that things are secure and working for everyone, we need to have tests. If you are adding a new feature, please make sure to add a test for it. That being said, tests for this library are tough - at very least make sure to visually confirm that it's working using index.html in the root.
+This project is constantly evolving, and to ensure that things are secure and working for everyone, we need to have tests. If you are adding a new feature, please make sure to add a test for it. We are using [pioneer](pioneerjs.com) for testing with [phantom.js](http://phantomjs.org/). For getting setup with those please checkout their setup instructions on their sites. All said and done, tests for this library are tough - at very least make sure to visually confirm that it's working using index.html in the root of the project. If it's a visual please make sure that everything looks okay in [examples/animation.html].
 
 To run the test suite, make sure you have installed [PhantomJS](//phantomjs.org/download.html), then you can use the `npm test` command to run them.
 
