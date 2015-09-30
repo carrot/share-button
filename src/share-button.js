@@ -1,7 +1,7 @@
 require('core-js/fn/symbol');
 require('core-js/fn/array/iterator');
 require('core-js/fn/math/trunc');
-import shareUtils from './share-utils';
+import ShareUtils from './share-utils';
 
 /**
  * Sharebutton
@@ -12,7 +12,7 @@ import shareUtils from './share-utils';
  * @param {String} element
  * @param {Object} options
  */
-class ShareButton extends shareUtils {
+class ShareButton extends ShareUtils {
   constructor(element, options) {
     super();
 
