@@ -161,8 +161,11 @@ class ShareButton extends ShareUtils {
     if (typeof element === 'undefined')
       instances =
         super._objToArray(document.getElementsByTagName('share-button'));
-    else
+    else {
       instances = document.querySelectorAll(`share-button${element}`);
+      if (typeof instances === 'object')
+        instances = super._objToArray(instances);
+    }
 
     // Adding user configs to default configs
     this._merge(this.config, opts);
