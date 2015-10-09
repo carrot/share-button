@@ -3,5 +3,6 @@ sudo: false
 before_script:
   - python -m SimpleHTTPServer > /dev/null 2>&1 &
   - sleep 2
+  - gulp build
 node_js:
-  - '0.12'
+  - 'node'

@@ -2,8 +2,7 @@
 <html>
 <head>
   <title>Share Button Test: Animation</title>
-  <!-- temporary link tag -->
-  <link rel="stylesheet" type="text/css" href="../../dist/styles.min.css">
+  <link rel="stylesheet" type="text/css" href="../../dist/share-button.min.css">
   <style>
     html, body {
       height: 100%;
@@ -61,7 +60,7 @@
   <div style="width: 100%; height: 100%;">
     <share-button style="position: absolute; margin: auto;" class="middle-center"></share-button>
   </div>
-  <script src='../../dist/ShareButton.min.js'></script>
+  <script src='../../dist/share-button.min.js'></script>
   <script>
     var shareButton = new ShareButton({
       networks: {
@@ -76,7 +75,7 @@
       }
     });
     window.setTimeout(function() { shareButton.toggle(); }, 500);
-    window.setTimeout(function() {shareButton.toggleListen(); }, 500);
+    window.setTimeout(function() { shareButton.toggleListen(); }, 500);
   </script>
 </body>
 </html>

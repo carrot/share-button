@@ -10,13 +10,13 @@ var axis = require('axis');
 var poststylus = require('poststylus');
 var postcssSVG = require('postcss-svg');
 
-gulp.task('clean', function() {
-    del(['dist/*[.js, .css]']);
+gulp.task('unbuild', function() {
+    del(['dist']);
 });
 
-gulp.task('style', ['clean'], function() {
+gulp.task('style', function() {
   var styleShareButton = gulp
-    .src('src/styles.styl')
+    .src('src/share-button.styl')
     .pipe(accord('stylus', {
       use: [
         autoprefixer(),
@@ -32,14 +32,13 @@ gulp.task('style', ['clean'], function() {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('script', ['clean'], function() {
+gulp.task('script', function() {
     var umdShareButton = gulp
-        .src(['src/ShareButton.js'], { read: false })
+        .src(['src/share-button.js'], { read: false })
         .pipe(browserify({
           transform: ['babelify'],
           standalone: 'ShareButton'
         }))
-        .pipe(rename('ShareButton.js'))
         .pipe(gulp.dest('dist/'))
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
