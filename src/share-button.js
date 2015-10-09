@@ -688,7 +688,7 @@ class ShareButton extends ShareUtils {
                   document.querySelector('meta[name="twitter:title"]'))))
       return content.getAttribute('content');
     else if ((content = document.querySelector('title')))
-      return content.innerText;
+      return content.textContent || content.innerText;
   }
 
   /**
