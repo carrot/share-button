@@ -1,7 +1,8 @@
 <h1 align="center">Share Button</h1>
 
 <p align="center">
-  <img src="https://i.cloudup.com/RTIOZex9-i.gif"/>
+  <img src="https://cldup.com/K3-R0bY2T8.gif"/>
+</p>
 <p align="center">
   <a title="Build Status" href="https://travis-ci.org/carrot/share-button">
     <img src="http://img.shields.io/travis/carrot/share-button.svg?style=flat-square"/>
