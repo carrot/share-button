@@ -1,7 +1,8 @@
 <h1 align="center">Share Button</h1>
 
 <p align="center">
-  <img src="https://i.cloudup.com/RTIOZex9-i.gif"/>
+  <img src="https://cldup.com/K3-R0bY2T8.gif"/>
+</p>
 <p align="center">
   <a title="Build Status" href="https://travis-ci.org/carrot/share-button">
     <img src="http://img.shields.io/travis/carrot/share-button.svg?style=flat-square"/>
@@ -13,6 +14,7 @@ Simple, light, flexible, and good-looking share button. [See it in action!](http
 
 ## Why Should You Use This?
 All major social networks have their own share widgets you can put on your page, but this isn't ideal for a variety of reasons:
+
 1. They tend to be slow-loading.
 2. They inject extra javascript and DOM elements into your page making it slower.
 3. They generally aren't customizable enough to fit the design of your site.
@@ -20,6 +22,7 @@ All major social networks have their own share widgets you can put on your page,
 5. The buttons themselves take up a lot of space (especially the Facebook share button).
 
 Let's take a quick look at the alternative, using this little plugin:
+
 1. It doesn't load any iframes or extra javascript making the overall load time much faster.
 2. It looks simple and clean by default, and can be customized in any and every way.
 3. All you have to do to use it is include the script and call `new ShareButton` on a `share-button` element. That's two lines of code total, the script link and the share call.
