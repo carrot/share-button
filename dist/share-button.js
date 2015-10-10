@@ -1417,7 +1417,7 @@ var ShareButton = (function (_ShareUtils) {
     key: '_defaultTitle',
     value: function _defaultTitle() {
       var content = undefined;
-      if (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) return content.getAttribute('content');else if (content = document.querySelector('title')) return content.innerText;
+      if (content = document.querySelector('meta[property="og:title"]') || document.querySelector('meta[name="twitter:title"]')) return content.getAttribute('content');else if (content = document.querySelector('title')) return content.textContent || content.innerText;
     }
 
     /**

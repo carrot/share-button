@@ -21,7 +21,7 @@ share-button:hover {
 }
 share-button:before {
   position: absolute;
-  top: 0.45em;
+  line-height: 1em;
   left: 0.6em;
   width: 1em;
   height: 1em;
