@@ -47,7 +47,11 @@
     "stylus": "^0.52.4"
   },
   "scripts": {
-    "test": "pioneer"
+    "test": "pioneer",
+    "build": "gulp build",
+    "unbuild": "gulp unbuild",
+    "build-css": "gulp style",
+    "build-js": "gulp script"
   },
   "keywords": [
     "share",
