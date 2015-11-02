@@ -42,7 +42,6 @@ class ShareButton extends ShareUtils {
         namespace: 'sb-',
         networkOrder: [],
         collision: false,
-        updateShareButtonSize: true
       },
 
       networks: {
