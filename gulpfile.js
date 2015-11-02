@@ -2,8 +2,8 @@ var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var accord = require('gulp-accord');
-var minifyCss = require('gulp-minify-css');
 var browserify = require('gulp-browserify');
+var shell = require('gulp-shell');
 var del = require('del');
 var autoprefixer = require('autoprefixer-stylus');
 var axis = require('axis');
@@ -25,11 +25,9 @@ gulp.task('style', function() {
       ]
     }))
     .pipe(gulp.dest('dist/'))
-    .pipe(minifyCss())
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    .pipe(gulp.dest('dist/'));
+    .pipe(shell(
+      ['node_modules/.bin/minify --output dist/share-button.min.css dist/share-button.css']
+    ))
 });
 
 gulp.task('script', function() {
