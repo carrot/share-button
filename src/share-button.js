@@ -214,7 +214,7 @@ class ShareButton extends ShareUtils {
    * @description Sets up each instance with config and styles
    * @private
    *
-   * @param {DOMNode} element
+   * @param {DOMNode} instance
    * @param {Integer} index
    */
   _setupInstance(instance, index) {
@@ -389,7 +389,7 @@ class ShareButton extends ShareUtils {
    *
    * @private
    * @param {DOMNode} button
-   * @param {DOMNode} label
+   * @param {DOMNode} networks
    * @param {Object} dimensions
    */
   _adjustClasses(button, networks, dimensions) {
