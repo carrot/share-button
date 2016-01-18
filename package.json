@@ -3,6 +3,7 @@
   "description": "fast, beautiful, and painless social shares",
   "version": "1.0.3",
   "homepage": "http://sharebutton.co",
+  "main": "dist/share-button.js",
   "bugs": {
     "url": "https://github.com/carrot/share-button/issues"
   },
