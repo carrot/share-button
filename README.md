@@ -67,7 +67,7 @@ var ShareButton = require('share-button');
 new ShareButton({
   networks: {
     facebook: {
-      app_id: "abc123"
+      appId: "abc123"
     }
   }
 });
