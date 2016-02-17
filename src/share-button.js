@@ -2,6 +2,7 @@ require('core-js/fn/symbol');
 require('core-js/fn/array/iterator');
 require('core-js/fn/math/trunc');
 import ShareUtils from './share-utils';
+import StringUtils from './string-utils';
 
 /**
  * Sharebutton
@@ -252,7 +253,7 @@ class ShareButton extends ShareUtils {
           this._hook('before', name, instance);
         });
         a.addEventListener('mouseup', () => {
-          this[`_network${name.capFLetter()}`](network);
+          this[`_network${StringUtils.capFLetter(name)}`](network);
         });
         a.addEventListener('click', () => {
           this._hook('after', name, instance);
