@@ -20,7 +20,7 @@ class ShareUtils {
     }
 
     return strValue;
-}
+  }
 
   /**
    * @method _hide
@@ -277,10 +277,8 @@ class ShareUtils {
    * @private
    */
   _isMobile() {
-    if(navigator.userAgent.match(/Android|iPhone|PhantomJS/i) &&
-       !navigator.userAgent.match(/iPod|iPad/i))
-      return true;
-    return false;
+    return navigator.userAgent.match(/Android|iPhone|PhantomJS/i) &&
+           !navigator.userAgent.match(/iPod|iPad/i);
   }
 }
 
