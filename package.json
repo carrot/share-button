@@ -3,6 +3,7 @@
   "description": "fast, beautiful, and painless social shares",
   "version": "1.0.3",
   "homepage": "http://sharebutton.co",
+  "main": "dist/share-button.js",
   "bugs": {
     "url": "https://github.com/carrot/share-button/issues"
   },
@@ -27,7 +28,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "pioneer": "^0.11.6"
   },
   "devDependencies": {
     "autoprefixer-stylus": "^0.8.0",
@@ -42,12 +42,17 @@
     "gulp-shell": "^0.5.0",
     "gulp-uglify": "^1.4.1",
     "minifier": "^0.7.1",
+    "pioneer": "^0.11.6",
     "postcss-svg": "^1.0.1",
     "poststylus": "^0.2.1",
     "stylus": "^0.52.4"
   },
   "scripts": {
-    "test": "pioneer"
+    "test": "pioneer",
+    "build": "gulp build",
+    "unbuild": "gulp unbuild",
+    "build-css": "gulp style",
+    "build-js": "gulp script"
   },
   "keywords": [
     "share",

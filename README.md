@@ -43,7 +43,7 @@ Let's take a quick look at the alternative, using this little plugin:
 new ShareButton({
   networks: {
     facebook: {
-      app_id: "abc123"
+      appId: "abc123"
     }
   }
 });

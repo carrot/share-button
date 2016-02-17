@@ -2,6 +2,7 @@ require('core-js/fn/symbol');
 require('core-js/fn/array/iterator');
 require('core-js/fn/math/trunc');
 import ShareUtils from './share-utils';
+import StringUtils from './string-utils';
 
 /**
  * Sharebutton
@@ -214,7 +215,7 @@ class ShareButton extends ShareUtils {
    * @description Sets up each instance with config and styles
    * @private
    *
-   * @param {DOMNode} element
+   * @param {DOMNode} instance
    * @param {Integer} index
    */
   _setupInstance(instance, index) {
@@ -245,14 +246,14 @@ class ShareButton extends ShareUtils {
 
         this._addClass(network, this.config.networks[name].class);
 
-        if (network.className !== 'email')
+        if (network.className.indexOf('email') < 0)
           a.setAttribute('onclick', 'return false');
 
         a.addEventListener('mousedown', () => {
           this._hook('before', name, instance);
         });
         a.addEventListener('mouseup', () => {
-          this[`_network${name.capFLetter()}`](network);
+          this[`_network${StringUtils.capFLetter(name)}`](network);
         });
         a.addEventListener('click', () => {
           this._hook('after', name, instance);
@@ -389,7 +390,7 @@ class ShareButton extends ShareUtils {
    *
    * @private
    * @param {DOMNode} button
-   * @param {DOMNode} label
+   * @param {DOMNode} networks
    * @param {Object} dimensions
    */
   _adjustClasses(button, networks, dimensions) {
