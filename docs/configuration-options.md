@@ -7,7 +7,7 @@ Passing configuration options:
 config = {
     networks: {
         facebook: {
-            app_id: '12345'
+            appId: '12345'
         }
     }
 }
@@ -46,7 +46,7 @@ config = {
                     // NOTE: This will disable the ability to dynamically set values and rely directly on applicable Open Graph tags.
                     // [Default: true]
       url:          // the url you'd like to share to Facebook [Default: config.url]
-      app_id:       // Facebook app id for tracking shares. if provided, will use the facebook API
+      appId:       // Facebook app id for tracking shares. if provided, will use the facebook API
       title:        // title to be shared alongside your link to Facebook [Default: config.title]
       caption:      // caption to be shared alongside your link to Facebook [Default: null]
       description:  // text to be shared alongside your link to Facebook [Default: config.description]

@@ -24,7 +24,7 @@ new Share(".share-button-top", {
   title: "Share Button",
   networks: {
     facebook: {
-      app_id: "602752456409826",
+      appId: "602752456409826",
       before: function() {
         console.log("BEFORE", this);
         this.url   = "https://github.com/carrot/share-button";
