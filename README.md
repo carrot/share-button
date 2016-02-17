@@ -51,9 +51,9 @@ new ShareButton({
 
 ## NPM installation
 
-1. ```npm i --save-dev share-button```
+1. `npm i --save-dev share-button`
 2. Make a `share-button` element on your page
-3. In your javascript, ```var ShareButton = require('share-button');```
+3. In your javascript, `var ShareButton = require('share-button');`
 4. Pass options to the share call if you want (details below)
 5. Profit!
 
