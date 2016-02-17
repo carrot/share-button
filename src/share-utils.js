@@ -1,3 +1,5 @@
+import StringUtils from './string-utils';
+
 /**
  * ShareUtils
  * @class
@@ -18,7 +20,7 @@ class ShareUtils {
     }
 
     return strValue;
-}
+  }
 
   /**
    * @method _hide
@@ -88,7 +90,7 @@ class ShareUtils {
    * @param {Boolean}
    */
   _isEncoded(str) {
-    str = str.toRFC3986();
+    str = StringUtils.toRFC3986(str);
     return decodeURIComponent(str) !== str;
   }
 
@@ -104,7 +106,7 @@ class ShareUtils {
     if (typeof str === 'undefined' || str === null || this._isEncoded(str))
       return encodeURIComponent(str);
     else
-      return str.toRFC3986();
+      return StringUtils.toRFC3986(str);
   }
 
   /**
@@ -275,36 +277,9 @@ class ShareUtils {
    * @private
    */
   _isMobile() {
-    if(navigator.userAgent.match(/Android|iPhone|PhantomJS/i) &&
-       !navigator.userAgent.match(/iPod|iPad/i))
-      return true;
-    return false;
+    return navigator.userAgent.match(/Android|iPhone|PhantomJS/i) &&
+           !navigator.userAgent.match(/iPod|iPad/i);
   }
 }
-
-/**
- * @method toRFC3986
- * @description Encodes the string in RFC3986
- * @memberof String
- *
- * @return {String}
- */
-String.prototype.toRFC3986 = function() {
-  let tmp = encodeURIComponent(this);
-  tmp.replace(/[!'()*]/g, function(c) {
-    return `%${c.charCodeAt(0).toString(16)}`;
-  });
-};
-
-/**
- * @method capFLetter
- * @description Does exactly what the method name states
- * @memberof String
- *
- * @return {String}
- */
-String.prototype.capFLetter = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
 
 export default ShareUtils;
