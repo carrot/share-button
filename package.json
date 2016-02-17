@@ -27,7 +27,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "pioneer": "^0.11.6"
   },
   "devDependencies": {
     "autoprefixer-stylus": "^0.8.0",
@@ -42,6 +41,7 @@
     "gulp-shell": "^0.5.0",
     "gulp-uglify": "^1.4.1",
     "minifier": "^0.7.1",
+    "pioneer": "^0.11.6",
     "postcss-svg": "^1.0.1",
     "poststylus": "^0.2.1",
     "stylus": "^0.52.4"
