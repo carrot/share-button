@@ -492,11 +492,12 @@ class ShareButton extends ShareUtils {
    */
   _networkFacebook(element) {
     if (this.config.networks.facebook.loadSdk) {
-      if (!window.FB)
-        return console.error('The Facebook JS SDK hasn\'t loaded yet.');
-      this._updateHref(element, 'https://www.facebook.com/sharer/sharer.php', {
-        u: this.config.networks.facebook.url
-      });
+      if (!window.FB) {
+        console.error('The Facebook JS SDK hasn\'t loaded yet.');
+        return this._updateHref(element, 'https://www.facebook.com/sharer/sharer.php', {
+          u: this.config.networks.facebook.url
+        });
+      }
       return FB.ui({
         method:'feed',
         name: this.config.networks.facebook.title,
@@ -505,13 +506,14 @@ class ShareButton extends ShareUtils {
         caption: this.config.networks.facebook.caption,
         description: this.config.networks.facebook.description
       });
-    } else
+    } else {
       return this._updateHref(
         element,
         'https://www.facebook.com/sharer/sharer.php', {
           u: this.config.networks.facebook.url
         }
       );
+    }
   }
 
   /**

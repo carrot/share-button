@@ -15,6 +15,9 @@ module.exports = ->
     addAnimate: ->
       @addClass('animate')
 
+    removeFacebookSDK: ->
+      @driver.executeScript('window.FB = null')
+
   @Widgets.SBDiv = @Widget.extend
     root: 'div'
 
