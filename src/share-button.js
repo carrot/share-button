@@ -245,7 +245,7 @@ class ShareButton extends ShareUtils {
 
         this._addClass(network, this.config.networks[name].class);
 
-        if (network.className !== 'email')
+        if (network.className.indexOf('email') < 0)
           a.setAttribute('onclick', 'return false');
 
         a.addEventListener('mousedown', () => {
