@@ -4,7 +4,7 @@ Hello there! First of all, thanks for being interested in share-button and helpi
 ## Filing Issues
 If you are filing an issue, it is **required** that you include a jsfiddle that reproduces the issue you are having. The share button is a very simple and straightforward script, and often times if you are encountering a bug it is the result of some other code on your page. This is not something you should file an issue about, as we don't have time to debug your code. By taking a look at the issue with the button in isolation, it is easier to determine whether you have found a bug with share-button or whether the issue was introduced by your code.
 
-There is a [template jsfiddle here](http://jsfiddle.net/95cVL/) for you to experiment with if you'd like.
+There is a [template jsfiddle here](http://jsfiddle.net/28fn23bj/) for you to experiment with if you'd like.
 
 If you are opening an issue to suggest a feature, that's totally fine, although we might not add the feature for you immediately. If you are after a new feature, the best course of action is to open an issue describing the feature you want in detail. If we approve of the feature, try submitting a pull request to add it yourself! As mentioned above, this project is fairly straightforward, and there are explicit instructions below for getting set up -- a contribution is a good way to get your feet wet with open source.
 
